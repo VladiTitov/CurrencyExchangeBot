@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeBot", "CurrencyExchangeBot\CurrencyExchangeBot.csproj", "{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-DataAccess", "01-DataAccess", "{AD760F9D-2004-436F-A60F-F89F095A43E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-BisinessLogic", "02-BisinessLogic", "{A836D102-5DC5-493C-8899-57588F58CBFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Core", "03-Core", "{86DC7C99-14AD-42BF-94DF-3B521034D267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.DataBaseLayer", "DataBaseLayer\DataAccess.DataBaseLayer.csproj", "{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.SeleniumHtmlParse", "SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj", "{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic.Database", "BisinessLogic.Database\BisinessLogic.Database.csproj", "{502881F6-BF45-49F5-B453-F7EFFD2B88DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{502881F6-BF45-49F5-B453-F7EFFD2B88DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502881F6-BF45-49F5-B453-F7EFFD2B88DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502881F6-BF45-49F5-B453-F7EFFD2B88DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502881F6-BF45-49F5-B453-F7EFFD2B88DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A} = {86DC7C99-14AD-42BF-94DF-3B521034D267}
+		{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6} = {AD760F9D-2004-436F-A60F-F89F095A43E7}
+		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0} = {AD760F9D-2004-436F-A60F-F89F095A43E7}
+		{502881F6-BF45-49F5-B453-F7EFFD2B88DA} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C631B7CF-2303-46A3-ACED-255843DA2E1C}
+	EndGlobalSection
+EndGlobal
