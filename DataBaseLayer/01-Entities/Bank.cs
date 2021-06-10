@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.DataBaseLayer
+namespace DataAccess.DataBaseLayer._01_Entities
 {
-    class Bank
+    public class Bank
     {
+        [Key]
         public int Id { get; set; }
         public string NameRus { get; set; }
+
+        public Bank() =>
+            Branches = new List<Branch>();
+        public ICollection<Branch> Branches { get; set; }
     }
 }
