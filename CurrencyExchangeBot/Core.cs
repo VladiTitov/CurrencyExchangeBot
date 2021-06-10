@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Data.Common;
 
-namespace CurrencyExchangeBot
+namespace Core.CurrencyExchangeBot
 {
     class Core
     {
         static void Main()
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
