@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.DataBaseLayer._02_Repositories.Interfaces
+namespace DataAccess.DataBaseLayer
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

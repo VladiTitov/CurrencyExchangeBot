@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.DataBaseLayer._01_Entities
+namespace DataAccess.DataBaseLayer
 {
     public class Phone
     {
