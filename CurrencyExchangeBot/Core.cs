@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Common;
+using BisinessLogic.BotConnection;
 
 namespace Core.CurrencyExchangeBot
 {
@@ -7,7 +7,10 @@ namespace Core.CurrencyExchangeBot
     {
         static void Main()
         {
-            
+            var connection = new Connection("1401702551:AAHrr7hEYPKXLXdLgvI6zWYsxgzA-Ra24ms");
+            connection.Start();
+
+            Console.ReadLine();
         }
     }
 }

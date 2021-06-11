@@ -1,5 +1,4 @@
-﻿using DataAccess.DataBaseLayer._01_Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataBaseLayer
 {
