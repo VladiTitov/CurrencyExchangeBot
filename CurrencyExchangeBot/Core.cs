@@ -1,12 +1,16 @@
 ﻿using System;
+using BisinessLogic.BotConnection;
 
-namespace CurrencyExchangeBot
+namespace Core.CurrencyExchangeBot
 {
     class Core
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            var connection = new Connection("1401702551:AAHrr7hEYPKXLXdLgvI6zWYsxgzA-Ra24ms");
+            connection.Start();
+
+            Console.ReadLine();
         }
     }
 }
