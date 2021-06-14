@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class CityService : ICityService
+    public class CityService : ICityService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

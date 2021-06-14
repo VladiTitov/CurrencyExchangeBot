@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class BankService : IBankService
+    public class BankService : IBankService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

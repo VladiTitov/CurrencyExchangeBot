@@ -1,6 +1,6 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    interface IRepositoryFactory
+    public interface IRepositoryFactory
     {
         ICurrencyRepository CreateCurrencyRepository();
         IBankRepository CreateBankRepository();

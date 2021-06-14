@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class BankMappingProfile : Profile
+    public class BankMappingProfile : Profile
     {
         public BankMappingProfile()
         {

@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class CurrencyMappingProfile : Profile
+    public class CurrencyMappingProfile : Profile
     {
         public CurrencyMappingProfile()
         {

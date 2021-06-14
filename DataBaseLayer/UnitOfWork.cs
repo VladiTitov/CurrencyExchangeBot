@@ -2,7 +2,7 @@
 
 namespace DataAccess.DataBaseLayer
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DataContext _context;
         private readonly IRepositoryFactory _repositoryFactory;

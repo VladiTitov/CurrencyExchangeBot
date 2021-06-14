@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class BranchService : IBranchService
+    public class BranchService : IBranchService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

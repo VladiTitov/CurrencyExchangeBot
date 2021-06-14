@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface IPhoneService
+    public interface IPhoneService
     {
         IEnumerable<PhoneDTO> GetData();
         void Add(PhoneDTO item);

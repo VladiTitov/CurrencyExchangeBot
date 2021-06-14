@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface IQuotationService
+    public interface IQuotationService
     {
         IEnumerable<QuotationDTO> GetData();
         void Add(QuotationDTO item);

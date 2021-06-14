@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class CurrencyService : ICurrencyService
+    public class CurrencyService : ICurrencyService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

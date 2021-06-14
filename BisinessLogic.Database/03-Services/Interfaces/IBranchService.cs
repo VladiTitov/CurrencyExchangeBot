@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface IBranchService
+    public interface IBranchService
     {
         IEnumerable<BranchDTO> GetData();
         void Add(BranchDTO item);

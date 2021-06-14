@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface ICityService
+    public interface ICityService
     {
         IEnumerable<CityDTO> GetData();
         void Add(CityDTO item);

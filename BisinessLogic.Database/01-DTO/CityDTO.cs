@@ -1,6 +1,6 @@
 ﻿namespace BisinessLogic.Database
 {
-    class CityDTO
+    public class CityDTO
     {
         public int Id { get; set; }
         public string NameRus { get; set; }

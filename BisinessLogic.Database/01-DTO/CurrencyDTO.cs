@@ -1,6 +1,6 @@
 ﻿namespace BisinessLogic.Database
 {
-    class CurrencyDTO
+    public class CurrencyDTO
     {
         public int Id { get; set; }
         public string NameRus { get; set; }

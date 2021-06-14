@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.CurrencyExchangeBot", "CurrencyExchangeBot\Core.CurrencyExchangeBot.csproj", "{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.CurrencyExchangeBot", "CurrencyExchangeBot\Core.CurrencyExchangeBot.csproj", "{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-DataAccess", "01-DataAccess", "{AD760F9D-2004-436F-A60F-F89F095A43E7}"
 EndProject
@@ -11,13 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-BisinessLogic", "02-Bisi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Core", "03-Core", "{86DC7C99-14AD-42BF-94DF-3B521034D267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.DataBaseLayer", "DataBaseLayer\DataAccess.DataBaseLayer.csproj", "{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.DataBaseLayer", "DataBaseLayer\DataAccess.DataBaseLayer.csproj", "{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.SeleniumHtmlParse", "SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj", "{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.SeleniumHtmlParse", "SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj", "{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic.Database", "BisinessLogic.Database\BisinessLogic.Database.csproj", "{502881F6-BF45-49F5-B453-F7EFFD2B88DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BisinessLogic.Database", "BisinessLogic.Database\BisinessLogic.Database.csproj", "{502881F6-BF45-49F5-B453-F7EFFD2B88DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic.BotConnection", "BisinessLogic.BotConnection\BisinessLogic.BotConnection.csproj", "{198CD3AE-2879-4C7C-A148-ACFFB14164A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BisinessLogic.BotConnection", "BisinessLogic.BotConnection\BisinessLogic.BotConnection.csproj", "{198CD3AE-2879-4C7C-A148-ACFFB14164A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BissinessLogic.Parcer", "BissinessLogic.Parcer\BissinessLogic.Parcer.csproj", "{9615507B-B7FC-45E5-83A9-682D4A1520F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0} = {AD760F9D-2004-436F-A60F-F89F095A43E7}
 		{502881F6-BF45-49F5-B453-F7EFFD2B88DA} = {A836D102-5DC5-493C-8899-57588F58CBFB}
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9} = {A836D102-5DC5-493C-8899-57588F58CBFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C631B7CF-2303-46A3-ACED-255843DA2E1C}

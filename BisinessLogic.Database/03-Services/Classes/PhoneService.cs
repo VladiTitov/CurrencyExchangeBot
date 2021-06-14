@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class PhoneService : IPhoneService
+    public class PhoneService : IPhoneService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

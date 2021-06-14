@@ -4,7 +4,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class QuotationService : IQuotationService
+    public class QuotationService : IQuotationService
     {
         private readonly IQuotationRepository _quotationRepository;
         private readonly IMapper _mapper;

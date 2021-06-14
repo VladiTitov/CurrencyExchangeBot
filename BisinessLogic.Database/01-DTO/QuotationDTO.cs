@@ -1,6 +1,6 @@
 ﻿namespace BisinessLogic.Database
 { 
-    class QuotationDTO
+    public class QuotationDTO
     {
         public int Id { get; set; }
         public string Sale { get; set; }

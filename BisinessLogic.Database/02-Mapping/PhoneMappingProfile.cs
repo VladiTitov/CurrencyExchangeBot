@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class PhoneMappingProfile : Profile
+    public class PhoneMappingProfile : Profile
     {
         public PhoneMappingProfile()
         {

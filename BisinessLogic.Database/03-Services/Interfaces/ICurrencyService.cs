@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface ICurrencyService
+    public interface ICurrencyService
     {
         IEnumerable<CurrencyDTO> GetData();
         void Add(CurrencyDTO item);

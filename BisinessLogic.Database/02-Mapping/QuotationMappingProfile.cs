@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace BisinessLogic.Database
 {
-    class QuotationMappingProfile : Profile
+    public class QuotationMappingProfile : Profile
     {
         public QuotationMappingProfile()
         {

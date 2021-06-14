@@ -2,7 +2,7 @@
 
 namespace BisinessLogic.Database
 {
-    interface IBankService
+    public interface IBankService
     {
         IEnumerable<BankDTO> GetData();
         void Add(BankDTO item);
