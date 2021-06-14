@@ -1,13 +1,13 @@
 ﻿using System;
 using FluentScheduler;
 
-namespace BissinessLogic.Parcer
+namespace BissinessLogic.Parser
 {
-    class ParcerDataTask : Registry
+    class ParserDataTask : Registry
     {
-        public ParcerDataTask()
+        public ParserDataTask()
         {
-            this.Schedule(() => new ParcerJob())
+            this.Schedule(() => new ParserJob())
                 .ToRunOnceAt(DateTime.Now.AddSeconds(5))
                 .AndEvery(1)
                 .Hours();

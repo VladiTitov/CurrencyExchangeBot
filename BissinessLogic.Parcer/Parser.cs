@@ -1,9 +1,8 @@
 ﻿using BisinessLogic.Database;
 
-
-namespace BissinessLogic.Parcer
+namespace BissinessLogic.Parser
 {
-    class Parcer
+    class Parser
     {
         private readonly IBankService _bankService;
         private readonly IBranchService _branchService;
@@ -12,7 +11,7 @@ namespace BissinessLogic.Parcer
         private readonly IPhoneService _phoneService;
         private readonly IQuotationService _quotationService;
 
-        public Parcer(IBankService bankService,
+        public Parser(IBankService bankService,
             IBranchService branchService,
             ICityService cityService,
             ICurrencyService currencyService,

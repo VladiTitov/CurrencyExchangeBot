@@ -5,14 +5,14 @@ using DataAccess.DataBaseLayer;
 using FluentScheduler;
 using SimpleInjector;
 
-namespace BissinessLogic.Parcer
+namespace BissinessLogic.Parser
 {
-    class ParcerJob : IJob
+    class ParserJob : IJob
     {
         public void Execute()
         {
             var container = CreateContainer();
-            container.GetInstance<Parcer>().Start();
+            container.GetInstance<Parser>().Start();
         }
 
         private static Container CreateContainer()
@@ -42,7 +42,7 @@ namespace BissinessLogic.Parcer
             container.Register<IQuotationRepository, QuotationRepository>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
-            container.Register<Parcer>(Lifestyle.Singleton);
+            container.Register<Parser>(Lifestyle.Singleton);
             container.Verify();
 
             return container;
