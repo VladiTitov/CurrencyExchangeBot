@@ -3,7 +3,7 @@ using FluentScheduler;
 
 namespace BissinessLogic.Parser
 {
-    class ParserDataTask : Registry
+    public class ParserDataTask : Registry
     {
         public ParserDataTask()
         {

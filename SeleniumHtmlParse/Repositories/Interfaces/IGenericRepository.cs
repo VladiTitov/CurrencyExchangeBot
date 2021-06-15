@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace DataAccess.SeleniumHtmlParse
 {
-    interface IGenericRepository
+    public interface IGenericRepository
     {
         IWebElement GetData(By selector);
         IReadOnlyList<IWebElement> GetDataList(By selector);

@@ -5,12 +5,12 @@ using OpenQA.Selenium.Chrome;
 
 namespace DataAccess.SeleniumHtmlParse
 {
-    class GenericRepository : IGenericRepository, IDisposable
+    public class GenericRepository : IGenericRepository, IDisposable
     {
         private readonly IWebDriver _driver;
 
         public GenericRepository(string url) =>
-            _driver = new ChromeDriver() { Url = url };
+            _driver = new ChromeDriver { Url = url };
 
         public void Dispose() =>
             _driver.Close();

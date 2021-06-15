@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using BisinessLogic.Database;
+using BissinessLogic.Parser.Services.Classes;
+using BissinessLogic.Parser.Services.Interfaces;
 using DataAccess.DataBaseLayer;
+using DataAccess.SeleniumHtmlParse;
+using DataAccess.SeleniumHtmlParse.Repositories.Classes;
 using FluentScheduler;
 using SimpleInjector;
 
@@ -40,6 +44,12 @@ namespace BissinessLogic.Parser
 
             container.Register<IQuotationService, QuotationService>(Lifestyle.Singleton);
             container.Register<IQuotationRepository, QuotationRepository>(Lifestyle.Singleton);
+
+            container.Register<ICityParserRepository, CityParserRepository>(Lifestyle.Singleton);
+            container.Register<ICityWebDataService, CityWebDataService>(Lifestyle.Singleton);
+
+            container.Register<ICurrencyParserRepository, CurrencyParserRepository>(Lifestyle.Singleton);
+            container.Register<ICurrencyWebDataService, CurrencyWebDataService>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
             container.Register<Parser>(Lifestyle.Singleton);

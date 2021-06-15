@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace DataAccess.SeleniumHtmlParse
 {
-    interface ICityParserRepository
+    public interface ICityParserRepository
     {
         IEnumerable<City> GetCities(string selector, string url);
     }

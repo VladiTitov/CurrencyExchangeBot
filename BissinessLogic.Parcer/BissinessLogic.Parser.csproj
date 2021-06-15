@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BisinessLogic.Database\BisinessLogic.Database.csproj" />
+    <ProjectReference Include="..\SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj" />
   </ItemGroup>
 
 </Project>

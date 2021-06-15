@@ -3,7 +3,7 @@ using DataAccess.DataBaseLayer;
 
 namespace DataAccess.SeleniumHtmlParse
 {
-    interface ICurrencyParserRepository
+    public interface ICurrencyParserRepository
     {
         IEnumerable<Currency> GetCurrencies(string selector, string url);
     }
