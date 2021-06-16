@@ -51,6 +51,9 @@ namespace BissinessLogic.Parser
             container.Register<ICurrencyParserRepository, CurrencyParserRepository>(Lifestyle.Singleton);
             container.Register<ICurrencyWebDataService, CurrencyWebDataService>(Lifestyle.Singleton);
 
+            container.Register<IBaseWebDataService, BaseWebDataService>(Lifestyle.Singleton);
+            container.Register<IBaseParserRepository, BaseParserRepository>(Lifestyle.Singleton);
+
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
             container.Register<Parser>(Lifestyle.Singleton);
             container.Verify();
@@ -67,7 +70,8 @@ namespace BissinessLogic.Parser
                 new CityMappingProfile(),
                 new CurrencyMappingProfile(),
                 new QuotationMappingProfile(),
-                new PhoneMappingProfile()
+                new PhoneMappingProfile(),
+                new BaseClassMappingProfile()
             }));
             var mapper = config.CreateMapper();
             return mapper;

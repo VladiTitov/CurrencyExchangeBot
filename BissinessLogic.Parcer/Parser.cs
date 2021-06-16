@@ -1,4 +1,5 @@
-﻿using BisinessLogic.Database;
+﻿using System.Collections.Generic;
+using BisinessLogic.Database;
 using BissinessLogic.Parser.Services.Interfaces;
 
 namespace BissinessLogic.Parser
@@ -14,6 +15,7 @@ namespace BissinessLogic.Parser
 
         private readonly ICurrencyWebDataService _currencyWebDataService;
         private readonly ICityWebDataService _cityWebDataService;
+        private readonly IBaseWebDataService _baseWebDataService;
 
         public Parser(IBankService bankService,
             IBranchService branchService,
@@ -22,7 +24,8 @@ namespace BissinessLogic.Parser
             IPhoneService phoneService,
             IQuotationService quotationService,
             ICityWebDataService cityWebDataService,
-            ICurrencyWebDataService currencyWebDataService)
+            ICurrencyWebDataService currencyWebDataService,
+            IBaseWebDataService baseWebDataService)
         {
             _bankService = bankService;
             _branchService = branchService;
@@ -33,6 +36,7 @@ namespace BissinessLogic.Parser
 
             _cityWebDataService = cityWebDataService;
             _currencyWebDataService = currencyWebDataService;
+            _baseWebDataService = baseWebDataService;
         }
 
 
@@ -42,7 +46,55 @@ namespace BissinessLogic.Parser
             foreach (var city in cities) _cityService.Add(city);
 
             var currencies = _currencyWebDataService.GetData(selector: ".//*/div/select/option", url: @"https://m.select.by/kurs");
-            foreach (var currency in currencies) _currencyService.Add(currency);
+            foreach (var currency in currencies) _currencyService.Add(currency); 
+            
+            GetData(_cityService.GetData(), _currencyService.GetData());
+        }
+
+        private void GetData(IEnumerable<CityDTO> cities, IEnumerable<CurrencyDTO> currencies)
+        {
+            foreach (var city in cities)
+            {
+                foreach (var currency in currencies)
+                {
+                    var data = _baseWebDataService.GetData(
+                        selector: ".//*/tbody/tr/td/table/tbody/tr/td",
+                        url: @"https://select.by" + $"/{city.NameLat}{currency.Url}");
+                    foreach (var d in data)
+                    {
+                        var (bank, branch, quotation, phone) = GetObjects(d);
+
+                        _bankService.Add(bank);
+                        _branchService.Add(new BranchDTO
+                        {
+
+                        });
+                       
+                    }
+                }
+            }
+        }
+
+        private (BankDTO bank, BranchDTO branch, QuotationDTO quotation, PhoneDTO phone) GetObjects(BaseClassDTO baseEntity)
+        {
+            return (
+                new BankDTO
+                {
+                    NameRus = baseEntity.BankName
+                },
+                new BranchDTO
+                {
+                    AdrRus = baseEntity.Adr
+                },
+                new QuotationDTO
+                {
+                    Buy = baseEntity.Buy,
+                    Sale = baseEntity.Sale
+                },
+                new PhoneDTO
+                {
+                    PhoneNum = baseEntity.Phone
+                });
         }
     }
 }
