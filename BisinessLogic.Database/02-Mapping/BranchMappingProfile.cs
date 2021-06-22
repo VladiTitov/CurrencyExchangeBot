@@ -7,7 +7,11 @@ namespace BisinessLogic.Database
     {
         public BranchMappingProfile()
         {
-            CreateMap<Branch, BranchDTO>().ReverseMap();
+            CreateMap<Branch, BranchDTO>()
+                .ForMember(dst => dst.AdrRus, opt => opt.MapFrom(src => src.AdrRus))
+                .ForMember(dst => dst.BankDtoId, opt => opt.MapFrom(src => src.BankId))
+                .ForMember(dst=>dst.CityDtoId, opt=>opt.MapFrom(src=>src.CityId))
+                .ReverseMap();
         }
     }
 }

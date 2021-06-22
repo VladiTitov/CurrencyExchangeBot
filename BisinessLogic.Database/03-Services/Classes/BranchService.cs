@@ -28,6 +28,12 @@ namespace BisinessLogic.Database
         public IEnumerable<BranchDTO> GetData() =>
             _mapper.Map<List<BranchDTO>>(_unitOfWork.BranchRepository.GetAll());
 
+        public BranchDTO GetWithInclude(BranchDTO item)
+        {
+            var bankDb = _unitOfWork.BranchRepository.GetWithInclude(branch => branch.AdrRus == item.AdrRus);
+            return _mapper.Map<BranchDTO>(bankDb);
+        }
+
         public void Update(BranchDTO branch) =>
             _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(branch));
     }

@@ -8,5 +8,6 @@ namespace BisinessLogic.Database
         void Add(BranchDTO item);
         void Update(BranchDTO item);
         void Delete(BranchDTO item);
+        BranchDTO GetWithInclude(BranchDTO item);
     }
 }

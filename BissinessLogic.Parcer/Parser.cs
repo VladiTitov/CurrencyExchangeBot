@@ -42,11 +42,49 @@ namespace BissinessLogic.Parser
 
         public void Start()
         {
+            List<string> citiesList = new List<string>()
+            {
+                "Minsk",
+                "Brest",
+                "Grodno",
+                "Gomel",
+                "Vitebsk",
+                "Mogilev",
+                "Bobrujsk",
+                "Baranovichi",
+                "Novopolock",
+                "Pinsk",
+                "Borisov",
+                "Lida",
+                "Mozyr",
+                "Polock",
+                "Slonim",
+                "Orsha",
+                "Molodechno",
+                "Zhlobin",
+                "Kobrin",
+                "Sluck"
+
+
+            };
+            List<string> currenciesList = new List<string>()
+            {
+                "USD",
+                "EUR",
+                "RUB"
+            };
+
             var cities = _cityWebDataService.GetData(selector: ".//*/li/select/option", url: @"https://m.select.by/kurs");
-            foreach (var city in cities) _cityService.Add(city);
+            foreach (var city in cities)
+            {
+                if (citiesList.Contains(city.NameLat)) _cityService.Add(city);
+            }
 
             var currencies = _currencyWebDataService.GetData(selector: ".//*/div/select/option", url: @"https://m.select.by/kurs");
-            foreach (var currency in currencies) _currencyService.Add(currency); 
+            foreach (var currency in currencies)
+            {
+                if (currenciesList.Contains(currency.NameLat)) _currencyService.Add(currency);
+            }
             
             GetData(_cityService.GetData(), _currencyService.GetData());
         }
@@ -62,20 +100,46 @@ namespace BissinessLogic.Parser
                         url: @"https://select.by" + $"/{city.NameLat}{currency.Url}");
                     foreach (var d in data)
                     {
-                        var (bank, branch, quotation, phone) = GetObjects(d);
+                        var (bank, branch, quotation, phones) = GetObjects(d);
 
                         _bankService.Add(bank);
+
+                        var pr = _bankService.GetWithInclude(bank);
+
                         _branchService.Add(new BranchDTO
                         {
-
+                            AdrRus = branch.AdrRus,
+                            BankDtoId = pr.Id,
+                            CityDtoId = city.Id
                         });
-                       
+
+                        var pr2 = _branchService.GetWithInclude(branch);
+
+                        _quotationService.Add(new QuotationDTO
+                        {
+                            Sale = quotation.Sale,
+                            Buy = quotation.Buy,
+                            BranchDtoId = pr2.Id,
+                            CurrencyDtoId = currency.Id
+                        });
+
+                        foreach (var phone in phones)
+                        {
+                            if (phone != "")
+                            {
+                                _phoneService.Add(new PhoneDTO
+                                {
+                                    PhoneNum = phone,
+                                    BranchDtoId = pr2.Id
+                                });
+                            }
+                        }
                     }
                 }
             }
         }
 
-        private (BankDTO bank, BranchDTO branch, QuotationDTO quotation, PhoneDTO phone) GetObjects(BaseClassDTO baseEntity)
+        private (BankDTO bank, BranchDTO branch, QuotationDTO quotation, string[] phones) GetObjects(BaseClassDTO baseEntity)
         {
             return (
                 new BankDTO
@@ -91,10 +155,8 @@ namespace BissinessLogic.Parser
                     Buy = baseEntity.Buy,
                     Sale = baseEntity.Sale
                 },
-                new PhoneDTO
-                {
-                    PhoneNum = baseEntity.Phone
-                });
+                baseEntity.Phone
+                );
         }
     }
 }

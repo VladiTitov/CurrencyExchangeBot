@@ -13,6 +13,14 @@ namespace DataAccess.DataBaseLayer
 
         public DataContext() => Database.EnsureCreated();
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Branch>()
+        //        .HasOne(o => o.Bank)
+        //        .WithMany(m => m.Branches)
+        //        .HasForeignKey(k=>k.BankId);
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             //optionsBuilder.UseSqlite(@"Data Source=..\\banks.db");
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bankDB;Trusted_Connection=True;");
