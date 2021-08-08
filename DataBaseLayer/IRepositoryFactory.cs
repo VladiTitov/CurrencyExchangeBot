@@ -8,5 +8,6 @@
         IQuotationRepository CreateQuotationRepository();
         IBranchRepository CreateBranchRepository();
         IPhoneRepository CreatePhoneRepository();
+        IUserStateRepository CreateUserStateRepository();
     }
 }

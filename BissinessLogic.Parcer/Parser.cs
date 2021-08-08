@@ -83,7 +83,8 @@ namespace BissinessLogic.Parser
             var currencies = _currencyWebDataService.GetData(selector: ".//*/div/select/option", url: @"https://m.select.by/kurs");
             foreach (var currency in currencies)
             {
-                if (currenciesList.Contains(currency.NameLat)) _currencyService.Add(currency);
+                //if (currenciesList.Contains(currency.NameLat))
+                _currencyService.Add(currency);
             }
             
             GetData(_cityService.GetData(), _currencyService.GetData());
@@ -110,7 +111,7 @@ namespace BissinessLogic.Parser
                         {
                             AdrRus = branch.AdrRus,
                             BankDtoId = pr.Id,
-                            CityDtoId = city.Id
+                            CityDtoId = city.Id,
                         });
 
                         var pr2 = _branchService.GetWithInclude(branch);

@@ -11,7 +11,7 @@ namespace DataAccess.SeleniumHtmlParse
             using (var parseData = new GenericRepository(url))
             {
                 var dataWebElements = parseData.GetDataList(By.XPath(selector));
-
+                 
                 var resultCurrencies = new List<Currency>();
 
                 for (int i = 1; i < dataWebElements.Count; i++)

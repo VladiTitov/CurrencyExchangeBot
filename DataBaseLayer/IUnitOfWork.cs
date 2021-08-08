@@ -10,6 +10,7 @@ namespace DataAccess.DataBaseLayer
         IBranchRepository BranchRepository { get; }
         IQuotationRepository QuotationRepository { get; }
         IPhoneRepository PhoneRepository { get; }
+        IUserStateRepository UserStateRepository { get; }
 
         void Save();
     }

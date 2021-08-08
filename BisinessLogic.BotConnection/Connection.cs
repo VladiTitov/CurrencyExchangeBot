@@ -1,42 +1,44 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using BusinessLogic.MenuStucture;
+using System;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
-namespace BisinessLogic.BotConnection
+namespace BusinessLogic.BotConnection
 {
     public class Connection
     {
         private readonly string _token;
+        private readonly ITelegramBotClient _botClient;
+        public TelegramUser _user;
 
-        private static ITelegramBotClient _botClient;
-        private static IReplyMarkup _markup;
+        public Connection(string token)
+        {
+            _token = token;
+            _botClient = new TelegramBotClient(_token) { Timeout = TimeSpan.FromSeconds(10) };
+        }
 
-        public Connection(string token) => _token = token;
-
+        [Obsolete]
         public void Start()
         {
-            _botClient = new TelegramBotClient(_token) { Timeout = TimeSpan.FromSeconds(10) };
-            User me = _botClient.GetMeAsync().Result;
+            var bot = _botClient.GetMeAsync().Result;
 
-            Console.WriteLine($"{me.Id} and {me.FirstName} started");
+            Console.WriteLine($"{bot.Id} and {bot.FirstName} started");
 
             _botClient.OnMessage += BotClient_OnMessage;
+            _botClient.OnCallbackQuery += BotClient_OnCallbackQuery;
             _botClient.StartReceiving();
+
+            _user = new TelegramUser();
         }
 
-        public async void BotClient_OnMessage(object sender, MessageEventArgs e)
+        [Obsolete]
+        private void BotClient_OnCallbackQuery(object sender, CallbackQueryEventArgs e) =>
+            new MenuContainer().MenuStart(e.CallbackQuery.Message.Chat, _botClient, e?.CallbackQuery?.Data);
+
+        [Obsolete]
+        public void BotClient_OnMessage(object sender, MessageEventArgs e)
         {
-            var text = e?.Message?.Text;
-            if (text == null) return;
-            await SendMessage(e.Message.Chat, text, _markup);
-        }
-
-        private Task SendMessage(Chat chat, string text, IReplyMarkup replyMarkup) => _botClient.SendTextMessageAsync(chatId: chat, text: text,
-            ParseMode.Default, true, false, 0, replyMarkup: replyMarkup, CancellationToken.None);
+            new MenuContainer().MenuStart(e.Message.Chat, _botClient, e?.Message?.Text);
+        }            
     }
 }

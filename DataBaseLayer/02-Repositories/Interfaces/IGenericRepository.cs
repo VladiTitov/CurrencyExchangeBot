@@ -6,9 +6,9 @@ namespace DataAccess.DataBaseLayer
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        void Add(TEntity bank);
+        void Add(TEntity item);
         void Delete(TEntity item);
-        void Update(TEntity bank);
+        void Update(TEntity item);
 
         IEnumerable<TEntity> GetAll();
 

@@ -23,5 +23,8 @@
 
         public IPhoneRepository CreatePhoneRepository() =>
             new PhoneRepository(_context);
+
+        public IUserStateRepository CreateUserStateRepository() => 
+            new UserStateRepository(_context);
     }
 }

@@ -9,19 +9,19 @@ namespace DataAccess.DataBaseLayer
         public int Id { get; set; }
         public string AdrRus { get; set; }
 
-        public ICollection<Quotation> Quotations { get; set; }
-        public ICollection<Phone> Phones { get; set; }
+        public List<Quotation> Quotations { get; set; } = new List<Quotation>();
+        public List<Phone> Phones { get; set; } = new List<Phone>();
 
-        public Branch()
-        {
-            Quotations = new List<Quotation>();
-            Phones = new List<Phone>();
-        }
+        //public Branch()
+        //{
+        //    Quotations = new List<Quotation>();
+        //    Phones = new List<Phone>();
+        //}
 
-        public int? BankId { get; set; }
+        public int BankId { get; set; }
         public Bank Bank { get; set; }
 
-        public int? CityId { get; set; }
+        public int CityId { get; set; }
         public City City { get; set; }
     }
 }

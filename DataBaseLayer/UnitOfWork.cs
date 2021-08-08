@@ -13,6 +13,7 @@ namespace DataAccess.DataBaseLayer
         private IBranchRepository _branchRepository;
         private IQuotationRepository _quotationRepository;
         private IPhoneRepository _phoneRepository;
+        private IUserStateRepository _userStateRepository;
         private bool _disposed;
 
         public UnitOfWork(DataContext context, IRepositoryFactory repositoryFactory)
@@ -40,6 +41,9 @@ namespace DataAccess.DataBaseLayer
         public IPhoneRepository PhoneRepository =>
             _phoneRepository ??= _repositoryFactory.CreatePhoneRepository();
 
+        public IUserStateRepository UserStateRepository =>
+            _userStateRepository ??= _repositoryFactory.CreateUserStateRepository();
+
         public void Save() => _context.SaveChanges();
 
         protected virtual void Dispose(bool disposing)
@@ -53,6 +57,7 @@ namespace DataAccess.DataBaseLayer
                 _quotationRepository?.Dispose();
                 _cityRepository?.Dispose();
                 _phoneRepository?.Dispose();
+                _userStateRepository?.Dispose();
             }
 
             _disposed = true;

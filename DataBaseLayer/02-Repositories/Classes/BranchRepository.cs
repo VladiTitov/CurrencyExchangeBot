@@ -2,8 +2,6 @@
 {
     public class BranchRepository : GenericRepository<Branch>, IBranchRepository
     {
-        public BranchRepository(DataContext context) : base(context)
-        {
-        }
+        public BranchRepository(DataContext context) : base(context) { }
     }
 }

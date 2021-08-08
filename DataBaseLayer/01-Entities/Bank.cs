@@ -9,8 +9,8 @@ namespace DataAccess.DataBaseLayer
         public int Id { get; set; }
         public string NameRus { get; set; }
 
-        public Bank() =>
-            Branches = new List<Branch>();
-        public ICollection<Branch> Branches { get; set; }
+        //public Bank() =>
+        //    Branches = new List<Branch>();
+        public List<Branch> Branches { get; set; } = new List<Branch>();
     }
 }
