@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DataAccess.DataBaseLayer;
 
@@ -16,14 +17,24 @@ namespace BisinessLogic.Database
             _mapper = mapper;
         }
 
-        public void Add(BranchDTO item)
+        public async Task Add(BranchDTO item)
         {
             if (_unitOfWork.BranchRepository.GetAll().All(branch => branch.AdrRus != item.AdrRus)) 
                 _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
+            await _unitOfWork.Save();
         }
 
-        public void Delete(BranchDTO item) =>
+        public async Task Delete(BranchDTO item)
+        {
             _unitOfWork.BranchRepository.Delete(_mapper.Map<Branch>(item));
+            await _unitOfWork.Save();
+        }
+
+        public async Task Update(BranchDTO branch)
+        {
+            _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(branch));
+            await _unitOfWork.Save();
+        }
 
         public IEnumerable<BranchDTO> GetData() =>
             _mapper.Map<List<BranchDTO>>(_unitOfWork.BranchRepository.GetAll());
@@ -44,8 +55,5 @@ namespace BisinessLogic.Database
             }
             return _mapper.Map<List<BranchDTO>>(items);
         }
-
-        public void Update(BranchDTO branch) =>
-            _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(branch));
     }
 }

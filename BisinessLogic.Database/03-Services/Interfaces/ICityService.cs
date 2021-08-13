@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BisinessLogic.Database
 {
     public interface ICityService
     {
         IEnumerable<CityDTO> GetData();
-        void Add(CityDTO item);
-        void Update(CityDTO item);
-        void Delete(CityDTO item);
+        Task Add(CityDTO item);
+        Task Update(CityDTO item);
+        Task Delete(CityDTO item);
     }
 }

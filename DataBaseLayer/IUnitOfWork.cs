@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace DataAccess.DataBaseLayer
 {
@@ -11,7 +12,6 @@ namespace DataAccess.DataBaseLayer
         IQuotationRepository QuotationRepository { get; }
         IPhoneRepository PhoneRepository { get; }
         IUserStateRepository UserStateRepository { get; }
-
-        void Save();
+        Task Save();
     }
 }

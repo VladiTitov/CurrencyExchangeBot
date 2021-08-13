@@ -17,23 +17,11 @@ namespace DataAccess.DataBaseLayer
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual void Add(TEntity item)
-        {
-            _dbSet.Add(item);
-            _context.SaveChanges();
-        }
+        public virtual void Add(TEntity item) =>_dbSet.Add(item);
 
-        public void Delete(TEntity item)
-        {
-            _dbSet.Remove(item);
-            _context.SaveChanges();
-        }
+        public void Delete(TEntity item) =>_dbSet.Remove(item);
 
-        public void Update(TEntity item)
-        {
-            _context.Entry(item).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
+        public void Update(TEntity item) =>_context.Entry(item).State = EntityState.Modified;
 
         public IEnumerable<TEntity> GetAll() => _dbSet.AsNoTracking().ToList();
 

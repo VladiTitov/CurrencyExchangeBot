@@ -1,6 +1,4 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    public interface IPhoneRepository : IGenericRepository<Phone>
-    {
-    }
+    public interface IPhoneRepository : IGenericRepository<Phone> { }
 }

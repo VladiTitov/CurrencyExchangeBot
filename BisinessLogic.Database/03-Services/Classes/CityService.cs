@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DataAccess.DataBaseLayer;
 
@@ -16,19 +17,25 @@ namespace BisinessLogic.Database
             _mapper = mapper;
         }
 
-        public void Add(CityDTO city)
+        public async Task Add(CityDTO city)
         {
             if (_unitOfWork.CityRepository.GetAll().All(a => a.NameRus != city.NameRus))
                 _unitOfWork.CityRepository.Add(_mapper.Map<City>(city));
+            await _unitOfWork.Save();
         }
 
-        public void Delete(CityDTO item) =>
+        public async Task Delete(CityDTO item)
+        {
             _unitOfWork.CityRepository.Delete(_mapper.Map<City>(item));
+            await _unitOfWork.Save();
+        }
+        public async Task Update(CityDTO city)
+        {
+            _unitOfWork.CityRepository.Update(_mapper.Map<City>(city));
+            await _unitOfWork.Save();
+        }
 
         public IEnumerable<CityDTO> GetData() =>
             _mapper.Map<List<CityDTO>>(_unitOfWork.CityRepository.GetAll());
-
-        public void Update(CityDTO city) =>
-            _unitOfWork.CityRepository.Update(_mapper.Map<City>(city));
     }
 }

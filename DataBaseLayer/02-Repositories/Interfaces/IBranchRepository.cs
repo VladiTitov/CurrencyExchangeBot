@@ -1,6 +1,4 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    public interface IBranchRepository : IGenericRepository<Branch> 
-    {
-    }
+    public interface IBranchRepository : IGenericRepository<Branch> { }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DataAccess.DataBaseLayer;
 
@@ -16,14 +17,19 @@ namespace BisinessLogic.Database
             _mapper = mapper;
         }
 
-        public void Add(BankDTO item)
+        public async Task Add(BankDTO item)
         {
             if (_unitOfWork.BankRepository.GetAll().All(a => a.NameRus != item.NameRus))
                 _unitOfWork.BankRepository.Add(_mapper.Map<Bank>(item));
+            await _unitOfWork.Save();
         }
 
-        public void Delete(BankDTO item) =>
+        public async Task Delete(BankDTO item)
+        {
             _unitOfWork.BankRepository.Delete(_mapper.Map<Bank>(item));
+            await _unitOfWork.Save();
+        }
+            
 
         public IEnumerable<BankDTO> GetData() =>
             _mapper.Map<List<BankDTO>>(_unitOfWork.BankRepository.GetAll());
@@ -34,7 +40,11 @@ namespace BisinessLogic.Database
             return _mapper.Map<BankDTO>(bankDb);
         }
 
-        public void Update(BankDTO item) =>
+        public async Task Update(BankDTO item)
+        {
             _unitOfWork.BankRepository.Update(_mapper.Map<Bank>(item));
+            await _unitOfWork.Save();
+        }
+            
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace BusinessLogic.Database
+﻿using System.Threading.Tasks;
+
+namespace BusinessLogic.Database
 {
     public interface IUserStateService
     {
-        void Add(UserStateDTO item);
+        Task Add(UserStateDTO item);
         UserStateDTO GetState(long userId);
-        void Update(UserStateDTO item);
-        void Delete(UserStateDTO item);
+        Task Update(UserStateDTO item);
+        Task Delete(UserStateDTO item);
+        bool IsExist(long userId);
     }
 }

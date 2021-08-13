@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using System.Collections.Generic;
 using BisinessLogic.Database;
 using BusinessLogic.Database;
 using DataAccess.DataBaseLayer;
 using SimpleInjector;
-using Telegram.Bot;
-using Telegram.Bot.Types;
+using AutoMapper;
+using BusinessLogic.MenuStucture.Services.ModelsServices;
 
 namespace BusinessLogic.MenuStucture
 {
     public class MenuContainer
     {
-        public void MenuStart(Chat chat, ITelegramBotClient botClient, string text)
-        { 
-            var container = CreateContainer();
-            container.GetInstance<MenuLogic>().Start(chat, botClient, text);
-        }
-        
-        private Container CreateContainer()
+        public Container CreateContainer()
         {
             var container = new Container();
 
@@ -45,7 +37,11 @@ namespace BusinessLogic.MenuStucture
             container.Register<IQuotationRepository, QuotationRepository>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
-            container.Register<MenuLogic>(Lifestyle.Singleton);
+
+            container.Register<CityDTOService>(Lifestyle.Singleton);
+            container.Register<CurrencyDTOService>(Lifestyle.Singleton);
+            container.Register<UserStateDTOService>(Lifestyle.Singleton);
+            container.Register<BranchDTOService>(Lifestyle.Singleton);
 
             return container;
         }

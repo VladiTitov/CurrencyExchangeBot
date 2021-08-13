@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataAccess.DataBaseLayer;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Database
 {
@@ -15,22 +16,32 @@ namespace BusinessLogic.Database
             _mapper = mapper;
         }
 
-        public void Add(UserStateDTO item)
+        public async Task Add(UserStateDTO item)
         {
             if (_unitOfWork.UserStateRepository.GetAll().All(a => a.UserId != item.UserId))
                 _unitOfWork.UserStateRepository.Add(_mapper.Map<UserState>(item));
+            else await Update(item);
+            await _unitOfWork.Save();
         }
 
-        public void Update(UserStateDTO item) =>
+        public async Task Update(UserStateDTO item)
+        { 
             _unitOfWork.UserStateRepository.Update(_mapper.Map<UserState>(item));
-
-        public void Delete(UserStateDTO item) => 
+            await _unitOfWork.Save();
+        }
+        
+        public async Task Delete(UserStateDTO item)
+        {
             _unitOfWork.UserStateRepository.Delete(_mapper.Map<UserState>(item));
+            await _unitOfWork.Save();
+        }
 
         public UserStateDTO GetState(long userId)
         {
             var request = _unitOfWork.UserStateRepository.GetWithInclude(item => item.UserId.Equals(userId));
             return _mapper.Map<UserStateDTO>(request);
         }
+
+        public bool IsExist(long userId) => GetState(userId) != null;
     }
 }

@@ -1,6 +1,4 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    public interface IUserStateRepository : IGenericRepository<UserState>
-    {
-    }
+    public interface IUserStateRepository : IGenericRepository<UserState> { }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace DataAccess.DataBaseLayer
 {
@@ -44,7 +45,7 @@ namespace DataAccess.DataBaseLayer
         public IUserStateRepository UserStateRepository =>
             _userStateRepository ??= _repositoryFactory.CreateUserStateRepository();
 
-        public void Save() => _context.SaveChanges();
+        public async Task Save() => await _context.SaveChangesAsync();
 
         protected virtual void Dispose(bool disposing)
         {

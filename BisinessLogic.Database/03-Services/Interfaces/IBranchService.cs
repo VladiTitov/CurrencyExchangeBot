@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BisinessLogic.Database
 {
@@ -6,9 +7,9 @@ namespace BisinessLogic.Database
     {
         IEnumerable<BranchDTO> GetData();
         public IEnumerable<BranchDTO> GetBranchInCity(int id);
-        void Add(BranchDTO item);
-        void Update(BranchDTO item);
-        void Delete(BranchDTO item);
         BranchDTO GetWithInclude(BranchDTO item);
+        Task Add(BranchDTO item);
+        Task Update(BranchDTO item);
+        Task Delete(BranchDTO item);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.MenuStucture
+﻿namespace BusinessLogic.MenuStucture.Constants
 {
     static class MenuEmojiConstants
     {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BisinessLogic.Database
 {
     public interface ICurrencyService
     {
         IEnumerable<CurrencyDTO> GetData();
-        void Add(CurrencyDTO item);
-        void Update(CurrencyDTO item);
-        void Delete(CurrencyDTO item);
+        Task Add(CurrencyDTO item);
+        Task Update(CurrencyDTO item);
+        Task Delete(CurrencyDTO item);
     }
 }

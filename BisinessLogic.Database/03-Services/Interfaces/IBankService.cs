@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BisinessLogic.Database
 {
     public interface IBankService
     {
         IEnumerable<BankDTO> GetData();
-        void Add(BankDTO item);
-        void Update(BankDTO item);
-        void Delete(BankDTO item);
+        Task Add(BankDTO item);
+        Task Update(BankDTO item);
+        Task Delete(BankDTO item);
         BankDTO GetWithInclude(BankDTO item);
     }
 }
