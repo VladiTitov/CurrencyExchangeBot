@@ -17,7 +17,7 @@ namespace BusinessLogic.MenuStucture.Keyboard
 
         public IReplyMarkup GetInlineButtonsKeyboard(int columns = 1)
         {
-            var newButtonsArray = _keyboardService.GetRangeButtonsArray(_buttonsLabels, 3);
+            var newButtonsArray = _keyboardService.GetRangeButtonsArray(_buttonsLabels, columns);
             List<InlineKeyboardButton[]> buttons = new List<InlineKeyboardButton[]>();
             for (int i = 0; i < newButtonsArray.Length; i++)
             {

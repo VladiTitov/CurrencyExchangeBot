@@ -19,33 +19,42 @@
             }
         }
 
-        private int _state = 0;
-        public int State
+        private int _stateId = 0;
+        public int StateId
         {
-            get => _state;
+            get => _stateId;
             set
             {
-                _state = value;
+                _stateId = value;
                 Modify?.Invoke();
             }
         }
-        public string City { get; set; }
-        public string Currency { get; set; }
+
+        public string CityId { get; set; }
+        public string CurrencyId { get; set; }
+        public string BankId { get; set; }
         public bool Buy { get; set; }
 
-        public void StepUp() => this.State++;
-        public void StepDown() => this.State--;
+        public void StepUp() => this.StateId++;
+        public void StepDown() => this.StateId--;
 
-        public void UpdateCity(string city)
+        public void UpdateCity(string cityId)
         {
-            this.City = city;
+            this.CityId = cityId;
             StepUp();
             Modify?.Invoke();
         }
 
-        public void UpdateCurrency(string currency)
+        public void UpdateCurrency(string currencyId)
         {
-            this.Currency = currency;
+            this.CurrencyId = currencyId;
+            StepUp();
+            Modify?.Invoke();
+        }
+
+        public void UpdateBank(string bankId)
+        {
+            this.BankId = bankId;
             StepUp();
             Modify?.Invoke();
         }

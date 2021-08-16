@@ -1,4 +1,6 @@
-﻿using BusinessLogic.Database;
+﻿using System.Collections.Generic;
+using BisinessLogic.Database;
+using BusinessLogic.Database;
 using BusinessLogic.MenuStucture.Services.ModelsServices;
 using SimpleInjector;
 
@@ -12,10 +14,10 @@ namespace BusinessLogic.MenuStucture.Services
             container = new MenuContainer().CreateContainer();
 
         public string[] GetCitiesNames() => 
-            container.GetInstance<CityDTOService>().GetNames();
+            container.GetInstance<BaseModelsService>().GetCityNames();
 
         public string[] GetCurrenciesNames() => 
-            container.GetInstance<CurrencyDTOService>().GetNames();
+            container.GetInstance<BaseModelsService>().GetCurrenciesNames();
 
         public UserStateDTO GetUserState(long userId) => 
             container.GetInstance<UserStateDTOService>().GetUserState(userId);
@@ -24,9 +26,15 @@ namespace BusinessLogic.MenuStucture.Services
             container.GetInstance<UserStateDTOService>().SaveState(userState);
 
         public string[] GetCurrencies(string city) => 
-            container.GetInstance<CurrencyDTOService>().GetCurrencies(city);
+            container.GetInstance<BaseModelsService>().GetCurrencies(city);
 
-        public string[] GetBanksNames(string city) => 
-            container.GetInstance<BranchDTOService>().GetBanksName(city);
+        public string[] GetBanksNames() =>
+            container.GetInstance<BaseModelsService>().GetBanksNames();
+
+        public string[] GetBranchesList(string currencyName, string cityName) =>
+            container.GetInstance<BaseModelsService>().GetBranchesAddrList(currencyName, cityName);
+
+        public string[] GetBanksByCurrency(string currencyName, string cityName) =>
+        container.GetInstance<BaseModelsService>().GetBanksNamesByCurrency(currencyName, cityName);
         }
 }

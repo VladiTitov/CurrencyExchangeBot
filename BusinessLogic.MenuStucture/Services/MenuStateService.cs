@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using BusinessLogic.Database;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Enums;
 using BusinessLogic.MenuStucture.Keyboard;
+using BusinessLogic.MenuStucture.Services.ModelsServices;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BusinessLogic.MenuStucture.Services
@@ -24,7 +26,7 @@ namespace BusinessLogic.MenuStucture.Services
 
         public (string message, IReplyMarkup markup) GetValues()
         {
-            var state = (EnumStates.MenuStates)Enum.Parse(typeof(EnumStates.MenuStates), _userState.State.ToString());
+            var state = (EnumStates.MenuStates)Enum.Parse(typeof(EnumStates.MenuStates), _userState.StateId.ToString());
             string message = MenuState(state);
             return (message, _markup);
         }
@@ -43,7 +45,7 @@ namespace BusinessLogic.MenuStucture.Services
                     return $"{MenuEmojiConstants.City} Выбирай интересующий город и поехали дальше!";
 
                 case EnumStates.MenuStates.ShowCurrencies:
-                    string[] currencies = _packerService.GetCurrencies(_userState.City);
+                    string[] currencies = _packerService.GetCurrencies(_userState.CityId);
                     _markup = new KeyboardButtonModel(currencies).GetButtonsKeyboard(true, false, 2);
                     return $"А теперь давай выберем валюту:";
 
@@ -55,12 +57,18 @@ namespace BusinessLogic.MenuStucture.Services
                 //    break;
 
                 case EnumStates.MenuStates.ShowBanks:
-                    string[] banks = _packerService.GetBanksNames(_userState.City);
+                    string[] banks = _packerService.GetBanksByCurrency(_userState.CurrencyId, _userState.CityId);
                     _markup = new KeyboardButtonModel(banks).GetButtonsKeyboard(true, true, 2);
                     return "А теперь давай выберем банк в который пойдем";
 
                 case EnumStates.MenuStates.ShowBank:
-                    return "А теперь давай выберем банк в который пойдем";
+                    string[] branchesTest = new[] {
+                        "ЦБУ №130/32\n ул. Советская\n 94",
+                    };
+
+                    var branches = _packerService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
+                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard();
+                    return "В какое отделение банка пойдем?";
 
                 case EnumStates.MenuStates.Location:
                     return "Location";

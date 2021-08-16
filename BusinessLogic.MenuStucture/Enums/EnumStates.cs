@@ -10,8 +10,8 @@
             BuyOrSell,
             //ShowBestOffer,
             ShowBanks,
-            Location,
-            ShowBank
+            ShowBank,
+            Location
         }
     }
 }

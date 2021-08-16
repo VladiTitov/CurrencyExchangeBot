@@ -23,7 +23,7 @@ namespace BusinessLogic.MenuStucture.Services
             switch (text)
             {
                 case "/start":
-                    _userState.State = 0;
+                    _userState.StateId = 0;
                     break;
                 case "Вернуться назад":
                     _userState.StepDown();
@@ -42,6 +42,9 @@ namespace BusinessLogic.MenuStucture.Services
                     break;
                 case string currency when (_packerService.GetCurrenciesNames().Contains($" {currency}")):
                     _userState.UpdateCurrency(currency);
+                    break;
+                case string bank when (_packerService.GetBanksNames().Contains(bank)):
+                    _userState.UpdateBank(bank);
                     break;
             }
         }

@@ -42,6 +42,7 @@ namespace BusinessLogic.MenuStucture
             container.Register<CurrencyDTOService>(Lifestyle.Singleton);
             container.Register<UserStateDTOService>(Lifestyle.Singleton);
             container.Register<BranchDTOService>(Lifestyle.Singleton);
+            container.Register<BaseModelsService>(Lifestyle.Singleton);
 
             return container;
         }

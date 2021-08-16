@@ -7,9 +7,10 @@ namespace DataAccess.DataBaseLayer
         [Key]
         public int Id { get; set; }
         public long UserId { get; set; }
-        public int State { get; set; }
-        public string City { get; set; }
-        public string Currency { get; set; }
+        public int StateId { get; set; }
+        public string CityId { get; set; }
+        public string CurrencyId { get; set; }
+        public string BankId { get; set; }
         public bool Buy { get; set; }
     }
 }
