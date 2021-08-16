@@ -8,33 +8,24 @@ namespace BusinessLogic.MenuStucture.Services
 {
     class ContainerPackerService
     {
-        private Container container;
+        private readonly Container container;
 
-        public ContainerPackerService() => 
+        public ContainerPackerService() =>
             container = new MenuContainer().CreateContainer();
 
-        public string[] GetCitiesNames() => 
-            container.GetInstance<BaseModelsService>().GetCityNames();
 
-        public string[] GetCurrenciesNames() => 
-            container.GetInstance<BaseModelsService>().GetCurrenciesNames();
+        public IEnumerable<CityDTO> GetCities() => container.GetInstance<BaseModelsService>().GetCities();
+        public IEnumerable<BankDTO> GetBanks() => container.GetInstance<BaseModelsService>().GetBanks();
+        public IEnumerable<BranchDTO> GetBranches() => container.GetInstance<BaseModelsService>().GetBranches();
+        public IEnumerable<QuotationDTO> GetQuotations() => container.GetInstance<BaseModelsService>().GetQuotations();
+        public IEnumerable<CurrencyDTO> GetCurrencies() => container.GetInstance<BaseModelsService>().GetCurrencies();
 
-        public UserStateDTO GetUserState(long userId) => 
-            container.GetInstance<UserStateDTOService>().GetUserState(userId);
+        public int GetCityId(string name) => container.GetInstance<BaseModelsService>().GetCitiesId(name);
+        public int GetBankId(string name) => container.GetInstance<BaseModelsService>().GetBanksId(name);
+        public int GetBranchId(string name) => container.GetInstance<BaseModelsService>().GetBranchesId(name);
+        public int GetCurrencyId(string name) => container.GetInstance<BaseModelsService>().GetCurrenciesId(name);
 
-        public void SaveUserState(UserStateDTO userState) => 
-            container.GetInstance<UserStateDTOService>().SaveState(userState);
-
-        public string[] GetCurrencies(string city) => 
-            container.GetInstance<BaseModelsService>().GetCurrencies(city);
-
-        public string[] GetBanksNames() =>
-            container.GetInstance<BaseModelsService>().GetBanksNames();
-
-        public string[] GetBranchesList(string currencyName, string cityName) =>
-            container.GetInstance<BaseModelsService>().GetBranchesAddrList(currencyName, cityName);
-
-        public string[] GetBanksByCurrency(string currencyName, string cityName) =>
-        container.GetInstance<BaseModelsService>().GetBanksNamesByCurrency(currencyName, cityName);
-        }
+        public UserStateDTO GetUserState(long userId) => container.GetInstance<UserStateDTOService>().GetUserState(userId);
+        public void SaveUserState(UserStateDTO userState) => container.GetInstance<UserStateDTOService>().SaveState(userState);
+    }
 }

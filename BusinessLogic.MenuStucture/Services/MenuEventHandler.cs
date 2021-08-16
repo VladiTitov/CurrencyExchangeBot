@@ -37,13 +37,13 @@ namespace BusinessLogic.MenuStucture.Services
                 case "Выбрать город":
                     _userState.StepUp();
                     break;
-                case string city when (_packerService.GetCitiesNames().Contains(city)):
+                case string city when (_packerService.GetCities().Select(i=>i.NameRus).Distinct().Contains(city)):
                     _userState.UpdateCity(city);
                     break;
-                case string currency when (_packerService.GetCurrenciesNames().Contains($" {currency}")):
+                case string currency when (_packerService.GetCurrencies().Select(i=>i.NameRus).Distinct().Contains($" {currency}")):
                     _userState.UpdateCurrency(currency);
                     break;
-                case string bank when (_packerService.GetBanksNames().Contains(bank)):
+                case string bank when (_packerService.GetBanks().Select(i=>i.NameRus).Distinct().Contains(bank)):
                     _userState.UpdateBank(bank);
                     break;
             }

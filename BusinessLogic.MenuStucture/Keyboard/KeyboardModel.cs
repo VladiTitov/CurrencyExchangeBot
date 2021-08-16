@@ -6,5 +6,6 @@ namespace BusinessLogic.MenuStucture.Keyboard
 {
     class KeyboardModel
     {
+
     }
 }

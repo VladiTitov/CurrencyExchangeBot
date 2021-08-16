@@ -12,6 +12,10 @@ namespace BusinessLogic.MenuStucture.Services
     public class MenuStateService
     {
         private readonly ContainerPackerService _packerService;
+        private readonly BankDTOService _bankService;
+        private readonly BranchDTOService _branchService;
+        private readonly CurrencyDTOService _currencyService;
+        private readonly CityDTOService _cityService;
         private readonly UserStateDTO _userState;
         private IReplyMarkup _markup;
 
@@ -21,6 +25,10 @@ namespace BusinessLogic.MenuStucture.Services
         public MenuStateService()
         {
             _packerService = new ContainerPackerService();
+            _bankService = new BankDTOService();
+            _branchService = new BranchDTOService();
+            _currencyService = new CurrencyDTOService();
+            _cityService = new CityDTOService();
             _userState = _packerService.GetUserState(MenuEvent.UserId);
         }
 
@@ -40,12 +48,12 @@ namespace BusinessLogic.MenuStucture.Services
                     return $"Привет! {MenuEvent.UserName}\nДавай найдем лучший курс для обмена валют\U0001f609";
 
                 case EnumStates.MenuStates.ShowCities:
-                    string[] cities = _packerService.GetCitiesNames();
+                    string[] cities = _cityService.GetCitiesList();
                     _markup = new KeyboardButtonModel(cities).GetButtonsKeyboard(true, false, 3);
                     return $"{MenuEmojiConstants.City} Выбирай интересующий город и поехали дальше!";
 
                 case EnumStates.MenuStates.ShowCurrencies:
-                    string[] currencies = _packerService.GetCurrencies(_userState.CityId);
+                    string[] currencies = _currencyService.GetCurrencies(_userState.CityId);
                     _markup = new KeyboardButtonModel(currencies).GetButtonsKeyboard(true, false, 2);
                     return $"А теперь давай выберем валюту:";
 
@@ -57,7 +65,7 @@ namespace BusinessLogic.MenuStucture.Services
                 //    break;
 
                 case EnumStates.MenuStates.ShowBanks:
-                    string[] banks = _packerService.GetBanksByCurrency(_userState.CurrencyId, _userState.CityId);
+                    string[] banks = _bankService.GetBanksNamesByCurrency(_userState.CurrencyId, _userState.CityId);
                     _markup = new KeyboardButtonModel(banks).GetButtonsKeyboard(true, true, 2);
                     return "А теперь давай выберем банк в который пойдем";
 
@@ -66,7 +74,7 @@ namespace BusinessLogic.MenuStucture.Services
                         "ЦБУ №130/32\n ул. Советская\n 94",
                     };
 
-                    var branches = _packerService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
+                    var branches = _branchService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
                     _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard();
                     return "В какое отделение банка пойдем?";
 
