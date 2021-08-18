@@ -10,8 +10,8 @@ namespace DataAccess.SeleniumHtmlParse
     {
         private readonly IWebDriver _driver;
 
-        public GenericRepository(string url) => 
-            _driver = new ChromeDriver {Url = url};
+        public GenericRepository(string url) =>
+            _driver = new ChromeDriver("./Dependency/") {Url = url};
 
         public void Dispose() =>
             _driver.Close();

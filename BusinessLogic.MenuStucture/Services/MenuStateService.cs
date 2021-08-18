@@ -71,12 +71,14 @@ namespace BusinessLogic.MenuStucture.Services
 
                 case EnumStates.MenuStates.ShowBank:
                     string[] branchesTest = new[] {
-                        "ЦБУ №130/32\n ул. Советская\n 94",
+                        "\U0001f4cd",
+                        "\U0001f695",
+                        "\u274C Закрыть"
                     };
 
                     var branches = _branchService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
-                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard();
-                    return "В какое отделение банка пойдем?";
+                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard(2);
+                    return $"[\U0001f4cd] Банк\n В какое отделение банка пойдем?";
 
                 case EnumStates.MenuStates.Location:
                     return "Location";

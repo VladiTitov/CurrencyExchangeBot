@@ -36,7 +36,7 @@ namespace BusinessLogic.MenuStucture.Keyboard
             {
                 Keyboard = buttons,
                 ResizeKeyboard = true,
-                //OneTimeKeyboard = true
+                OneTimeKeyboard = true
             });
         }
     }
