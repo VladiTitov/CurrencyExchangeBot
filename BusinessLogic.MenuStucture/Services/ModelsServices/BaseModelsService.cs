@@ -33,7 +33,7 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
 
         public int GetCitiesId(string name) => GetCities().FirstOrDefault(i=>i.NameRus.Equals(name)).Id;
         public int GetBanksId(string name) => GetBanks().FirstOrDefault(i => i.NameRus.Equals(name)).Id;
-        public int GetBranchesId(string name) => GetBranches().FirstOrDefault(i => i.AdrRus.Equals(name)).Id;
+        public int GetBranchesId(string name) => GetBranches().FirstOrDefault(i => i.Adr.Equals(name)).Id;
         public int GetCurrenciesId(string name) => GetCurrencies().FirstOrDefault(i => i.NameRus.Equals($" {name}")).Id;
     }
 }

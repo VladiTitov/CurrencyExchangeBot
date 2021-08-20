@@ -7,16 +7,17 @@ namespace DataAccess.DataBaseLayer
     {
         [Key]
         public int Id { get; set; }
-        public string AdrRus { get; set; }
+        public string Name { get; set; }
+        public string Adr { get; set; }
 
         public List<Quotation> Quotations { get; set; } = new List<Quotation>();
         public List<Phone> Phones { get; set; } = new List<Phone>();
 
-        //public Branch()
-        //{
-        //    Quotations = new List<Quotation>();
-        //    Phones = new List<Phone>();
-        //}
+        public Branch()
+        {
+            Quotations = new List<Quotation>();
+            Phones = new List<Phone>();
+        }
 
         public int BankId { get; set; }
         public Bank Bank { get; set; }

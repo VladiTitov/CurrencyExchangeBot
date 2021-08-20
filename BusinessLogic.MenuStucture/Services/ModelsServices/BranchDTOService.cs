@@ -34,7 +34,7 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
         }
 
         public string[] GetBranchesAddrList(string currencyName, string cityName) =>
-            GetBranchesList(currencyName, cityName).Select(i => i.AdrRus).Distinct().ToArray();
+            GetBranchesList(currencyName, cityName).Select(i => i.Adr).Distinct().ToArray();
 
         public IEnumerable<BranchDTO> GetBranchesInCity(int id)
         {

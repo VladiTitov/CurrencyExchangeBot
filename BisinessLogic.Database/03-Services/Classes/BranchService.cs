@@ -19,7 +19,7 @@ namespace BisinessLogic.Database
 
         public async Task Add(BranchDTO item)
         {
-            if (_unitOfWork.BranchRepository.GetAll().All(branch => branch.AdrRus != item.AdrRus)) 
+            if (_unitOfWork.BranchRepository.GetAll().All(branch => !branch.Name.Equals(item.Name) || !branch.Adr.Equals(item.Adr)))
                 _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
             await _unitOfWork.Save();
         }
@@ -41,8 +41,9 @@ namespace BisinessLogic.Database
 
         public BranchDTO GetWithInclude(BranchDTO item)
         {
-            var request = _unitOfWork.BranchRepository.GetWithInclude(branch => branch.AdrRus == item.AdrRus);
+            var request = _unitOfWork.BranchRepository.GetWithInclude(branch => branch.Adr.Equals(item.Adr) && branch.Name.Equals(item.Name));
             return _mapper.Map<BranchDTO>(request);
         }
+
     }
 }

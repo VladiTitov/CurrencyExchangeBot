@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -24,11 +25,13 @@ namespace BusinessLogic.MenuStucture.Keyboard
                 List<InlineKeyboardButton> btns = new List<InlineKeyboardButton>();
                 foreach (var btn in newButtonsArray[i])
                 {
-                    btns.Add(new InlineKeyboardButton() { Text = btn, CallbackData = btn });
+                    btns.Add(new InlineKeyboardButton() { Text = btn, CallbackData = $"{btn.Length}" });
                 }
                 buttons.Add(btns.ToArray());
             }
+            buttons.Add(new[] { new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Close}  Закрыть", CallbackData = "Close" } });
             return (new InlineKeyboardMarkup(buttons));
         }
+
     }
 }

@@ -1,37 +1,33 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using BusinessLogic.MenuStucture.Models;
-using BusinessLogic.MenuStucture.Services;
+using BusinessLogic.MenuStucture.Models.Interfaces;
 using Telegram.Bot;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace BusinessLogic.MenuStucture
+namespace BusinessLogic.MenuStucture.Services
 {
-    public class MenuEvent
+    public class MenuEventService
     {
+        private IHandler _handler;
         private readonly ITelegramBotClient _botClient;
-        private readonly Chat _chat;
 
         public static long UserId;
         public static string UserName;
 
-        public MenuEvent(Chat chat, ITelegramBotClient botClient)
-        {
+        public MenuEventService(ITelegramBotClient botClient) => 
             _botClient = botClient;
-            _chat = chat;
-            UserName = $"{_chat.FirstName} {_chat.LastName}";
-            UserId = _chat.Id;
-        }
 
-        public async void Start(string text)
+        public async void Process(IHandler handler)
         {
-            MenuEventHandler handler = new MenuEventHandler(text);
-            handler.Process();
+            _handler = handler;
+            UserName = $"{_handler.Message.Chat.FirstName} {_handler.Message.Chat.LastName}";
+            UserId = _handler.Message.Chat.Id;
+            _handler.Process();
 
-            MenuState state = new MenuState();
-            await SendMessage(state);
+            MenuState menuState = new MenuState();
+            await SendMessage(menuState);
         }
 
         private Task SendMessage(MenuState state)
@@ -39,7 +35,7 @@ namespace BusinessLogic.MenuStucture
             string text = state.Message;
             IReplyMarkup replyMarkup = state.Markup;
             return _botClient.SendTextMessageAsync(
-                chatId: _chat,
+                chatId: _handler.Message.Chat,
                 text: text, ParseMode.Default,
                 null,
                 true,
@@ -48,6 +44,13 @@ namespace BusinessLogic.MenuStucture
                 false,
                 replyMarkup,
                 CancellationToken.None);
+        }
+
+        private void DeleteMessage()
+        {
+            _botClient.DeleteMessageAsync(
+                chatId: _handler.Message.Chat,
+                messageId: _handler.Message.MessageId);
         }
     }
 }

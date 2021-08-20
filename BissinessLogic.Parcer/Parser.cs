@@ -64,16 +64,8 @@ namespace BissinessLogic.Parser
                 "Zhlobin",
                 "Kobrin",
                 "Sluck"
-
-
             };
-            List<string> currenciesList = new List<string>()
-            {
-                "USD",
-                "EUR",
-                "RUB"
-            };
-
+           
             var cities = _cityWebDataService.GetData(selector: ".//*/li/select/option", url: @"https://m.select.by/kurs");
             foreach (var city in cities)
             {
@@ -83,7 +75,6 @@ namespace BissinessLogic.Parser
             var currencies = _currencyWebDataService.GetData(selector: ".//*/div/select/option", url: @"https://m.select.by/kurs");
             foreach (var currency in currencies)
             {
-                //if (currenciesList.Contains(currency.NameLat))
                 _currencyService.Add(currency);
             }
             
@@ -107,9 +98,10 @@ namespace BissinessLogic.Parser
 
                         var pr = _bankService.GetWithInclude(bank);
 
-                        _branchService.Add(new BranchDTO
+                        _branchService.Add(new BranchDTO()
                         {
-                            AdrRus = branch.AdrRus,
+                            Name = branch.Name,
+                            Adr = branch.Adr,
                             BankDtoId = pr.Id,
                             CityDtoId = city.Id,
                         });
@@ -149,7 +141,8 @@ namespace BissinessLogic.Parser
                 },
                 new BranchDTO
                 {
-                    AdrRus = baseEntity.Adr
+                    Name = baseEntity.BranchName,
+                    Adr = baseEntity.BranchAdr
                 },
                 new QuotationDTO
                 {

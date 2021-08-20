@@ -5,21 +5,22 @@ namespace BusinessLogic.MenuStucture.Services
 {
     public class MenuEventHandler
     {
+        public delegate void MessageAction();
+        public event MessageAction Delete;
+
         private readonly ContainerPackerService _packerService;
         private readonly UserStateDTO _userState;
-        private readonly string _message;
 
-        public MenuEventHandler(string text)
+        public MenuEventHandler()
         {
-            _message = text;
             _packerService = new ContainerPackerService();
-            _userState = _packerService.GetUserState(MenuEvent.UserId);
+            _userState = _packerService.GetUserState(MenuEventService.UserId);
             _userState.Modify += SaveState;
         }
 
-        public void Process()
+        public void MessageProcess(string message)
         {
-            string text = _message.Split("  ").LastOrDefault();
+            string text = message.Split("  ").LastOrDefault();
             switch (text)
             {
                 case "/start":
@@ -45,6 +46,28 @@ namespace BusinessLogic.MenuStucture.Services
                     break;
                 case string bank when (_packerService.GetBanks().Select(i=>i.NameRus).Distinct().Contains(bank)):
                     _userState.UpdateBank(bank);
+                    break;
+            }
+        }
+
+        public void CallbackProcess(string message)
+        {
+            string text = message.Split("  ").LastOrDefault();
+            switch (text)
+            {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "Close":
+                    Delete?.Invoke();
+                    _userState.StepDown();
                     break;
             }
         }

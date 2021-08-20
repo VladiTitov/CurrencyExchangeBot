@@ -28,17 +28,20 @@ namespace DataAccess.SeleniumHtmlParse
 
         private BaseEntity ParseData(List<IWebElement> elements)
         {
-            string[] nameAndAdr = elements[0].FindElement(By.ClassName("btn-tomap")).GetAttribute("data-name").Split(": ");
+            var element = elements[0].FindElement(By.ClassName("btn-tomap"));
+            string[] bankAndAdr = element.GetAttribute("data-name").Split(": ");
+            string adrBranch = element.Text;
             string[] phones = elements[0].FindElement(By.ClassName("phones")).Text.Split("\r\n");
-            string bankName = nameAndAdr[0];
-            string adr = nameAndAdr[1];
+            string bankName = bankAndAdr[0];
+            string nameBranch = bankAndAdr[1].TrimEnd(adrBranch.ToCharArray());
             string bestBuy = elements[1].Text;
             string bestSale = elements[2].Text;
 
             return new BaseEntity
             {
                 BankName = bankName,
-                Adr = adr,
+                BranchName = nameBranch, 
+                BranchAdr = adrBranch,
                 Buy = bestBuy,
                 Sale = bestSale,
                 Phone = phones

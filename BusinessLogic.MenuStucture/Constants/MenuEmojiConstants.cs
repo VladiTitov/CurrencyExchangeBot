@@ -8,5 +8,7 @@
         public const string City = "\U0001f3db\uFE0F";
         public const string BackButton = "\u2B05\uFE0F";
         public const string BestOffer = "\U0001f911";
+        public const string Close = "\u274C";
+        public const string Taxi = "\U0001f695";
     }
 }

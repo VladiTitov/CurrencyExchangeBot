@@ -1,17 +1,20 @@
 ﻿using System;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using BusinessLogic.MenuStucture;
+using BusinessLogic.MenuStucture.Models;
+using BusinessLogic.MenuStucture.Services;
 
 namespace BusinessLogic.BotConnection
 {
     public class Connection
     {
         private readonly ITelegramBotClient _botClient;
+        private readonly MenuEventService _menuEventService;
 
         public Connection(string token)
         {
             _botClient = new TelegramBotClient(token) { Timeout = TimeSpan.FromSeconds(10) };
+            _menuEventService = new MenuEventService(_botClient);
         }
 
         [Obsolete]
@@ -27,11 +30,11 @@ namespace BusinessLogic.BotConnection
         }
 
         [Obsolete]
-        private void BotClient_OnCallbackQuery(object sender, CallbackQueryEventArgs e) =>
-            new MenuEvent(e.CallbackQuery.Message.Chat, _botClient).Start(e?.CallbackQuery?.Data);
+        private void BotClient_OnCallbackQuery(object sender, CallbackQueryEventArgs e) => 
+            _menuEventService.Process(new CallbackQueryHandler(e));
 
         [Obsolete]
-        private void BotClient_OnMessage(object sender, MessageEventArgs e) =>
-            new MenuEvent(e.Message.Chat, _botClient).Start(e?.Message?.Text);
+        private void BotClient_OnMessage(object sender, MessageEventArgs e) => 
+            _menuEventService.Process(new MessageHandler(e));
     }
 }

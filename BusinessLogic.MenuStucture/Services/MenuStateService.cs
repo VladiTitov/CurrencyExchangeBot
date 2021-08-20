@@ -29,7 +29,7 @@ namespace BusinessLogic.MenuStucture.Services
             _branchService = new BranchDTOService();
             _currencyService = new CurrencyDTOService();
             _cityService = new CityDTOService();
-            _userState = _packerService.GetUserState(MenuEvent.UserId);
+            _userState = _packerService.GetUserState(MenuEventService.UserId);
         }
 
         public (string message, IReplyMarkup markup) GetValues()
@@ -45,7 +45,7 @@ namespace BusinessLogic.MenuStucture.Services
             {
                 case EnumStates.MenuStates.SelectCityOrSendLocation:
                     _markup = new KeyboardButtonModel(_selectCityOrLocationLabels).GetButtonsKeyboard(false, false);
-                    return $"Привет! {MenuEvent.UserName}\nДавай найдем лучший курс для обмена валют\U0001f609";
+                    return $"Привет! {MenuEventService.UserName}\nДавай найдем лучший курс для обмена валют\U0001f609";
 
                 case EnumStates.MenuStates.ShowCities:
                     string[] cities = _cityService.GetCitiesList();
@@ -58,7 +58,7 @@ namespace BusinessLogic.MenuStucture.Services
                     return $"А теперь давай выберем валюту:";
 
                 case EnumStates.MenuStates.BuyOrSell:
-                    _markup = new KeyboardButtonModel(_buyOrSaleLabels).GetButtonsKeyboard(true, false);
+                    _markup = new KeyboardButtonModel(_buyOrSaleLabels).GetButtonsKeyboard(true, false,2);
                     return $"Будем покупать или продавать?:";
 
                 //case MenuStates.ShowBestOffer:
@@ -70,15 +70,10 @@ namespace BusinessLogic.MenuStucture.Services
                     return "А теперь давай выберем банк в который пойдем";
 
                 case EnumStates.MenuStates.ShowBank:
-                    string[] branchesTest = new[] {
-                        "\U0001f4cd",
-                        "\U0001f695",
-                        "\u274C Закрыть"
-                    };
-
                     var branches = _branchService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
-                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard(2);
-                    return $"[\U0001f4cd] Банк\n В какое отделение банка пойдем?";
+                    string[] branchesTest = branches.Select(i => i.Adr).ToArray();
+                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard();
+                    return $"[\U0001f4cd] {_userState.BankId}\n В какое отделение банка пойдем?";
 
                 case EnumStates.MenuStates.Location:
                     return "Location";
