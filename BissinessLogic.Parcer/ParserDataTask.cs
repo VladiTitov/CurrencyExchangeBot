@@ -5,11 +5,11 @@ namespace BissinessLogic.Parser
 {
     public class ParserDataTask : Registry
     {
-        public ParserDataTask()
+        public ParserDataTask(int delay, int interval)
         {
             this.Schedule(() => new ParserJob())
-                .ToRunOnceAt(DateTime.Now.AddSeconds(5))
-                .AndEvery(1)
+                .ToRunOnceAt(DateTime.Now.AddSeconds(delay))
+                .AndEvery(interval)
                 .Hours();
         }
     }

@@ -20,8 +20,7 @@ namespace BusinessLogic.MenuStucture.Services
 
         public void MessageProcess(string message)
         {
-            string text = message.Split("  ").LastOrDefault();
-            switch (text)
+            switch (message)
             {
                 case "/start":
                     _userState.StateId = 0;
@@ -52,8 +51,7 @@ namespace BusinessLogic.MenuStucture.Services
 
         public void CallbackProcess(string message)
         {
-            string text = message.Split("  ").LastOrDefault();
-            switch (text)
+            switch (message)
             {
                 case "1":
                     break;

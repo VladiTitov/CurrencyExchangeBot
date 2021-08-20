@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -19,7 +20,7 @@ namespace BusinessLogic.MenuStucture.Keyboard
         {
             string[][] newButtonsArray = _keyboardService.GetRangeButtonsArray(_buttonsLabels, columns);
             List<KeyboardButton[]> buttons = new List<KeyboardButton[]>();
-            if (isBanks) buttons.Add(new[] { new KeyboardButton($"Лучшее предложение в городе") });
+            if (isBanks) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.Shock}  Лучшее предложение в городе") });
             for (int i = 0; i < newButtonsArray.Length; i++)
             {
                 List<KeyboardButton> btns = new List<KeyboardButton>();
@@ -30,7 +31,7 @@ namespace BusinessLogic.MenuStucture.Keyboard
                 buttons.Add(btns.ToArray());
             }
 
-            if (backButton) buttons.Add(new[] { new KeyboardButton($"Вернуться назад") });
+            if (backButton) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.BackButton}  Вернуться назад") });
 
             return (new ReplyKeyboardMarkup
             {

@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BisinessLogic.BotConnection\BusinessLogic.BotConnection.csproj" />
-    <ProjectReference Include="..\BissinessLogic.Parcer\BusinessLogic.Parser.csproj" />
   </ItemGroup>
 
 </Project>

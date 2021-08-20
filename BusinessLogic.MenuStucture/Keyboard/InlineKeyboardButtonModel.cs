@@ -25,7 +25,7 @@ namespace BusinessLogic.MenuStucture.Keyboard
                 List<InlineKeyboardButton> btns = new List<InlineKeyboardButton>();
                 foreach (var btn in newButtonsArray[i])
                 {
-                    btns.Add(new InlineKeyboardButton() { Text = btn, CallbackData = $"{btn.Length}" });
+                    btns.Add(new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Location}  {btn}", CallbackData = $"{btn.Length}" });
                 }
                 buttons.Add(btns.ToArray());
             }

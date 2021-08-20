@@ -19,8 +19,8 @@ namespace BusinessLogic.MenuStucture.Services
         private readonly UserStateDTO _userState;
         private IReplyMarkup _markup;
 
-        private readonly string[] _buyOrSaleLabels = new[] { "Купить", "Продать"};
-        private readonly string[] _selectCityOrLocationLabels = new[] { $"{MenuEmojiConstants.City}  Выбрать город", $"{MenuEmojiConstants.Location}  Найти ближайшее" };
+        private readonly string[] _buyOrSaleLabels = { $"{MenuEmojiConstants.Buy}  Купить", $"{MenuEmojiConstants.Sell}  Продать"};
+        private readonly string[] _selectCityOrLocationLabels = { $"{MenuEmojiConstants.City}  Выбрать город", $"{MenuEmojiConstants.Location}  Найти ближайшее" };
 
         public MenuStateService()
         {
