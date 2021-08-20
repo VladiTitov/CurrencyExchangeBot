@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Database;
+using BusinessLogic.Database.Interfaces;
 
 namespace BusinessLogic.MenuStucture.Services.ModelsServices
 {

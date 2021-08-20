@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using BisinessLogic.Database;
-using BissinessLogic.Parser.Services.Classes;
-using BissinessLogic.Parser.Services.Interfaces;
+using BusinessLogic.Database;
+using BusinessLogic.Database.Classes;
+using BusinessLogic.Database.Interfaces;
+using BusinessLogic.Parser.Services.Classes;
+using BusinessLogic.Parser.Services.Interfaces;
 using DataAccess.DataBaseLayer;
 using DataAccess.SeleniumHtmlParse;
 using DataAccess.SeleniumHtmlParse.Repositories.Classes;
 using FluentScheduler;
 using SimpleInjector;
 
-namespace BissinessLogic.Parser
+namespace BusinessLogic.Parser
 {
     class ParserJob : IJob
     {
         public void Execute()
         {
             var container = CreateContainer();
-            container.GetInstance<Parser>().Start();
+            container.GetInstance<BusinessLogic.Parser.Parser>().Start();
         }
 
         private static Container CreateContainer()
@@ -55,7 +57,7 @@ namespace BissinessLogic.Parser
             container.Register<IBaseParserRepository, BaseParserRepository>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
-            container.Register<Parser>(Lifestyle.Singleton);
+            container.Register<BusinessLogic.Parser.Parser>(Lifestyle.Singleton);
             container.Verify();
 
             return container;

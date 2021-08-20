@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database
 {
     public class QuotationMappingProfile : Profile
     {

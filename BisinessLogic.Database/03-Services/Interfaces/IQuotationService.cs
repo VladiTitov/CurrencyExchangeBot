@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database.Interfaces
 {
     public interface IQuotationService
     {

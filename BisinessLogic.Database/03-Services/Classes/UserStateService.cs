@@ -1,9 +1,10 @@
-﻿using AutoMapper;
-using DataAccess.DataBaseLayer;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BusinessLogic.Database.Interfaces;
+using DataAccess.DataBaseLayer;
 
-namespace BusinessLogic.Database
+namespace BusinessLogic.Database.Classes
 {
     public class UserStateService : IUserStateService
     {

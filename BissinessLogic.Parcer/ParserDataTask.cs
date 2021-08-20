@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentScheduler;
 
-namespace BissinessLogic.Parser
+namespace BusinessLogic.Parser
 {
     public class ParserDataTask : Registry
     {

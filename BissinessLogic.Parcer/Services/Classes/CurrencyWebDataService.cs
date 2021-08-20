@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using BisinessLogic.Database;
-using BissinessLogic.Parser.Services.Interfaces;
+using BusinessLogic.Database;
+using BusinessLogic.Parser.Services.Interfaces;
 using DataAccess.SeleniumHtmlParse;
 
-namespace BissinessLogic.Parser.Services.Classes
+namespace BusinessLogic.Parser.Services.Classes
 {
     class CurrencyWebDataService : ICurrencyWebDataService
     {

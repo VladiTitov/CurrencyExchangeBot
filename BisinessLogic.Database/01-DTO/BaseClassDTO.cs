@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BisinessLogic.Database
+﻿namespace BusinessLogic.Database
 {
     public class BaseClassDTO
     {

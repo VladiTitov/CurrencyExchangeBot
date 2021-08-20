@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using BisinessLogic.Database;
+using BusinessLogic.Database;
+using BusinessLogic.Parser.Services.Interfaces;
 using DataAccess.SeleniumHtmlParse;
 
-namespace BissinessLogic.Parser.Services.Classes
+namespace BusinessLogic.Parser.Services.Classes
 {
     class CityWebDataService : ICityWebDataService
     {

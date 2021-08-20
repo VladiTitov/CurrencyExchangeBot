@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database.Interfaces
 {
     public interface IBankService
     {

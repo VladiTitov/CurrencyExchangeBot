@@ -5,9 +5,7 @@ namespace BusinessLogic.Database
 {
     public class UserStateMappingProfile : Profile
     {
-        public UserStateMappingProfile()
-        {
+        public UserStateMappingProfile() => 
             CreateMap<UserState, UserStateDTO>().ReverseMap();
-        }
     }
 }

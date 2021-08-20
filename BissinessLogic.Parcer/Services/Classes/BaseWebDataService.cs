@@ -1,9 +1,10 @@
-﻿using BisinessLogic.Database;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoMapper;
+using BusinessLogic.Database;
+using BusinessLogic.Parser.Services.Interfaces;
 using DataAccess.SeleniumHtmlParse;
 
-namespace BissinessLogic.Parser
+namespace BusinessLogic.Parser.Services.Classes
 {
     class BaseWebDataService : IBaseWebDataService
     {

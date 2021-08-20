@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BisinessLogic.Database;
+using BusinessLogic.Database;
 
-namespace BissinessLogic.Parser
+namespace BusinessLogic.Parser.Services.Interfaces
 {
     interface IBaseWebDataService
     {

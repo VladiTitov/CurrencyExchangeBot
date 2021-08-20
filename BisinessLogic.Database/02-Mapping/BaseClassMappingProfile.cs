@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database
 {
     public class BaseClassMappingProfile : Profile
     {
-        public BaseClassMappingProfile()
-        {
+        public BaseClassMappingProfile() => 
             CreateMap<BaseEntity, BaseClassDTO>().ReverseMap();
-        }
     }
 }

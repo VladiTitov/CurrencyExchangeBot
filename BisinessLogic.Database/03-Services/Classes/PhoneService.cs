@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database.Classes
 {
     public class PhoneService : IPhoneService
     {

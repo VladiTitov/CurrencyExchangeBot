@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database
 {
     public class BankMappingProfile : Profile
     {
-        public BankMappingProfile()
-        {
+        public BankMappingProfile() => 
             CreateMap<Bank, BankDTO>().ReverseMap();
-        }
     }
 }

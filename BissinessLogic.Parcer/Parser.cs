@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using BisinessLogic.Database;
-using BissinessLogic.Parser.Services.Interfaces;
+using BusinessLogic.Database;
+using BusinessLogic.Database.Interfaces;
+using BusinessLogic.Parser.Services.Interfaces;
 
-namespace BissinessLogic.Parser
+namespace BusinessLogic.Parser
 {
     class Parser
     {

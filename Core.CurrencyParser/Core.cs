@@ -1,5 +1,5 @@
 ﻿using System;
-using BissinessLogic.Parser;
+using BusinessLogic.Parser;
 using FluentScheduler;
 
 namespace Core.CurrencyParser

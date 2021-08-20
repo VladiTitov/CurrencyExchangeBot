@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BusinessLogic.Database
+namespace BusinessLogic.Database.Interfaces
 {
     public interface IUserStateService
     {

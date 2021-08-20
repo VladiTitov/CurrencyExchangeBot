@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database.Classes
 {
     public class CityService : ICityService
     {

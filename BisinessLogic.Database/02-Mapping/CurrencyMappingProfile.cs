@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DataAccess.DataBaseLayer;
 
-namespace BisinessLogic.Database
+namespace BusinessLogic.Database
 {
     public class CurrencyMappingProfile : Profile
     {
-        public CurrencyMappingProfile()
-        {
+        public CurrencyMappingProfile() => 
             CreateMap<Currency, CurrencyDTO>().ReverseMap();
-        }
     }
 }

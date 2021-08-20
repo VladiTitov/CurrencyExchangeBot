@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BisinessLogic.Database;
+using BusinessLogic.Database;
+using BusinessLogic.Database.Interfaces;
 
 namespace BusinessLogic.MenuStucture.Services.ModelsServices
 {
