@@ -8,10 +8,10 @@
             ShowCities,
             ShowCurrencies,
             BuyOrSell,
-            //ShowBestOffer,
             ShowBanks,
             ShowBank,
-            Location
+            Location,
+            ShowBestOffer = 10
         }
     }
 }

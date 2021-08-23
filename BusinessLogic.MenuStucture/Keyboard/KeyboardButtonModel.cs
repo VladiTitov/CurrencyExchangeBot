@@ -19,26 +19,26 @@ namespace BusinessLogic.MenuStucture.Keyboard
         public IReplyMarkup GetButtonsKeyboard(bool backButton, bool isBanks, int columns = 1)
         {
             string[][] newButtonsArray = _keyboardService.GetRangeButtonsArray(_buttonsLabels, columns);
-            List<KeyboardButton[]> buttons = new List<KeyboardButton[]>();
-            if (isBanks) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.Shock}  Лучшее предложение в городе") });
-            for (int i = 0; i < newButtonsArray.Length; i++)
-            {
-                List<KeyboardButton> btns = new List<KeyboardButton>();
-                foreach (var btn in newButtonsArray[i])
-                {
-                    btns.Add(new KeyboardButton(btn));
-                }
-                buttons.Add(btns.ToArray());
-            }
-
-            if (backButton) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.BackButton}  Вернуться назад") });
-
+            IEnumerable<IEnumerable<KeyboardButton>> buttons = GetButtonArray(newButtonsArray, isBanks, backButton);
             return (new ReplyKeyboardMarkup
             {
                 Keyboard = buttons,
                 ResizeKeyboard = true,
                 OneTimeKeyboard = isBanks
             });
+        }
+
+        public IEnumerable<IEnumerable<KeyboardButton>> GetButtonArray(string[][] buttonLabels, bool isBanks, bool backButton)
+        {
+            List<IEnumerable<KeyboardButton>> buttons = new List<IEnumerable<KeyboardButton>>();
+            if (isBanks) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.Shock}  Лучшее предложение в городе") });
+            for (int i = 0; i < buttonLabels.Length; i++)
+            {
+                buttons.Add(_keyboardService.GetKeyboardButtonModelButtons(buttonLabels[i]));
+            }
+            if (backButton) buttons.Add(new[] { new KeyboardButton($"{MenuEmojiConstants.BackButton}  Вернуться назад") });
+
+            return buttons;
         }
     }
 }

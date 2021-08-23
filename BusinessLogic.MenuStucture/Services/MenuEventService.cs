@@ -26,14 +26,18 @@ namespace BusinessLogic.MenuStucture.Services
             UserId = _handler.Message.Chat.Id;
             _handler.Process();
 
-            MenuState menuState = new MenuState();
-            await SendMessage(menuState);
+            foreach (var st in new MenuStateService().GetMenuState())
+            {
+                await SendMessage(st);
+            }
+            //MenuState menuState = new MenuState();
+            //await SendMessage(menuState);
         }
 
-        private Task SendMessage(MenuState state)
+        private Task SendMessage(UserResponseModel state)
         {
-            string text = state.Message;
-            IReplyMarkup replyMarkup = state.Markup;
+            string text = state.ResponseLabel;
+            IReplyMarkup replyMarkup = state.ResponseReplyMarkup;
             return _botClient.SendTextMessageAsync(
                 chatId: _handler.Message.Chat,
                 text: text, ParseMode.Default,

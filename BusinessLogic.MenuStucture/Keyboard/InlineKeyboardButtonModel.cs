@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -19,21 +20,30 @@ namespace BusinessLogic.MenuStucture.Keyboard
         public IReplyMarkup GetInlineButtonsKeyboard(int columns = 1)
         {
             var newButtonsArray = _keyboardService.GetRangeButtonsArray(_buttonsLabels, columns);
-            List<InlineKeyboardButton[]> buttons = new List<InlineKeyboardButton[]>();
-            for (int i = 0; i < newButtonsArray.Length; i++)
-            {
-                List<InlineKeyboardButton> btns = new List<InlineKeyboardButton>();
-                foreach (var btn in newButtonsArray[i])
-                {
-                    btns.Add(new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Location}  {btn}", CallbackData = $"{btn.Length}" });
-                }
-                buttons.Add(btns.ToArray());
-            }
-            buttons.Add(new[] { new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Close}  Закрыть", CallbackData = "Close" } });
-            return (new InlineKeyboardMarkup(buttons));
+            IEnumerable<IEnumerable<InlineKeyboardButton>> buttons = GetButtonArray(newButtonsArray);
+            return new InlineKeyboardMarkup(buttons);
         }
 
-        
+        public IEnumerable<IEnumerable<InlineKeyboardButton>> GetButtonArray(string[][] buttonLabels)
+        {
+            List<IEnumerable<InlineKeyboardButton>> buttons = new List<IEnumerable<InlineKeyboardButton>>();
+            for (int i = 0; i < buttonLabels.Length; i++)
+            {
+                buttons.Add(GetButtons(buttonLabels[i]));
+            }
+            buttons.Add(new[] { new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Close}  Закрыть", CallbackData = "Close" } });
 
+            return buttons;
+        }
+
+        public IEnumerable<InlineKeyboardButton> GetButtons(string[] buttonLabels)
+        {
+            List<InlineKeyboardButton> buttons = new List<InlineKeyboardButton>();
+            foreach (var btn in buttonLabels)
+            {
+                buttons.Add(new InlineKeyboardButton() { Text = btn, CallbackData = "1" });
+            }
+            return buttons;
+        }
     }
 }

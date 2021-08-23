@@ -18,7 +18,7 @@ namespace BusinessLogic.Parser
         public void Execute()
         {
             var container = CreateContainer();
-            container.GetInstance<BusinessLogic.Parser.Parser>().Start();
+            container.GetInstance<Parser>().Start();
         }
 
         private static Container CreateContainer()
@@ -57,7 +57,7 @@ namespace BusinessLogic.Parser
             container.Register<IBaseParserRepository, BaseParserRepository>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
-            container.Register<BusinessLogic.Parser.Parser>(Lifestyle.Singleton);
+            container.Register<Parser>(Lifestyle.Singleton);
             container.Verify();
 
             return container;

@@ -13,13 +13,4 @@
     <ProjectReference Include="..\DataBaseLayer\DataAccess.DataBaseLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Dependency\chromedriver">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Dependency\chromedriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

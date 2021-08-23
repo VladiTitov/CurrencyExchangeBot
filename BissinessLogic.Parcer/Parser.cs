@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BusinessLogic.Database;
 using BusinessLogic.Database.Interfaces;
 using BusinessLogic.Parser.Services.Interfaces;
@@ -43,6 +44,7 @@ namespace BusinessLogic.Parser
 
         public void Start()
         {
+            Console.WriteLine("Start parser");
             List<string> citiesList = new List<string>()
             {
                 "Minsk",
@@ -88,6 +90,8 @@ namespace BusinessLogic.Parser
             {
                 foreach (var currency in currencies)
                 {
+                    Console.Clear();
+                    Console.WriteLine($"{new string('#', 40)}\n{city.NameRus} {currency.NameRus}\n{new string('#', 40)}");
                     var data = _baseWebDataService.GetData(
                         selector: ".//*/tbody/tr/td/table/tbody/tr/td",
                         url: @"https://select.by" + $"/{city.NameLat}{currency.Url}");

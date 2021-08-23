@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using BusinessLogic.MenuStucture.Constants;
+using System.Linq;
 
 namespace BusinessLogic.MenuStucture.Services.ModelsServices
 {
@@ -8,7 +9,16 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
 
         public CityDTOService() => _containerPacker = new ContainerPackerService();
 
-        public string[] GetCitiesList() => 
-            _containerPacker.GetCities().Select(i => i.NameRus).ToArray();
+        public string[] GetCitiesList() 
+        {
+            var cities = _containerPacker.GetCities().Select(i => i.NameRus).ToArray();
+            for (int i = 0; i < cities.Length; i++)
+            {
+                cities[i] = $"{MenuEmojiConstants.City}  {cities[i]}";
+            }
+
+            return cities;
+        }
+            
     }
 }

@@ -39,6 +39,7 @@ namespace BusinessLogic.MenuStucture
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
             container.Register<BaseModelsService>(Lifestyle.Singleton);
+            container.Register<UserStateDTOService>(Lifestyle.Singleton);
 
             return container;
         }

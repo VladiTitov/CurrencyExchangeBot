@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BisinessLogic.Database\BusinessLogic.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Keyboard\Buttons\" />
+  </ItemGroup>
+
 </Project>

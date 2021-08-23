@@ -30,29 +30,30 @@
             }
         }
 
-        public string CityId { get; set; }
-        public string CurrencyId { get; set; }
-        public string BankId { get; set; }
+        public int CityId { get; set; }
+        public int CurrencyId { get; set; }
+        public int BankId { get; set; }
         public bool Buy { get; set; }
 
         public void StepUp() => this.StateId++;
         public void StepDown() => this.StateId--;
 
-        public void UpdateCity(string cityId)
+        public void UpdateState(int state) => this.StateId = state;
+        public void UpdateCity(int cityId)
         {
             this.CityId = cityId;
             StepUp();
             Modify?.Invoke();
         }
 
-        public void UpdateCurrency(string currencyId)
+        public void UpdateCurrency(int currencyId)
         {
             this.CurrencyId = currencyId;
             StepUp();
             Modify?.Invoke();
         }
 
-        public void UpdateBank(string bankId)
+        public void UpdateBank(int bankId)
         {
             this.BankId = bankId;
             StepUp();

@@ -15,7 +15,7 @@ namespace DataAccess.DataBaseLayer
         public DataContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseSqlite(@"Data Source=..\\banks.db");
+            optionsBuilder.UseSqlite(@"Data Source=..\..\..\..\\CurrencyExchangeBotDB.db");
         //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mytestdb;Username=postgres;Password=postgres"); 
         //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bankDB;Trusted_Connection=True;");
     }

@@ -10,11 +10,8 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
 
         public BranchDTOService() => _packerService = new ContainerPackerService();
 
-        public List<BranchDTO> GetBranchesList(string currencyName, string cityName)
+        public List<BranchDTO> GetBranchesList(int currencyId, int cityId)
         {
-            int currencyId = _packerService.GetCurrencyId(currencyName);
-            int cityId = _packerService.GetCityId(cityName);
-
             var branchList = _packerService.GetBranches().Where(i => i.CityDtoId.Equals(cityId)).ToList();
             var quotationList = _packerService.GetQuotations().Where(i => i.CurrencyDtoId.Equals(currencyId)).Select(i => i.BranchDtoId).ToList();
 
@@ -33,8 +30,19 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
             return result;
         }
 
-        public string[] GetBranchesAddrList(string currencyName, string cityName) =>
-            GetBranchesList(currencyName, cityName).Select(i => i.Adr).Distinct().ToArray();
+        public List<BranchDTO> GetBranchesList(IEnumerable<int> idList)
+        {
+            var branchList = _packerService.GetBranches().Where(i => idList.Contains(i.Id)).Distinct().ToList();
+            foreach (var branch in branchList)
+            {
+                branch.Bank = _packerService.GetBanks().FirstOrDefault(i => i.Id.Equals(branch.BankDtoId));
+            }
+
+            return branchList;
+        }
+
+        public string[] GetBranchesAddrList(int currencyId, int cityId) =>
+            GetBranchesList(currencyId, cityId).Select(i => i.Adr).Distinct().ToArray();
 
         public IEnumerable<BranchDTO> GetBranchesInCity(int id)
         {

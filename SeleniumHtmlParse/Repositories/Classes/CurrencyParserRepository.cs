@@ -16,13 +16,18 @@ namespace DataAccess.SeleniumHtmlParse
 
                 for (int i = 1; i < dataWebElements.Count; i++)
                 {
-                    var nameLat = dataWebElements[i].Text.Split(' ')[0];
-                    var nameRus = dataWebElements[i].Text.TrimStart(nameLat.ToCharArray());
+                    var text = dataWebElements[i].Text;
+                    var nameLat = text.Split(' ')[0];
+                    var logoAndNameRus = dataWebElements[i].Text.TrimStart($"{nameLat} ".ToCharArray()).Split(" - ");
+
+                    string logo = logoAndNameRus[0];
+                    string nameRus = logoAndNameRus[1];
 
                     resultCurrencies.Add(new Currency
                     {
                         NameLat = nameLat,
                         NameRus = nameRus,
+                        Logo = logo,
                         Url = dataWebElements[i].GetAttribute("value")
                     });
                 }

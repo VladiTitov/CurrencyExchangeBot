@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BusinessLogic.Database;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Enums;
 using BusinessLogic.MenuStucture.Keyboard;
+using BusinessLogic.MenuStucture.Models;
 using BusinessLogic.MenuStucture.Services.ModelsServices;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BusinessLogic.MenuStucture.Services
 {
@@ -16,11 +17,12 @@ namespace BusinessLogic.MenuStucture.Services
         private readonly BranchDTOService _branchService;
         private readonly CurrencyDTOService _currencyService;
         private readonly CityDTOService _cityService;
+        private readonly QuotationDTOService _quotationService;
         private readonly UserStateDTO _userState;
-        private IReplyMarkup _markup;
 
-        private readonly string[] _buyOrSaleLabels = { $"{MenuEmojiConstants.Buy}  Купить", $"{MenuEmojiConstants.Sell}  Продать"};
+        private readonly string[] _buyOrSaleLabels = { $"{MenuEmojiConstants.Buy}  Купить", $"{MenuEmojiConstants.Sell}  Продать" };
         private readonly string[] _selectCityOrLocationLabels = { $"{MenuEmojiConstants.City}  Выбрать город", $"{MenuEmojiConstants.Location}  Найти ближайшее" };
+        private readonly string[] _responseButtons = { $"{MenuEmojiConstants.Location}  Маршрут", $"{MenuEmojiConstants.Taxi}  Яндекс.Такси" };
 
         public MenuStateService()
         {
@@ -28,59 +30,93 @@ namespace BusinessLogic.MenuStucture.Services
             _bankService = new BankDTOService();
             _branchService = new BranchDTOService();
             _currencyService = new CurrencyDTOService();
+            _quotationService = new QuotationDTOService();
             _cityService = new CityDTOService();
             _userState = _packerService.GetUserState(MenuEventService.UserId);
         }
 
-        public (string message, IReplyMarkup markup) GetValues()
+        public List<UserResponseModel> GetMenuState()
         {
             var state = (EnumStates.MenuStates)Enum.Parse(typeof(EnumStates.MenuStates), _userState.StateId.ToString());
-            string message = MenuState(state);
-            return (message, _markup);
-        }
-
-        private string MenuState(EnumStates.MenuStates state)
-        {
             switch (state)
             {
                 case EnumStates.MenuStates.SelectCityOrSendLocation:
-                    _markup = new KeyboardButtonModel(_selectCityOrLocationLabels).GetButtonsKeyboard(false, false);
-                    return $"Привет! {MenuEventService.UserName}\nДавай найдем лучший курс для обмена валют\U0001f609";
+                    return new List<UserResponseModel>() 
+                    {
+                        new UserResponseModel(
+                            $"Привет! {MenuEventService.UserName}\nДавай найдем лучший курс для обмена валют\U0001f609", 
+                            new KeyboardButtonModel(_selectCityOrLocationLabels).GetButtonsKeyboard(false, false)
+                            ) 
+                    };
 
                 case EnumStates.MenuStates.ShowCities:
-                    string[] cities = _cityService.GetCitiesList();
-                    _markup = new KeyboardButtonModel(cities).GetButtonsKeyboard(true, false, 3);
-                    return $"{MenuEmojiConstants.City} Выбирай интересующий город и поехали дальше!";
-
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            $"{MenuEmojiConstants.City} Выбирай интересующий город и поехали дальше!",
+                            new KeyboardButtonModel(_cityService.GetCitiesList()).GetButtonsKeyboard(true, false, 2)
+                            )
+                    };
                 case EnumStates.MenuStates.ShowCurrencies:
-                    string[] currencies = _currencyService.GetCurrencies(_userState.CityId);
-                    _markup = new KeyboardButtonModel(currencies).GetButtonsKeyboard(true, false, 2);
-                    return $"А теперь давай выберем валюту:";
-
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            $"А теперь давай выберем валюту:",
+                            new KeyboardButtonModel(_currencyService.GetCurrencies(_userState.CityId)).GetButtonsKeyboard(true, false, 2)
+                            )
+                    };
                 case EnumStates.MenuStates.BuyOrSell:
-                    _markup = new KeyboardButtonModel(_buyOrSaleLabels).GetButtonsKeyboard(true, false,2);
-                    return $"Будем покупать или продавать?:";
-
-                //case MenuStates.ShowBestOffer:
-                //    break;
-
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            $"Будем покупать или продавать?:",
+                            new KeyboardButtonModel(_buyOrSaleLabels).GetButtonsKeyboard(true, false, 2)
+                            )
+                    };
                 case EnumStates.MenuStates.ShowBanks:
-                    string[] banks = _bankService.GetBanksNamesByCurrency(_userState.CurrencyId, _userState.CityId);
-                    _markup = new KeyboardButtonModel(banks).GetButtonsKeyboard(true, true, 2);
-                    return "А теперь давай выберем банк в который пойдем";
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            "А теперь давай выберем банк в который пойдем",
+                            new KeyboardButtonModel(_bankService.GetBanksNamesByCurrency(_userState.CurrencyId, _userState.CityId)).GetButtonsKeyboard(true, true, 2)
+                            )
+                    };
+                case EnumStates.MenuStates.ShowBestOffer:
+                    var bestOffers = _quotationService.GetBestOffer(_userState.Buy, _userState.CityId);
+                    return GetResponseList(bestOffers);
 
                 case EnumStates.MenuStates.ShowBank:
-                    var branches = _branchService.GetBranchesList(_userState.CurrencyId, _userState.CityId);
-                    string[] branchesTest = branches.Select(i => i.Adr).ToArray();
-                    _markup = new InlineKeyboardButtonModel(branchesTest).GetInlineButtonsKeyboard();
-                    return $"[\U0001f4cd] {_userState.BankId}\n В какое отделение банка пойдем?";
-
-                case EnumStates.MenuStates.Location:
-                    return "Location";
+                    string[] branches = _branchService.GetBranchesList(_userState.CurrencyId, _userState.CityId).Select(i => i.Adr).ToArray();
+                    string bankName = _bankService.GetBankNameById(_userState.CurrencyId);
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            $"[\U0001f4cd] {bankName}\n В какое отделение банка пойдем?",
+                            new InlineKeyboardButtonModel(branches).GetInlineButtonsKeyboard()
+                            )
+                    };
+                //case EnumStates.MenuStates.Location:
+                //    return "Location";
 
                 default:
-                    return "default";
+                    return new List<UserResponseModel>()
+                    {
+                        new UserResponseModel(
+                            "DEFAULT",
+                            null
+                            )
+                    };
             }
+        }
+
+        public List<UserResponseModel> GetResponseList(string[] data)
+        {
+            List<UserResponseModel> response = new List<UserResponseModel>();
+            foreach(var d in data)
+            {
+                response.Add(new UserResponseModel(d, new InlineKeyboardButtonModel(_responseButtons).GetInlineButtonsKeyboard(2)));
+            }
+            return response;
         }
     }
 }
