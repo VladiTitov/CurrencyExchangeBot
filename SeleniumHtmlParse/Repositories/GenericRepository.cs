@@ -12,8 +12,12 @@ namespace DataAccess.SeleniumHtmlParse
 
         public GenericRepository(string url) => _driver = new ChromeDriver {Url = url};
 
-        public void Dispose() =>
+        public void Dispose() 
+        {
             _driver.Close();
+            _driver.Quit();
+        }
+        
 
         public IWebElement GetData(By selector) =>
             _driver.FindElement(selector);

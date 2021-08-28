@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BusinessLogic.MenuStucture.Services.ModelsServices
+namespace BusinessLogic.MenuStucture.Services.ModelsDtoServices
 {
     class CurrencyDTOService
     {

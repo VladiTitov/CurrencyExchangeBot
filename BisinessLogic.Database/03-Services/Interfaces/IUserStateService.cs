@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Database.Interfaces
 {
@@ -8,6 +9,6 @@ namespace BusinessLogic.Database.Interfaces
         UserStateDTO GetState(long userId);
         Task Update(UserStateDTO item);
         Task Delete(UserStateDTO item);
-        bool IsExist(long userId);
+        IEnumerable<UserStateDTO> GetData();
     }
 }

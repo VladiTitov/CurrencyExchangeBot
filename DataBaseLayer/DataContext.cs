@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.DataBaseLayer
 {
@@ -16,7 +17,7 @@ namespace DataAccess.DataBaseLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlite(@"Data Source=..\..\..\..\\CurrencyExchangeBotDB.db");
-        //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mytestdb;Username=postgres;Password=postgres"); 
+        //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=banks;Username=postgres;Password=]]]]"); 
         //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bankDB;Trusted_Connection=True;");
     }
 }

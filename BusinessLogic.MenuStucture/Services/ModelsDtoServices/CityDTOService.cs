@@ -1,7 +1,7 @@
 ﻿using BusinessLogic.MenuStucture.Constants;
 using System.Linq;
 
-namespace BusinessLogic.MenuStucture.Services.ModelsServices
+namespace BusinessLogic.MenuStucture.Services.ModelsDtoServices
 {
     class CityDTOService
     {

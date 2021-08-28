@@ -1,5 +1,4 @@
 ﻿using BusinessLogic.MenuStucture.Models.Interfaces;
-using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
@@ -16,10 +15,7 @@ namespace BusinessLogic.MenuStucture.Models
             Text = arg.CallbackQuery.Data;
         }
 
-        public void Process()
-        {
-            MenuEventHandler menuEventHandler = new MenuEventHandler();
+        public void Process(IEventHandler menuEventHandler) => 
             menuEventHandler.CallbackProcess(Text);
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace BusinessLogic.Parser
             this.Schedule(() => new ParserJob())
                 .ToRunOnceAt(DateTime.Now.AddSeconds(delay))
                 .AndEvery(interval)
-                .Hours();
+                .Minutes();
         }
     }
 }

@@ -6,8 +6,8 @@ namespace BusinessLogic.Database.Interfaces
     public interface ICurrencyService
     {
         IEnumerable<CurrencyDTO> GetData();
-        Task Add(CurrencyDTO item);
-        Task Update(CurrencyDTO item);
-        Task Delete(CurrencyDTO item);
+        void Add(CurrencyDTO item);
+        void Update(CurrencyDTO item);
+        void Delete(CurrencyDTO item);
     }
 }

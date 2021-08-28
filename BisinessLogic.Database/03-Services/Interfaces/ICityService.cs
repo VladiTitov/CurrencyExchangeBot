@@ -6,8 +6,8 @@ namespace BusinessLogic.Database.Interfaces
     public interface ICityService
     {
         IEnumerable<CityDTO> GetData();
-        Task Add(CityDTO item);
-        Task Update(CityDTO item);
-        Task Delete(CityDTO item);
+        void Add(CityDTO item);
+        void Update(CityDTO item);
+        void Delete(CityDTO item);
     }
 }

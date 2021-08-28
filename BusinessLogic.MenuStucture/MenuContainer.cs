@@ -5,7 +5,7 @@ using SimpleInjector;
 using AutoMapper;
 using BusinessLogic.Database.Classes;
 using BusinessLogic.Database.Interfaces;
-using BusinessLogic.MenuStucture.Services.ModelsServices;
+using BusinessLogic.MenuStucture.Services.ModelsDtoServices;
 
 namespace BusinessLogic.MenuStucture
 {

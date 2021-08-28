@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BusinessLogic.Database;
 using BusinessLogic.Database.Interfaces;
 using BusinessLogic.Parser.Services.Interfaces;
@@ -42,9 +43,8 @@ namespace BusinessLogic.Parser
         }
 
 
-        public void Start()
+        public async void Start()
         {
-            Console.WriteLine("Start parser");
             List<string> citiesList = new List<string>()
             {
                 "Minsk",
@@ -81,7 +81,7 @@ namespace BusinessLogic.Parser
                 _currencyService.Add(currency);
             }
             
-            GetData(_cityService.GetData(), _currencyService.GetData());
+            await Task.Run(()=> GetData(_cityService.GetData(), _currencyService.GetData()));
         }
 
         private void GetData(IEnumerable<CityDTO> cities, IEnumerable<CurrencyDTO> currencies)

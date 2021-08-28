@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
-using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
+using BusinessLogic.Database.Interfaces;
 
 namespace BusinessLogic.Database.Classes
 {
@@ -19,13 +20,28 @@ namespace BusinessLogic.Database.Classes
         public IEnumerable<QuotationDTO> GetData() =>
             _mapper.Map<List<QuotationDTO>>(_quotationRepository.GetAll());
 
-        public void Add(QuotationDTO quotation) =>
-            _quotationRepository.Add(_mapper.Map<Quotation>(quotation));
+        public async Task Add(QuotationDTO item)
+        {
+            if (await IsExist(item)) _quotationRepository.Add(_mapper.Map<Quotation>(item));
+            else await Update(item);
+        }
 
-        public void Update(QuotationDTO quotation) =>
-            _quotationRepository.Update(_mapper.Map<Quotation>(quotation));
 
+        public async Task Update(QuotationDTO item)
+        {
+            var itemInDb = await _quotationRepository.GetByIdAsync(item.Id);
+            itemInDb.Buy = item.Buy;
+            itemInDb.Sale = item.Sale;
+            _quotationRepository.Update(_mapper.Map<Quotation>(itemInDb));
+        }
+        
         public void Delete(QuotationDTO item) =>
             _quotationRepository.Delete(_mapper.Map<Quotation>(item));
+
+        public async Task<bool> IsExist(QuotationDTO item)
+        {
+           var obj = await _quotationRepository.GetByIdAsync(item.Id);
+           return obj == null;
+        }
     }
 }

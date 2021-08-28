@@ -1,9 +1,8 @@
 ﻿using BusinessLogic.MenuStucture.Constants;
 using System.Linq;
 
-namespace BusinessLogic.MenuStucture.Services.ModelsServices
+namespace BusinessLogic.MenuStucture.Services.ModelsDtoServices
 {
-
     class BankDTOService
     {
         private readonly ContainerPackerService _packerService;
@@ -15,11 +14,10 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
             {
                 banks[i] = $"{MenuEmojiConstants.Bank}  {banks[i]}";
             }
-
             return banks;
         }
 
         public string GetBankNameById(int id) => 
-            _packerService.GetBanks().FirstOrDefault(i => i.Id.Equals(id)).NameRus;
+            _packerService.GetBanks().FirstOrDefault(i => i.Id.Equals(id))?.NameRus;
     }
 }

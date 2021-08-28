@@ -2,7 +2,7 @@
 using System.Linq;
 using BusinessLogic.Database;
 
-namespace BusinessLogic.MenuStucture.Services.ModelsServices
+namespace BusinessLogic.MenuStucture.Services.ModelsDtoServices
 {
     class BranchDTOService
     {
@@ -30,7 +30,13 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
             return result;
         }
 
-        public List<BranchDTO> GetBranchesList(IEnumerable<int> idList)
+        public string[] GetBranchesAndOffers(int currencyId, int cityId, int bankId, bool key)
+        {
+            var branches = GetBranchesList(currencyId, cityId).Where(i => i.BankDtoId.Equals(bankId)).ToList();
+            return new QuotationDTOService().GetQuotationByBranches(currencyId, branches, key);
+        }
+
+        public List<BranchDTO> GetBranchesList(List<int> idList)
         {
             var branchList = _packerService.GetBranches().Where(i => idList.Contains(i.Id)).Distinct().ToList();
             foreach (var branch in branchList)
@@ -40,9 +46,6 @@ namespace BusinessLogic.MenuStucture.Services.ModelsServices
 
             return branchList;
         }
-
-        public string[] GetBranchesAddrList(int currencyId, int cityId) =>
-            GetBranchesList(currencyId, cityId).Select(i => i.Adr).Distinct().ToArray();
 
         public IEnumerable<BranchDTO> GetBranchesInCity(int id)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BusinessLogic.Database;
-using BusinessLogic.MenuStucture.Services.ModelsServices;
+using BusinessLogic.MenuStucture.Services.ModelsDtoServices;
 using SimpleInjector;
 
 namespace BusinessLogic.MenuStucture.Services

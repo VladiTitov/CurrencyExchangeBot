@@ -6,7 +6,6 @@ namespace BusinessLogic.MenuStucture.Models.Interfaces
     {
         public Message Message { get; set; }
         public string Text { get; set; }
-
-        public void Process();
+        public void Process(IEventHandler menuEventHandler);
     }
 }

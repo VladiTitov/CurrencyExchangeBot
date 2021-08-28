@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.Parser", "Bis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.MenuStucture", "BusinessLogic.MenuStucture\BusinessLogic.MenuStucture.csproj", "{FA9A1614-D287-4685-8E4B-2C4A669DC386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.CurrencyParser", "Core.CurrencyParser\Core.CurrencyParser.csproj", "{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.CurrencyParser", "Core.CurrencyParser\Core.CurrencyParser.csproj", "{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

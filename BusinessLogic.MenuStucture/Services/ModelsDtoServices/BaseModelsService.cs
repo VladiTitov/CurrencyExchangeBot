@@ -3,7 +3,7 @@ using System.Linq;
 using BusinessLogic.Database;
 using BusinessLogic.Database.Interfaces;
 
-namespace BusinessLogic.MenuStucture.Services.ModelsServices
+namespace BusinessLogic.MenuStucture.Services.ModelsDtoServices
 {
     public class BaseModelsService
     {

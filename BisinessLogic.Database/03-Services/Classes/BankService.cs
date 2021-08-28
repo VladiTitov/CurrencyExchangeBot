@@ -18,17 +18,17 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public async Task Add(BankDTO item)
+        public void Add(BankDTO item)
         {
             if (_unitOfWork.BankRepository.GetAll().All(a => a.NameRus != item.NameRus))
                 _unitOfWork.BankRepository.Add(_mapper.Map<Bank>(item));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
 
-        public async Task Delete(BankDTO item)
+        public void Delete(BankDTO item)
         {
             _unitOfWork.BankRepository.Delete(_mapper.Map<Bank>(item));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
             
 
@@ -41,10 +41,10 @@ namespace BusinessLogic.Database.Classes
             return _mapper.Map<BankDTO>(bankDb);
         }
 
-        public async Task Update(BankDTO item)
+        public void Update(BankDTO item)
         {
             _unitOfWork.BankRepository.Update(_mapper.Map<Bank>(item));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
             
     }

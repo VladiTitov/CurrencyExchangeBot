@@ -2,10 +2,8 @@
 
 namespace DataAccess.DataBaseLayer
 {
-    public class UserState
+    public class UserState : BaseDbModel
     {
-        [Key]
-        public int Id { get; set; }
         public long UserId { get; set; }
         public int StateId { get; set; }
         public string CityId { get; set; }

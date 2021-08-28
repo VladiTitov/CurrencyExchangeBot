@@ -18,22 +18,22 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public async Task Add(CityDTO city)
+        public void Add(CityDTO city)
         {
             if (_unitOfWork.CityRepository.GetAll().All(a => a.NameRus != city.NameRus))
                 _unitOfWork.CityRepository.Add(_mapper.Map<City>(city));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
 
-        public async Task Delete(CityDTO item)
+        public void Delete(CityDTO item)
         {
             _unitOfWork.CityRepository.Delete(_mapper.Map<City>(item));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
-        public async Task Update(CityDTO city)
+        public void Update(CityDTO city)
         {
             _unitOfWork.CityRepository.Update(_mapper.Map<City>(city));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
 
         public IEnumerable<CityDTO> GetData() =>

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
@@ -18,23 +17,29 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public async Task Add(BranchDTO item)
+        public void Add(BranchDTO item)
         {
-            if (_unitOfWork.BranchRepository.GetAll().All(branch => !branch.Name.Equals(item.Name) || !branch.Adr.Equals(item.Adr)))
-                _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
-            await _unitOfWork.Save();
+            if (IsExist(item)) _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
+            else
+            {
+                return;
+            }
+            _unitOfWork.Save();
         }
 
-        public async Task Delete(BranchDTO item)
+        public void Delete(BranchDTO item)
         {
             _unitOfWork.BranchRepository.Delete(_mapper.Map<Branch>(item));
-            await _unitOfWork.Save();
+            _unitOfWork.Save();
         }
 
-        public async Task Update(BranchDTO branch)
+        public bool IsExist(BranchDTO item) => _unitOfWork.BranchRepository.GetAll()
+                .All(branch => !branch.Name.Equals(item.Name) || !branch.Adr.Equals(item.Adr));
+
+        public void Update(BranchDTO item)
         {
-            _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(branch));
-            await _unitOfWork.Save();
+            _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(item));
+            _unitOfWork.Save();
         }
 
         public IEnumerable<BranchDTO> GetData() =>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Database.Interfaces;
@@ -19,22 +20,20 @@ namespace BusinessLogic.Database.Classes
 
         public async Task Add(UserStateDTO item)
         {
-            if (_unitOfWork.UserStateRepository.GetAll().All(a => a.UserId != item.UserId))
-                _unitOfWork.UserStateRepository.Add(_mapper.Map<UserState>(item));
-            else await Update(item);
-            await _unitOfWork.Save();
+            _unitOfWork.UserStateRepository.Add(_mapper.Map<UserState>(item));
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task Update(UserStateDTO item)
         { 
             _unitOfWork.UserStateRepository.Update(_mapper.Map<UserState>(item));
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
         
         public async Task Delete(UserStateDTO item)
         {
             _unitOfWork.UserStateRepository.Delete(_mapper.Map<UserState>(item));
-            await _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
 
         public UserStateDTO GetState(long userId)
@@ -43,6 +42,10 @@ namespace BusinessLogic.Database.Classes
             return _mapper.Map<UserStateDTO>(request);
         }
 
-        public bool IsExist(long userId) => GetState(userId) != null;
+        public IEnumerable<UserStateDTO> GetData()
+        {
+            var request = _unitOfWork.UserStateRepository.GetAll();
+            return _mapper.Map<List<UserStateDTO>>(request);
+        }
     }
 }

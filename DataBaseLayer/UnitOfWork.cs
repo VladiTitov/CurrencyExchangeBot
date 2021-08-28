@@ -45,7 +45,9 @@ namespace DataAccess.DataBaseLayer
         public IUserStateRepository UserStateRepository =>
             _userStateRepository ??= _repositoryFactory.CreateUserStateRepository();
 
-        public async Task Save() => await _context.SaveChangesAsync();
+        public void Save() => _context.SaveChanges();
+
+        public Task SaveAsync() => _context.SaveChangesAsync();
 
         protected virtual void Dispose(bool disposing)
         {

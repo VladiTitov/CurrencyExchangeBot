@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using BusinessLogic.MenuStucture.Models.Interfaces;
-using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
@@ -17,11 +16,7 @@ namespace BusinessLogic.MenuStucture.Models
             Text = arg.Message.Text;
         }
 
-        public void Process()
-        {
-            MenuEventHandler menuEventHandler = new MenuEventHandler();
-            string text = Text.Split("  ").LastOrDefault();
-            menuEventHandler.MessageProcess(text);
-        }
+        public void Process(IEventHandler menuEventHandler) => 
+            menuEventHandler.MessageProcess(Text.Split("  ").LastOrDefault());
     }
 }

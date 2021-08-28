@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.DataBaseLayer
 {
-    public class Currency
+    public class Currency : BaseDbModel
     {
-        [Key]
-        public int Id { get; set; }
         public string NameRus { get; set; }
         public string NameLat { get; set; }
         public string Logo { get; set; }

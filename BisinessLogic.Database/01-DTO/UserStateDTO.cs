@@ -26,7 +26,6 @@
             set
             {
                 _stateId = value;
-                Modify?.Invoke();
             }
         }
 
@@ -35,35 +34,42 @@
         public int BankId { get; set; }
         public bool Buy { get; set; }
 
-        public void StepUp() => this.StateId++;
-        public void StepDown() => this.StateId--;
+        public void StepDown()
+        {
+            this.StateId--;
+            Modify?.Invoke();
+        }
 
-        public void UpdateState(int state) => this.StateId = state;
+        public void UpdateState(int state)
+        {
+            this.StateId = state;
+            Modify?.Invoke();
+        }
         public void UpdateCity(int cityId)
         {
             this.CityId = cityId;
-            StepUp();
+            this.StateId = 2;
             Modify?.Invoke();
         }
 
         public void UpdateCurrency(int currencyId)
         {
             this.CurrencyId = currencyId;
-            StepUp();
+            this.StateId = 3;
             Modify?.Invoke();
         }
 
         public void UpdateBank(int bankId)
         {
             this.BankId = bankId;
-            StepUp();
+            this.StateId = 5;
             Modify?.Invoke();
         }
 
         public void UpdateBool(bool state)
         {
             this.Buy = state;
-            StepUp();
+            this.StateId = 4;
             Modify?.Invoke();
         }
     }

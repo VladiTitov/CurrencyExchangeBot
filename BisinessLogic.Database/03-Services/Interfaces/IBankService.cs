@@ -6,9 +6,9 @@ namespace BusinessLogic.Database.Interfaces
     public interface IBankService
     {
         IEnumerable<BankDTO> GetData();
-        Task Add(BankDTO item);
-        Task Update(BankDTO item);
-        Task Delete(BankDTO item);
+        void Add(BankDTO item);
+        void Update(BankDTO item);
+        void Delete(BankDTO item);
         BankDTO GetWithInclude(BankDTO item);
     }
 }

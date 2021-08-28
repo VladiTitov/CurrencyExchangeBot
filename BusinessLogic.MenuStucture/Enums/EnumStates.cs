@@ -4,14 +4,16 @@
     {
         public enum MenuStates
         {
-            SelectCityOrSendLocation,
-            ShowCities,
-            ShowCurrencies,
-            BuyOrSell,
-            ShowBanks,
-            ShowBank,
-            Location,
-            ShowBestOffer = 10
+            SelectCityOrSendLocation = 0,
+            ShowCities = 1,
+            ShowCurrencies = 2,
+            BuyOrSell = 3,
+            ShowBanks = 4,
+            ShowBranches = 5,
+            ShowBank = 6,
+            Location = 7,
+            ShowBestOffer = 8,
+            ShowBestBanks = 9
         }
     }
 }

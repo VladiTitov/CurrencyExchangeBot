@@ -12,6 +12,7 @@ namespace DataAccess.DataBaseLayer
         IQuotationRepository QuotationRepository { get; }
         IPhoneRepository PhoneRepository { get; }
         IUserStateRepository UserStateRepository { get; }
-        Task Save();
+        void Save();
+        Task SaveAsync();
     }
 }

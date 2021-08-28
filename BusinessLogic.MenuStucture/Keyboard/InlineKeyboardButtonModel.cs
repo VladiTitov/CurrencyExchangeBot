@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Services;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -10,11 +9,13 @@ namespace BusinessLogic.MenuStucture.Keyboard
     {
         private readonly KeyboardService _keyboardService;
         private readonly string[] _buttonsLabels;
+        private readonly int _userStateId;
 
-        public InlineKeyboardButtonModel(string[] buttonsLabels)
+        public InlineKeyboardButtonModel(string[] buttonsLabels, int userStateId)
         {
             _keyboardService = new KeyboardService();
             _buttonsLabels = buttonsLabels;
+            _userStateId = userStateId;
         }
 
         public IReplyMarkup GetInlineButtonsKeyboard(int columns = 1)
@@ -31,7 +32,13 @@ namespace BusinessLogic.MenuStucture.Keyboard
             {
                 buttons.Add(GetButtons(buttonLabels[i]));
             }
-            buttons.Add(new[] { new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Close}  Закрыть", CallbackData = "Close" } });
+            buttons.Add(new[] 
+            { new InlineKeyboardButton()
+                {
+                    Text = $"{MenuEmojiConstants.Close}  Закрыть", 
+                    CallbackData = $"Stage{_userStateId}-close"
+                }
+            });
 
             return buttons;
         }
