@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Database
+﻿using System.Collections.Generic;
+
+namespace BusinessLogic.Database
 {
     public class CurrencyDTO
     {
@@ -7,5 +9,7 @@
         public string NameLat { get; set; }
         public string Logo { get; set; }
         public string Url { get; set; }
+
+        public List<QuotationDTO> Quotation { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace DataAccess.DataBaseLayer
             return await entities.FirstOrDefaultAsync(i => i.Id.Equals(id)).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] include)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] include)
         {
             var entities = _context.Set<TEntity>().AsQueryable();
             entities = include.Aggregate(entities, (current, expr) => current.Include(expr));
@@ -40,13 +40,13 @@ namespace DataAccess.DataBaseLayer
             Delete(item);
         }
 
-        public virtual void Add(TEntity item) => _context.Set<TEntity>().Add(item);
+        public virtual async Task Add(TEntity item) => await _context.Set<TEntity>().AddAsync(item);
 
         public void Delete(TEntity item) => _context.Set<TEntity>().Remove(item);
 
         public void Update(TEntity item) =>_context.Entry(item).State = EntityState.Modified;
 
-        public IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().AsNoTracking().ToList();
+        public virtual IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().AsNoTracking().ToList();
 
         public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate) => _context.Set<TEntity>().AsNoTracking().Where(predicate).ToList();
 

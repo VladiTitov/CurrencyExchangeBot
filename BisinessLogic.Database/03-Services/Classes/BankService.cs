@@ -18,6 +18,16 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<BankDTO>> GetDataAsync()
+        {
+            return _mapper.Map<List<BankDTO>>(await _unitOfWork.BankRepository.GetAllAsync());
+        }
+
+        public IEnumerable<Bank> GetDataTemp()
+        {
+           return _unitOfWork.BankRepository.GetAll();
+        }
+
         public void Add(BankDTO item)
         {
             if (_unitOfWork.BankRepository.GetAll().All(a => a.NameRus != item.NameRus))

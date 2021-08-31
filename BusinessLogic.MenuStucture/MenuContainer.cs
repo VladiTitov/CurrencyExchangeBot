@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using BusinessLogic.Database;
 using DataAccess.DataBaseLayer;
 using SimpleInjector;
 using AutoMapper;
+using BusinessLogic.Database;
 using BusinessLogic.Database.Classes;
 using BusinessLogic.Database.Interfaces;
-using BusinessLogic.MenuStucture.Services.ModelsDtoServices;
+using BusinessLogic.MenuStucture.Services;
 
 namespace BusinessLogic.MenuStucture
 {
@@ -38,8 +38,7 @@ namespace BusinessLogic.MenuStucture
             container.Register<IQuotationRepository, QuotationRepository>(Lifestyle.Singleton);
 
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
-            container.Register<BaseModelsService>(Lifestyle.Singleton);
-            container.Register<UserStateDTOService>(Lifestyle.Singleton);
+            container.Register<GetDataFromBDService>(Lifestyle.Singleton);
 
             return container;
         }

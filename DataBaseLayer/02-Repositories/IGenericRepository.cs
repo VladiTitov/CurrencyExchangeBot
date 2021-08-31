@@ -13,7 +13,7 @@ namespace DataAccess.DataBaseLayer
             params Expression<Func<TEntity, bool>>[] include);
         public Task DeleteAsync(int id);
 
-        void Add(TEntity item);
+        Task Add(TEntity item);
         void Delete(TEntity item);
         void Update(TEntity item);
 

@@ -27,6 +27,12 @@ namespace BusinessLogic.Database.Classes
             _unitOfWork.Save();
         }
 
+        public void Add(Branch item)
+        {
+            _unitOfWork.BranchRepository.Add(item);
+            _unitOfWork.Save();
+        }
+
         public void Delete(BranchDTO item)
         {
             _unitOfWork.BranchRepository.Delete(_mapper.Map<Branch>(item));

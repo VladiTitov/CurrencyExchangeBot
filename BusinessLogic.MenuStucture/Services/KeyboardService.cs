@@ -22,7 +22,8 @@ namespace BusinessLogic.MenuStucture.Services
             List<KeyboardButton> buttons = new List<KeyboardButton>();
             foreach (var btn in buttonLabels)
             {
-                buttons.Add(new KeyboardButton(btn));
+                if (!btn.Equals("📍  Найти ближайшее")) buttons.Add(new KeyboardButton(btn));
+                else buttons.Add(new KeyboardButton() { Text = btn, RequestLocation = true });
             }
             return buttons;
         }

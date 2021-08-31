@@ -23,7 +23,6 @@ namespace DataAccess.DataBaseLayer
             _repositoryFactory = repositoryFactory;
         }
 
-
         public IBankRepository BankRepository =>
             _bankRepository ??= _repositoryFactory.CreateBankRepository();
 

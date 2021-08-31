@@ -18,6 +18,11 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<CityDTO>> GetDataAsync()
+        {
+            return _mapper.Map<List<CityDTO>>(await _unitOfWork.CityRepository.GetAllAsync());
+        }
+
         public void Add(CityDTO city)
         {
             if (_unitOfWork.CityRepository.GetAll().All(a => a.NameRus != city.NameRus))
@@ -38,5 +43,8 @@ namespace BusinessLogic.Database.Classes
 
         public IEnumerable<CityDTO> GetData() =>
             _mapper.Map<List<CityDTO>>(_unitOfWork.CityRepository.GetAll());
+
+        public IEnumerable<City> GetDataTemp() =>
+            _unitOfWork.CityRepository.GetAll();
     }
 }

@@ -1,18 +1,19 @@
-﻿using FluentScheduler;
+﻿using BusinessLogic.Parser.Parsers;
+using FluentScheduler;
 
-namespace BusinessLogic.Parser
+namespace BusinessLogic.Parser.Jobs
 {
-    class ParserJob : IJob
+    class ParserCitiesJob : IJob
     {
         private readonly ParserContainer _containerService;
 
-        public ParserJob() => 
+        public ParserCitiesJob() =>
             _containerService = new ParserContainer();
 
         public void Execute()
         {
             var container = _containerService.CreateContainer();
-            _ = container.GetInstance<Parser>().StartAsync();
+            container.GetInstance<ParserCities>().Start();
         }
     }
 }

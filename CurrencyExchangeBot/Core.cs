@@ -9,6 +9,7 @@ namespace Core.CurrencyExchangeBot
         {
             var connection = new Connection("1401702551:AAHrr7hEYPKXLXdLgvI6zWYsxgzA-Ra24ms");
             connection.Connect();
+
             Console.ReadLine();
         }
     }

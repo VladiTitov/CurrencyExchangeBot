@@ -10,10 +10,6 @@ namespace DataAccess.DataBaseLayer
         public string Logo { get; set; }
         public string Url { get; set; }
 
-
-        public Currency() => 
-            Quotations = new List<Quotation>();
-
         public ICollection<Quotation> Quotations { get; set; }
     }
 }

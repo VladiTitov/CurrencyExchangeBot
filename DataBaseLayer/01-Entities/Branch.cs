@@ -7,19 +7,13 @@ namespace DataAccess.DataBaseLayer
         public string Name { get; set; }
         public string Adr { get; set; }
 
-        public List<Quotation> Quotations { get; set; }
-        public List<Phone> Phones { get; set; }
+        public ICollection<Quotation> Quotations { get; set; }
+        public ICollection<Phone> Phones { get; set; }
 
-        public Branch()
-        {
-            Quotations = new List<Quotation>();
-            Phones = new List<Phone>();
-        }
+        public int? BankId { get; set; }
+        public virtual Bank Bank { get; set; }
 
-        public int BankId { get; set; }
-        public Bank Bank { get; set; }
-
-        public int CityId { get; set; }
-        public City City { get; set; }
+        public int? CityId { get; set; }
+        public virtual City City { get; set; }
     }
 }

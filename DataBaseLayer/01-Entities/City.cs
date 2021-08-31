@@ -9,10 +9,6 @@ namespace DataAccess.DataBaseLayer
         public string NameLat { get; set; }
         public string Url { get; set; }
 
-
-        public City() =>
-            Branches = new List<Branch>();
-
         public ICollection<Branch> Branches { get; set; }
     }
 }

@@ -26,10 +26,15 @@ namespace BusinessLogic.MenuStucture.Services
 
         public void MessageProcess(string message)
         {
+            //var pr = _packerService.GetBanks();
+
             switch (message)
             {
                 case "/start":
                     _userState.UpdateState(0);
+                    break;
+                case "Найти ближайшее":
+                    _userState.UpdateState(7);
                     break;
                 case "Выбрать город":
                     _userState.UpdateState(1);
@@ -62,22 +67,16 @@ namespace BusinessLogic.MenuStucture.Services
         {
             switch (message)
             {
-                case "1":
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-                case "4":
-                    break;
-                case "5":
-                    break;
                 case "Stage8-close":
                     _userState.UpdateState(4);
                     Delete?.Invoke(_message);
                     break;
                 case "Stage5-close":
                     _userState.UpdateState(4);
+                    Delete?.Invoke(_message);
+                    break;
+                default:
+                    _userState.UpdateState(6);
                     Delete?.Invoke(_message);
                     break;
             }
