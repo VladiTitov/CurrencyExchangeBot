@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using BusinessLogic.Logger;
 using BusinessLogic.MenuStucture.Models.Interfaces;
+using BusinessLogic.Serilog;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 

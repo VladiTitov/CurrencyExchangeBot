@@ -5,7 +5,7 @@ using DataAccess.DataBaseLayer;
 using OpenQA.Selenium;
 using HtmlAgilityPack;
 using System;
-using BusinessLogic.Logger;
+using BusinessLogic.Serilog;
 
 namespace DataAccess.SeleniumHtmlParse
 {

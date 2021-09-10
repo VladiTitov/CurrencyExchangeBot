@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BusinessLogic.Logger\BusinessLogic.Logger.csproj" />
     <ProjectReference Include="..\BisinessLogic.Database\BusinessLogic.Database.csproj" />
     <ProjectReference Include="..\BusinessLogic.GeoParser\BusinessLogic.GeoParser.csproj" />
+    <ProjectReference Include="..\BusinessLogic.Serilog\BusinessLogic.Serilog.csproj" />
   </ItemGroup>
 
   <ItemGroup>
