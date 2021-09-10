@@ -9,7 +9,7 @@ namespace Core.CurrencyParser
         [Obsolete]
         static void Main()
         {
-            JobManager.Initialize(new ParserDataTask(delay: 10, interval: 15));
+            JobManager.Initialize(new ParserDataTask());
             Console.ReadLine();
         }
     }

@@ -12,7 +12,7 @@ namespace DataAccess.SeleniumHtmlParse
 
         public GenericRepository(string url)
         {
-            string remoteUrlChrome = "http://localhost:4445/wd/hub";
+            string remoteUrlChrome = "http://10.5.0.3:4444/wd/hub";
             ChromeOptions chromeOptions = new ChromeOptions();
             _driver = new RemoteWebDriver(new Uri(remoteUrlChrome), chromeOptions);
             _driver.Navigate().GoToUrl(url);

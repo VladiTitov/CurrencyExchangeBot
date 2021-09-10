@@ -6,7 +6,7 @@ namespace BusinessLogic.Parser
 {
     public class ParserDataTask : Registry
     {
-        public ParserDataTask(int delay, int interval)
+        public ParserDataTask()
         {
             this.Schedule(() => new ParserCitiesJob())
                 .ToRunOnceAt(DateTime.Now.AddSeconds(30))

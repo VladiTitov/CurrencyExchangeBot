@@ -14,4 +14,10 @@
     <ProjectReference Include="..\BisinessLogic.BotConnection\BusinessLogic.BotConnection.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="token.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

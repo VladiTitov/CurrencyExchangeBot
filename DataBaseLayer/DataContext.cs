@@ -15,6 +15,6 @@ namespace DataAccess.DataBaseLayer
         public DataContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => 
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres");
+            optionsBuilder.UseNpgsql("Host=10.5.0.2;Port=5432;Database=postgres;Username=postgres;Password=postgres");
     }
 }

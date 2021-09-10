@@ -21,32 +21,44 @@ namespace BusinessLogic.BotConnection
 
         public Connection()
         {
-            using (var sr = new StreamReader("../token.txt", Encoding.UTF8))
+            try
             {
-                string token = sr.ReadLine();
-                if (token != null)
+                using (var sr = new StreamReader("token.txt", Encoding.UTF8))
                 {
-                    _botClient = new TelegramBotClient(token)
+                    string token = sr.ReadLine();
+                    if (token != null)
                     {
-                        Timeout = TimeSpan.FromSeconds(10)
-                    };
-                }
-                else
-                {
-                    LoggingService.AddEventToLog("Token is null");
+                        _botClient = new TelegramBotClient(token)
+                        {
+                            Timeout = TimeSpan.FromSeconds(10)
+                        };
+                    }
+                    else
+                    {
+                        LoggingService.AddEventToLog("Token is null");
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                LoggingService.AddEventToLog(e.Message);
+            }
+            
         }
 
         [Obsolete("This property is obsolete")]
         public void Connect()
         {
-            var bot = _botClient.GetMeAsync().Result;
-            Console.WriteLine($"{bot.Id} and {bot.FirstName} started");
+            if (_botClient != null)
+            {
+                var bot = _botClient.GetMeAsync().Result;
+                Console.WriteLine($"{bot.Id} and {bot.FirstName} started");
 
-            _botClient.OnMessage += BotClient_OnMessage;
-            _botClient.OnCallbackQuery += BotClient_OnCallbackQuery;
-            _botClient.StartReceiving();
+                _botClient.OnMessage += BotClient_OnMessage;
+                _botClient.OnCallbackQuery += BotClient_OnCallbackQuery;
+                _botClient.StartReceiving();
+            }
         }
 
         [Obsolete ("This property is obsolete")]
@@ -69,9 +81,9 @@ namespace BusinessLogic.BotConnection
 
                 handler.Process(menuEventHandler);
             }
-            catch
+            catch (Exception e)
             {
-                LoggingService.AddEventToLog($"Cannot send message to user {msg.Chat.Id}");
+                LoggingService.AddEventToLog($"Cannot send message to user {msg.Chat.Id}. {e.Message}");
             }
             
         }
