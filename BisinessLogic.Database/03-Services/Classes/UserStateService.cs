@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Database.Interfaces;
@@ -38,8 +37,8 @@ namespace BusinessLogic.Database.Classes
 
         public UserStateDTO GetState(long userId)
         {
-            var request = _unitOfWork.UserStateRepository.GetWithInclude(item => item.UserId.Equals(userId));
-            return _mapper.Map<UserStateDTO>(request);
+            var item = _unitOfWork.UserStateRepository.GetWithInclude(item => item.UserId.Equals(userId));
+            return _mapper.Map<UserStateDTO>(item);
         }
 
         public IEnumerable<UserStateDTO> GetData()

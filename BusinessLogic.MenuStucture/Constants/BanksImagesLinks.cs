@@ -27,7 +27,7 @@ namespace BusinessLogic.MenuStucture.Constants
             {"Статусбанк", "https://i.ibb.co/6B615gB/bank-19.jpg" },
             {"БСБ Банк", "https://i.ibb.co/1qw7sC4/bank-20.jpg" },
             {"ТК Банк", "https://i.ibb.co/RSCJzM5/bank-21.jpg" },
-            {"Беларусбанк", "" }
+            {"Беларусбанк", "https://i.ibb.co/c24220c/bank-22.jpg" }
         };
     }
 }

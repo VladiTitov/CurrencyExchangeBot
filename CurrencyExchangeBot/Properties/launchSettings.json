@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Core.CurrencyExchangeBot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

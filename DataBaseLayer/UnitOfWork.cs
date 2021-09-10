@@ -46,7 +46,7 @@ namespace DataAccess.DataBaseLayer
 
         public void Save() => _context.SaveChanges();
 
-        public Task SaveAsync() => _context.SaveChangesAsync();
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
 
         protected virtual void Dispose(bool disposing)
         {

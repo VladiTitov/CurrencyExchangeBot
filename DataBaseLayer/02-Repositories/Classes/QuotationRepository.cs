@@ -14,21 +14,21 @@ namespace DataAccess.DataBaseLayer
             _context = context;
         }
 
-        public override async Task Add(Quotation item)
-        {
-            var branchDto = item.Branch;
-            var currencyDto = item.Currency;
+        //public override async Task Add(Quotation item)
+        //{
+        //    var branchDto = item.Branch;
+        //    var currencyDto = item.Currency;
 
-            item.Branch = 
-                await _context.Branches.FirstOrDefaultAsync(i => i.Name.Equals(branchDto.Name) && i.Adr.Equals(branchDto.Adr));
-            item.Currency = 
-                await _context.Currencies.FirstOrDefaultAsync(i => i.NameRus.Equals(currencyDto.NameRus));
+        //    item.Branch = 
+        //        await _context.Branches.FirstOrDefaultAsync(i => i.Name.Equals(branchDto.Name) && i.Adr.Equals(branchDto.Adr));
+        //    item.Currency = 
+        //        await _context.Currencies.FirstOrDefaultAsync(i => i.NameRus.Equals(currencyDto.NameRus));
 
-            _context.Set<Quotation>().Add(item);
-            _context.SaveChanges();
-        }
+        //    _context.Set<Quotation>().Add(item);
+        //    _context.SaveChanges();
+        //}
 
-        public override IEnumerable<Quotation> GetAll() => 
-            _context.Quotations.Include(i => i.Branch).Include(p => p.Currency).ToList();
+        //public override IEnumerable<Quotation> GetAll() => 
+        //    _context.Quotations.Include(i => i.Branch).Include(p => p.Currency).ToList();
     }
 }

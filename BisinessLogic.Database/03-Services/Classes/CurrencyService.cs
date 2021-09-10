@@ -18,27 +18,20 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public IEnumerable<CurrencyDTO> GetData() =>
-            _mapper.Map<List<CurrencyDTO>>(_unitOfWork.CurrencyRepository.GetAll());
+        public async Task<IEnumerable<CurrencyDTO>> GetData() =>
+           _mapper.Map<List<CurrencyDTO>>(await _unitOfWork.CurrencyRepository.GetAllAsync());
 
-        public void Add(CurrencyDTO currency)
+        public async Task Add(CurrencyDTO currency)
         {
-            if (_unitOfWork.CurrencyRepository.GetAll().All(a => a.NameRus != currency.NameRus))
-                _unitOfWork.CurrencyRepository.Add(_mapper.Map<Currency>(currency));
-            _unitOfWork.Save();
+            if (await IsExist(currency)) _unitOfWork.CurrencyRepository.Add(_mapper.Map<Currency>(currency));
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Update(CurrencyDTO currency)
+        public async Task<bool> IsExist(CurrencyDTO item) 
         {
-            _unitOfWork.CurrencyRepository.Update(_mapper.Map<Currency>(currency));
-            _unitOfWork.Save();
+            var data = await GetData();
+            var result = data.FirstOrDefault(i => i.NameRus.Equals(item.NameRus));
+            return result == null;
         }
-
-        public void Delete(CurrencyDTO item)
-        {
-            _unitOfWork.CurrencyRepository.Delete(_mapper.Map<Currency>(item));
-            _unitOfWork.Save();
-        }
-        
     }
 }

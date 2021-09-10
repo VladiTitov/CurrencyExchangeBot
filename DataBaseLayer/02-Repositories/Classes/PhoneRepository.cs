@@ -14,18 +14,18 @@ namespace DataAccess.DataBaseLayer
             _context = context;
         }
 
-        public override async Task Add(Phone item)
-        {
-            var branchDto = item.Branch;
+        //public override async Task Add(Phone item)
+        //{
+        //    var branchDto = item.Branch;
 
-            item.Branch =
-            await _context.Branches.FirstOrDefaultAsync(i =>
-                i.Name.Equals(branchDto.Name) && i.Adr.Equals(branchDto.Adr));
-            _context.Set<Phone>().Add(item);
-            _context.SaveChanges();
-        }
+        //    item.Branch =
+        //    await _context.Branches.FirstOrDefaultAsync(i =>
+        //        i.Name.Equals(branchDto.Name) && i.Adr.Equals(branchDto.Adr));
+        //    _context.Set<Phone>().Add(item);
+        //    _context.SaveChanges();
+        //}
 
-        public override IEnumerable<Phone> GetAll() => 
-            _context.Phones.Include(i => i.Branch).ToList();
+        //public override IEnumerable<Phone> GetAll() => 
+        //    _context.Phones.Include(i => i.Branch).ToList();
     }
 }

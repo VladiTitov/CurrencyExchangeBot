@@ -17,45 +17,26 @@ namespace BusinessLogic.Database.Classes
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-        public async Task<IEnumerable<BankDTO>> GetDataAsync()
+   
+        public async Task Add(BankDTO item)
         {
-            return _mapper.Map<List<BankDTO>>(await _unitOfWork.BankRepository.GetAllAsync());
+            if (await IsExist(item)) _unitOfWork.BankRepository.Add(_mapper.Map<Bank>(item));
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<Bank> GetDataTemp()
+        private async Task<bool> IsExist(BankDTO item)
         {
-           return _unitOfWork.BankRepository.GetAll();
+            var data = await GetData();
+            return data.All(i => !i.NameRus.Equals(item.NameRus));
         }
 
-        public void Add(BankDTO item)
-        {
-            if (_unitOfWork.BankRepository.GetAll().All(a => a.NameRus != item.NameRus))
-                _unitOfWork.BankRepository.Add(_mapper.Map<Bank>(item));
-            _unitOfWork.Save();
-        }
+        public async Task<IEnumerable<BankDTO>> GetData() => 
+            _mapper.Map<List<BankDTO>>(await _unitOfWork.BankRepository.GetAllAsync());
 
-        public void Delete(BankDTO item)
+        public async Task<BankDTO> GetWithInclude(BankDTO item)
         {
-            _unitOfWork.BankRepository.Delete(_mapper.Map<Bank>(item));
-            _unitOfWork.Save();
+            var pr = await _unitOfWork.BankRepository.GetFilteredAsync(i => i.NameRus.Equals(item.NameRus));
+            return _mapper.Map<BankDTO>(pr.FirstOrDefault());
         }
-            
-
-        public IEnumerable<BankDTO> GetData() =>
-            _mapper.Map<List<BankDTO>>(_unitOfWork.BankRepository.GetAll());
-
-        public BankDTO GetWithInclude(BankDTO item)
-        {
-            var bankDb = _unitOfWork.BankRepository.GetWithInclude(bank => bank.NameRus == item.NameRus);
-            return _mapper.Map<BankDTO>(bankDb);
-        }
-
-        public void Update(BankDTO item)
-        {
-            _unitOfWork.BankRepository.Update(_mapper.Map<Bank>(item));
-            _unitOfWork.Save();
-        }
-            
     }
 }

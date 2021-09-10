@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataAccess.DataBaseLayer;
 
 namespace BusinessLogic.Database.Interfaces
 {
     public interface IBranchService
     {
-        IEnumerable<BranchDTO> GetData();
-        BranchDTO GetWithInclude(BranchDTO item);
-        void Add(BranchDTO item);
-        void Add(Branch item);
-        void Update(BranchDTO item);
-        void Delete(BranchDTO item);
-        bool IsExist(BranchDTO item);
+        Task<IEnumerable<BranchDTO>> GetData();
+        Task<BranchDTO> GetWithInclude(BranchDTO item);
+        Task Add(BranchDTO item);
+        Task Update(BranchDTO item);
+        Task Delete(BranchDTO item);
+        Task<bool> IsExist(BranchDTO item);
     }
 }

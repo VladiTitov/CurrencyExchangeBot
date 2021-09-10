@@ -11,44 +11,54 @@ namespace DataAccess.DataBaseLayer
     {
         private readonly DataContext _context;
 
-        public GenericRepository(DataContext context) => _context = context;
+        private readonly DbSet<TEntity> _dbSet;
+
+        public GenericRepository(DataContext context)
+        {
+            _context = context;
+            _dbSet = _context.Set<TEntity>();
+        }
 
         public async Task<TEntity> GetByIdAsync(int id, params Expression<Func<TEntity, object>>[] include)
         {
-            var entities = _context.Set<TEntity>().AsQueryable();
+            var entities = _dbSet.AsQueryable();
             entities = include.Aggregate(entities, (current, expr) => current.Include(expr));
             return await entities.FirstOrDefaultAsync(i => i.Id.Equals(id)).ConfigureAwait(false);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] include)
         {
-            var entities = _context.Set<TEntity>().AsQueryable();
+            var entities = _dbSet.AsQueryable();
             entities = include.Aggregate(entities, (current, expr) => current.Include(expr));
             return await entities.ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, bool>>[] include)
         {
-            var entities = _context.Set<TEntity>().AsQueryable();
+            var entities = _dbSet.AsQueryable();
             entities = include.Aggregate(entities, (current, expr) => current.Include(expr)).Where(filter);
             return await entities.ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(int id)
+        public virtual async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] include)
         {
-            var item = await GetByIdAsync(id).ConfigureAwait(false);
-            Delete(item);
+            var entities = _dbSet.AsQueryable();
+            entities = include.Aggregate(entities, (current, expr) => current.Include(expr));
+            return await entities.Where(predicate).ToListAsync().ConfigureAwait(false);
         }
 
-        public virtual async Task Add(TEntity item) => await _context.Set<TEntity>().AddAsync(item);
+        public async Task DeleteAsync(int id) => Delete(await GetByIdAsync(id).ConfigureAwait(false));
 
-        public void Delete(TEntity item) => _context.Set<TEntity>().Remove(item);
+        public virtual void Add(TEntity item) => _dbSet.Add(item);
 
-        public void Update(TEntity item) =>_context.Entry(item).State = EntityState.Modified;
+        public void Delete(TEntity item) => _dbSet.Remove(item);
 
-        public virtual IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().AsNoTracking().ToList();
+        public void Update(TEntity item) =>
+            _context.Entry(item).State = EntityState.Modified;
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate) => _context.Set<TEntity>().AsNoTracking().Where(predicate).ToList();
+        public virtual IEnumerable<TEntity> GetAll() => _dbSet.AsNoTracking().ToList();
+
+        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate) => _dbSet.AsNoTracking().Where(predicate).ToList();
 
         public IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties) => Include(includeProperties).ToList();
 
@@ -56,7 +66,7 @@ namespace DataAccess.DataBaseLayer
             Include(includeProperties).FirstOrDefault(predicate);
 
         private IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties) => 
-            includeProperties.Aggregate(_context.Set<TEntity>().AsNoTracking(),
+            includeProperties.Aggregate(_dbSet.AsNoTracking(),
                 (current, includeProperty) => current.Include(includeProperty));
 
         public void Dispose() => _context.Dispose();

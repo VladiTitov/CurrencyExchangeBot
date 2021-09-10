@@ -37,8 +37,12 @@ namespace BusinessLogic.MenuStucture
             container.Register<IQuotationService, QuotationService>(Lifestyle.Singleton);
             container.Register<IQuotationRepository, QuotationRepository>(Lifestyle.Singleton);
 
+            container.Register<IPhoneService, PhoneService>(Lifestyle.Singleton);
+            container.Register<IPhoneRepository, PhoneRepository>(Lifestyle.Singleton);
+
             container.Register<IMapper>(CreateMapper, Lifestyle.Singleton);
             container.Register<GetDataFromBDService>(Lifestyle.Singleton);
+            container.Verify();
 
             return container;
         }

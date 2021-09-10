@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using BusinessLogic.Database;
 using BusinessLogic.Database.Interfaces;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Keyboard.RequestModels;
+using System.Threading.Tasks;
+using BusinessLogic.GeoParser.Models;
 
 namespace BusinessLogic.MenuStucture.Services
 {
@@ -22,6 +24,7 @@ namespace BusinessLogic.MenuStucture.Services
         private readonly IBranchService _branchService;
         private readonly IQuotationService _quotationService;
         private readonly ICurrencyService _currencyService;
+        private readonly IPhoneService _phoneService;
         private readonly IUserStateService _userStateService;
 
         public GetDataFromBDService(ICityService cityService,
@@ -29,6 +32,7 @@ namespace BusinessLogic.MenuStucture.Services
             IBranchService branchService,
             IQuotationService quotationService,
             ICurrencyService currencyService,
+            IPhoneService phoneService,
             IUserStateService userStateService)
         {
             _cityService = cityService;
@@ -36,26 +40,26 @@ namespace BusinessLogic.MenuStucture.Services
             _branchService = branchService;
             _quotationService = quotationService;
             _currencyService = currencyService;
+            _phoneService = phoneService;
             _userStateService = userStateService;
         }
 
         #region Base CRUD
-        public IEnumerable<CityDTO> GetCities() => _cityService.GetData();
-        public IEnumerable<BankDTO> GetBanks() => _bankService.GetData();
-        public IEnumerable<CurrencyDTO> GetCurrencies() => _currencyService.GetData();
+        public async Task<IEnumerable<CityDTO>> GetCitiesAsync() => await _cityService.GetData();
+        public async Task<IEnumerable<BankDTO>> GetBanksAsync() => await _bankService.GetData();
+        public async Task<IEnumerable<CurrencyDTO>> GetCurrenciesAsync() => await _currencyService.GetData();
+        public async Task<IEnumerable<BranchDTO>> GetBranchesAsync() => await _branchService.GetData();
+        public async Task<IEnumerable<QuotationDTO>> GetQuotationsAsync() => await _quotationService.GetData();
+        public async Task<IEnumerable<PhoneDTO>> GetPhonesAsync() => await _phoneService.GetData();
 
         public int GetCitiesId(string name) =>
-            _cityService.GetData()
-                .FirstOrDefault(i => i.NameRus.Equals(name)).Id;
+            GetCitiesAsync().Result.FirstOrDefault(i => i.NameRus.Equals(name)).Id;
         public int GetBanksId(string name) =>
-            _bankService.GetData()
-                .FirstOrDefault(i => i.NameRus.Equals(name)).Id;
-        public int GetBranchesId(string name) =>
-            _branchService.GetData()
-                .FirstOrDefault(i => i.Adr.Equals(name)).Id;
+            GetBanksAsync().Result.FirstOrDefault(i => i.NameRus.Equals(name)).Id;
+        public int GetBranchesId(string name) => 
+            GetBranchesAsync().Result.FirstOrDefault(i => i.Adr.Equals(name)).Id;
         public int GetCurrenciesId(string name) =>
-            _currencyService.GetData()
-                .FirstOrDefault(i => i.NameRus.Equals(name)).Id;
+            GetCurrenciesAsync().Result.FirstOrDefault(i => i.NameRus.Equals(name)).Id;
 
 
         #endregion
@@ -63,7 +67,7 @@ namespace BusinessLogic.MenuStucture.Services
         #region CitiesRegion
         public string[] GetCitiesList()
         {
-            var cities = _cityService.GetData().Select(i => i.NameRus).ToArray();
+            var cities = GetCitiesAsync().Result.Select(i => i.NameRus).ToArray();
             for (int i = 0; i < cities.Length; i++)
             {
                 cities[i] = $"{MenuEmojiConstants.City}  {cities[i]}";
@@ -84,14 +88,14 @@ namespace BusinessLogic.MenuStucture.Services
             return banks;
         }
 
-        public string GetBankNameById(int id) => _bankService.GetData().FirstOrDefault(i => i.Id.Equals(id))?.NameRus;
+        public string GetBankNameById(int id) => GetBanksAsync().Result.FirstOrDefault(i => i.Id.Equals(id))?.NameRus;
         #endregion
 
         #region BranchesRegion
         private List<BranchDTO> GetBranchesList(int currencyId, int cityId)
         {
-            var branchList = _branchService.GetData().Where(i => i.CityId.Equals(cityId)).ToList();
-            var quotationList = _quotationService.GetData().Where(i => i.CurrencyId.Equals(currencyId)).Select(i => i.BranchId).ToList();
+            var branchList = GetBranchesAsync().Result.Where(i => i.CityId.Equals(cityId)).ToList();
+            var quotationList = GetQuotationsAsync().Result.Where(i => i.CurrencyId.Equals(currencyId)).Select(i => i.BranchId).ToList();
 
             List<BranchDTO> result = new List<BranchDTO>();
 
@@ -103,9 +107,12 @@ namespace BusinessLogic.MenuStucture.Services
             return result;
         }
 
-        public void GetBank(int bankId, int branchId)
+        public BankViewModel GetBankFromBranch(int branchId, int currencyId)
         {
-
+            var branch = GetBranchesAsync().Result.FirstOrDefault(i => i.Id.Equals(branchId));
+            var quotation = GetQuotationsAsync().Result.FirstOrDefault(i=>i.CurrencyId.Equals(currencyId));
+            var phones = GetPhonesAsync().Result.Where(i=>i.BranchId.Equals(branchId)).Select(s=>s.PhoneNum).ToList();
+            return new BankViewModel(branch.Bank.NameRus, branch.Name, branch.Adr, quotation.Buy, quotation.Sale, phones);
         }
 
         public List<BestOffersModel> GetBranchesAndOffers(int currencyId, int bankId, int cityId, bool key)
@@ -114,25 +121,39 @@ namespace BusinessLogic.MenuStucture.Services
             return GetQuotationByBranches(currencyId, branches, key);
         }
 
-        public List<BranchDTO> GetBranchesList(IEnumerable<int> idList) =>
-            _branchService.GetData().Where(i => idList.Contains(i.Id)).Distinct().ToList();
+        public List<BranchDTO> GetBranchesList(IEnumerable<int> idList) => 
+            GetBranchesAsync().Result.Where(i => idList.Contains(i.Id)).Distinct().ToList();
 
+        public GeoLocationModel GetCoordinates(int branchId)
+        {
+            var branches = GetBranchesAsync().Result;
+            var branch = branches.FirstOrDefault(i => i.Id.Equals(branchId));
+            var x = float.Parse(branch?.Latitude.Replace('.',','));
+            var y = float.Parse(branch?.Longitude.Replace('.',','));
 
-        private IEnumerable<BranchDTO> GetBranchesInCity(int id) =>
-            _branchService.GetData().Where(i => i.CityId.Equals(id));
+            GeoLocationModel location = new GeoLocationModel(
+                branch?.Adr, 
+                x, 
+                y
+                );
+            return location;
+        }
+
+        private IEnumerable<BranchDTO> GetBranchesInCity(int id) => GetBranchesAsync().Result.Where(i => i.CityId.Equals(id));
 
         #endregion
 
         #region QuotationsRegion
-        public IEnumerable<QuotationDTO> GetQuotations(int cityId)
+
+        private IEnumerable<QuotationDTO> GetQuotations(int cityId)
         {
-            var branches = _branchService.GetData().Where(i => i.CityId.Equals(cityId)).ToList();
-            return _quotationService.GetData().Where(i => branches.Select(j => j.Id).ToList().Contains(i.BranchId)).Distinct().ToList();
+            var branches = GetBranchesAsync().Result.Where(i => i.CityId.Equals(cityId)).ToList();
+            return GetQuotationsAsync().Result.Where(i => branches.Select(j => j.Id).ToList().Contains(i.BranchId)).Distinct().ToList();
         }
 
         public List<BestOffersModel> GetBestOffer(int cityId, int currencyId, bool key)
         {
-            List<QuotationDTO> quotations = _quotationService.GetData().Where(i => i.CurrencyId.Equals(currencyId)).ToList();
+            var quotations = GetQuotations(cityId).Where(i=>i.CurrencyId.Equals(currencyId)).ToList();
             var bestOffers = key ? BestOfferSale(quotations) : BestOfferBuy(quotations);
             List<int> branchesId = bestOffers.Select(i => i.BranchId).ToList();
             var branches = GetBranchesList(branchesId);
@@ -140,7 +161,12 @@ namespace BusinessLogic.MenuStucture.Services
 
             for (int i = 0; i < branches.Count(); i++)
             {
-                result.Add(new BestOffersModel(branches[i].BankId, branches[i].Bank.NameRus, branches[i].Id, branches[i].Adr, bestOffers[i].Offer));
+                result.Add(new BestOffersModel(
+                    branches[i].BankId, 
+                    branches[i].Bank.NameRus, 
+                    branches[i].Id, 
+                    branches[i].Adr, 
+                    bestOffers[i].Offer));
             }
 
             return result;
@@ -150,8 +176,7 @@ namespace BusinessLogic.MenuStucture.Services
         {
             List<BestOffersModel> result = new List<BestOffersModel>();
 
-            var quotations = _quotationService.GetData()
-                .Where(i => branches.Select(i => i.Id).Contains(i.BranchId)).ToList();
+            var quotations = GetQuotationsAsync().Result.Where(i => branches.Select(i => i.Id).Contains(i.BranchId)).ToList();
             var quotationsByCurrency = quotations.Where(i => i.CurrencyId.Equals(currencyId)).ToList();
 
             for (int i = 0; i < branches.Count(); i++)
@@ -197,9 +222,9 @@ namespace BusinessLogic.MenuStucture.Services
         {
             var branches = GetBranchesInCity(cityId).ToList();
             var branchID = branches.Select(i => i.Id).Distinct();
-            var quotations = _quotationService.GetData().Where(i => branchID.Contains(i.BranchId)).ToList();
+            var quotations = GetQuotationsAsync().Result.Where(i => branchID.Contains(i.BranchId)).ToList();
 
-            var currencies = _currencyService.GetData().Where(i => quotations.Select(i => i.CurrencyId).ToList().Contains(i.Id)).Distinct().ToArray();
+            var currencies = GetCurrenciesAsync().Result.Where(i => quotations.Select(i => i.CurrencyId).ToList().Contains(i.Id)).Distinct().ToArray();
 
             List<string> result = new List<string>();
 
@@ -223,7 +248,6 @@ namespace BusinessLogic.MenuStucture.Services
             if (isExist != null) _userStateService.Update(userState);
             else _userStateService.Add(userState);
         }
-
         #endregion
     }
 }

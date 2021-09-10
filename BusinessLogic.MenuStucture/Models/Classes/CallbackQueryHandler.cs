@@ -1,4 +1,5 @@
-﻿using BusinessLogic.MenuStucture.Models.Interfaces;
+﻿using System;
+using BusinessLogic.MenuStucture.Models.Interfaces;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
@@ -9,6 +10,7 @@ namespace BusinessLogic.MenuStucture.Models
         public Message Message { get; set; }
         public string Text { get; set; }
 
+        [Obsolete ("This property is obsolete")]
         public CallbackQueryHandler(CallbackQueryEventArgs arg)
         {
             Message = arg.CallbackQuery.Message;

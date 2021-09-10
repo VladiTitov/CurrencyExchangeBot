@@ -12,8 +12,7 @@
             ShowBranches = 5,
             ShowBank = 6,
             Location = 7,
-            ShowBestOffer = 8,
-            ShowBestBanks = 9
+            ShowBestOffer = 8
         }
     }
 }

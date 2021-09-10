@@ -9,19 +9,19 @@ namespace BusinessLogic.Parser
         public ParserDataTask(int delay, int interval)
         {
             this.Schedule(() => new ParserCitiesJob())
-                .ToRunOnceAt(DateTime.Now.AddSeconds(1))
+                .ToRunOnceAt(DateTime.Now.AddSeconds(30))
                 .AndEvery(1)
                 .Days();
 
             this.Schedule(() => new ParserCurrenciesJob())
-                .ToRunOnceAt(DateTime.Now.AddSeconds(20))
+                .ToRunOnceAt(DateTime.Now.AddMinutes(2))
                 .AndEvery(1)
                 .Days();
 
             this.Schedule(() => new ParserJob())
-                .ToRunOnceAt(DateTime.Now.AddSeconds(40))
-                .AndEvery(1)
-                .Hours();
+                .ToRunOnceAt(DateTime.Now.AddMinutes(5))
+                .AndEvery(20)
+                .Minutes();
 
         }
     }

@@ -3,6 +3,9 @@ using System.Linq;
 using System.Threading;
 using DataAccess.DataBaseLayer;
 using OpenQA.Selenium;
+using HtmlAgilityPack;
+using System;
+using BusinessLogic.Logger;
 
 namespace DataAccess.SeleniumHtmlParse
 {
@@ -10,51 +13,99 @@ namespace DataAccess.SeleniumHtmlParse
     {
         public IEnumerable<BaseEntity> GetData(string selector, string url)
         {
+            string pageString = "";
             using (var parseData = new GenericRepository(url))
             {
-                List<BaseEntity> result = new List<BaseEntity>();
-
                 var buttons = parseData.GetDataList(By.ClassName("expand"));
                 foreach (var btn in buttons)
                 {
-                    btn.Click();
+                    try
+                    {
+                        btn?.Click();
+                    }
+                    catch (Exception ex)
+                    {
+                        LoggingService.AddEventToLog(ex.Message);
+                    }
+                    
                     Thread.Sleep(100);
                 }
-                var selectedDataList = parseData.GetDataList(By.XPath(selector));
-                var dropSelectedDataList = DropData(selectedDataList);
-                return dropSelectedDataList.Select(ParseData).ToList();
+
+                pageString = parseData.GetString();
             }
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(pageString);
+
+            var nodes = htmlDoc.DocumentNode.SelectNodes(".//*/tbody/tr/td/table/tbody/tr");
+
+            return ParseData(nodes);
         }
 
-        private BaseEntity ParseData(List<IWebElement> elements)
+        private List<BaseEntity> ParseData(HtmlNodeCollection nodes)
         {
-            var element = elements[0].FindElement(By.ClassName("btn-tomap"));
-            string[] bankAndAdr = element.GetAttribute("data-name").Split(": ");
-            string adrBranch = element.Text;
-            string[] phones = elements[0].FindElement(By.ClassName("phones")).Text.Split("\r\n");
-            string bankName = bankAndAdr[0];
-            string nameBranch = bankAndAdr[1].TrimEnd(adrBranch.ToCharArray());
-            string bestBuy = elements[1].Text;
-            string bestSale = elements[2].Text;
+            
+            List<BaseEntity> objects = new List<BaseEntity>();
+
+            if (nodes != null)
+            {
+                foreach (var node in nodes)
+                {
+                    objects.Add(GetEntity(node));
+                }
+            }
+            return objects;
+        }
+
+        private BaseEntity GetEntity(HtmlNode node)
+        {
+            var data = node.ChildNodes.ToArray();
+            var firstNodeChilds = data[0].ChildNodes.ToArray();
+
+            var adr = firstNodeChilds[0].Attributes["data-name"]?.Value.Replace(':', ',').Split(", ");
+
+            var bankName = adr[0];
+            var branchName = adr[1];
+            var branchAdr = string.Join(", ", adr[2..adr.Length]);
+
+            var latitude = firstNodeChilds[0].Attributes["data-x"]?.Value;
+            var longitude = firstNodeChilds[0].Attributes["data-y"]?.Value;
+
+            var phones = new List<string>();
+
+            var phonesChilds = firstNodeChilds[2].ChildNodes.ToArray();
+            if (!phonesChilds.Length.Equals(0))
+            {
+                phones = GetPhones(phonesChilds[1].ChildNodes.ToArray());
+            }
+            
+            var bestBuy = data[1]?.InnerText;
+
+            var bestSale = data[2]?.InnerText;
 
             return new BaseEntity
             {
                 BankName = bankName,
-                BranchName = nameBranch, 
-                BranchAdr = adrBranch,
+                BranchName = branchName,
+                BranchAdr = branchAdr,
+                Latitude = latitude,
+                Longitude = longitude,
+                Phone = phones,
                 Buy = bestBuy,
-                Sale = bestSale,
-                Phone = phones
+                Sale = bestSale
             };
         }
 
-        private List<List<IWebElement>> DropData(IReadOnlyCollection<IWebElement> data)
+        private List<string> GetPhones(HtmlNode[] nodes)
         {
-            return Enumerable.Range(0, data.Count / 3)
-                .Select(i => data.Skip(i * 3)
-                    .Take(3)
-                    .ToList())
-                .ToList();
+            List<string> phones = new List<string>();
+
+            foreach (var node in nodes)
+            {
+                phones.Add(node?.InnerText);
+            }
+
+            return phones;
         }
     }
 }

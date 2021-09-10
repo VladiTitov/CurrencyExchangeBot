@@ -18,33 +18,16 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CityDTO>> GetDataAsync()
+        public async Task<IEnumerable<CityDTO>> GetData() => 
+            _mapper.Map<List<CityDTO>>(await _unitOfWork.CityRepository.GetAllAsync());
+
+        public async Task Add(CityDTO city)
         {
-            return _mapper.Map<List<CityDTO>>(await _unitOfWork.CityRepository.GetAllAsync());
+            if (IsExist(city)) _unitOfWork.CityRepository.Add(_mapper.Map<City>(city));
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Add(CityDTO city)
-        {
-            if (_unitOfWork.CityRepository.GetAll().All(a => a.NameRus != city.NameRus))
-                _unitOfWork.CityRepository.Add(_mapper.Map<City>(city));
-            _unitOfWork.Save();
-        }
-
-        public void Delete(CityDTO item)
-        {
-            _unitOfWork.CityRepository.Delete(_mapper.Map<City>(item));
-            _unitOfWork.Save();
-        }
-        public void Update(CityDTO city)
-        {
-            _unitOfWork.CityRepository.Update(_mapper.Map<City>(city));
-            _unitOfWork.Save();
-        }
-
-        public IEnumerable<CityDTO> GetData() =>
-            _mapper.Map<List<CityDTO>>(_unitOfWork.CityRepository.GetAll());
-
-        public IEnumerable<City> GetDataTemp() =>
-            _unitOfWork.CityRepository.GetAll();
+        public bool IsExist(CityDTO item) =>
+           GetData().Result.All(i => !i.NameRus.Equals(item.NameRus));
     }
 }

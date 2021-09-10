@@ -9,11 +9,11 @@ namespace DataAccess.DataBaseLayer
     {
         public Task<TEntity> GetByIdAsync(int id, params Expression<Func<TEntity, object>>[] include);
         public Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[] include);
-        public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter,
-            params Expression<Func<TEntity, bool>>[] include);
+        public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, bool>>[] include);
+        public Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] include);
         public Task DeleteAsync(int id);
 
-        Task Add(TEntity item);
+        void Add(TEntity item);
         void Delete(TEntity item);
         void Update(TEntity item);
 

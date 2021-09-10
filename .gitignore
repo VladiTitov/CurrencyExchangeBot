@@ -88,6 +88,10 @@ StyleCopReport.xml
 *.svclog
 *.scc
 *.db
+Dockerfile
+*.dockerignore
+*.dcproj
+*.yml
 
 # Chutzpah Test files
 _Chutzpah*

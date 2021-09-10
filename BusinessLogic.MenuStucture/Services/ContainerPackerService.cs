@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BusinessLogic.Database;
+using BusinessLogic.GeoParser.Models;
 using BusinessLogic.MenuStucture.Keyboard.RequestModels;
 using SimpleInjector;
 
@@ -24,20 +26,20 @@ namespace BusinessLogic.MenuStucture.Services
         public List<BestOffersModel> GetBranchesAndOffers(int currencyId, int bankId, int cityId, bool key) =>
             _container.GetInstance<GetDataFromBDService>().GetBranchesAndOffers(currencyId, bankId, cityId, key);
 
-        public List<BranchDTO> GetBranchesList(IEnumerable<int> idList) =>
-            _container.GetInstance<GetDataFromBDService>().GetBranchesList(idList);
-
-        public IEnumerable<QuotationDTO> GetQuotationsList(int cityId) =>
-            _container.GetInstance<GetDataFromBDService>().GetQuotations(cityId);
-
         public List<BestOffersModel> GetBestOffer(int cityId, int currencyId, bool key) =>
             _container.GetInstance<GetDataFromBDService>().GetBestOffer(cityId, currencyId, key);
 
         public IEnumerable<BestOffersModel> GetQuotationByBranches(int currencyId, List<BranchDTO> branches, bool key) =>
             _container.GetInstance<GetDataFromBDService>().GetQuotationByBranches(currencyId, branches, key);
 
+        public GeoLocationModel GetLocation(int branchId) =>
+            _container.GetInstance<GetDataFromBDService>().GetCoordinates(branchId);
+
         public string[] GetCurrenciesList(int cityId) => 
             _container.GetInstance<GetDataFromBDService>().GetCurrenciesList(cityId);
+
+        public BankViewModel GetBankFromBranch(int branchId, int currencyId) =>
+            _container.GetInstance<GetDataFromBDService>().GetBankFromBranch(branchId, currencyId);
 
         public int GetCityId(string name) => 
             _container.GetInstance<GetDataFromBDService>().GetCitiesId(name);
@@ -48,17 +50,18 @@ namespace BusinessLogic.MenuStucture.Services
         public int GetCurrencyId(string name) => 
             _container.GetInstance<GetDataFromBDService>().GetCurrenciesId(name);
 
-        public IEnumerable<CityDTO> GetCities() => 
-            _container.GetInstance<GetDataFromBDService>().GetCities();
+        public async Task<IEnumerable<CityDTO>> GetCities() => 
+            await _container.GetInstance<GetDataFromBDService>().GetCitiesAsync();
 
-        public IEnumerable<CurrencyDTO> GetCurrencies() => 
-            _container.GetInstance<GetDataFromBDService>().GetCurrencies();
+        public async Task<IEnumerable<CurrencyDTO>> GetCurrencies() => 
+            await _container.GetInstance<GetDataFromBDService>().GetCurrenciesAsync();
 
-        public IEnumerable<BankDTO> GetBanks() => 
-            _container.GetInstance<GetDataFromBDService>().GetBanks();
+        public Task<IEnumerable<BankDTO>> GetBanksAsync() => 
+            _container.GetInstance<GetDataFromBDService>().GetBanksAsync();
 
         public UserStateDTO GetUserState(long userId) => 
             _container.GetInstance<GetDataFromBDService>().GetUserState(userId);
+
         public void SaveUserState(UserStateDTO userState) => 
             _container.GetInstance<GetDataFromBDService>().SaveState(userState);
     }

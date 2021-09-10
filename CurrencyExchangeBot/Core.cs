@@ -5,9 +5,10 @@ namespace Core.CurrencyExchangeBot
 {
     static class Core
     {
+        [Obsolete("This property is obsolete")]
         static void Main()
         {
-            var connection = new Connection("1401702551:AAHrr7hEYPKXLXdLgvI6zWYsxgzA-Ra24ms");
+            var connection = new Connection();
             connection.Connect();
 
             Console.ReadLine();

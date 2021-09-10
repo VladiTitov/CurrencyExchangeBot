@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
@@ -17,19 +18,20 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public void Add(PhoneDTO phone)
+        public async Task Add(PhoneDTO phone)
         {
-            if (_unitOfWork.PhoneRepository.GetAll().All(a => a.PhoneNum != phone.PhoneNum))
-                _unitOfWork.PhoneRepository.Add(_mapper.Map<Phone>(phone));
+            if (await IsExist(phone)) _unitOfWork.PhoneRepository.Add(_mapper.Map<Phone>(phone));
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Delete(PhoneDTO phone) =>
-            _unitOfWork.PhoneRepository.Delete(_mapper.Map<Phone>(phone));
+        public async Task<IEnumerable<PhoneDTO>> GetData() =>
+           _mapper.Map<List<PhoneDTO>>(await _unitOfWork.PhoneRepository.GetAllAsync());
 
-        public IEnumerable<PhoneDTO> GetData() =>
-            _mapper.Map<List<PhoneDTO>>(_unitOfWork.PhoneRepository.GetAll());
-
-        public void Update(PhoneDTO phone) =>
-            _unitOfWork.PhoneRepository.Update(_mapper.Map<Phone>(phone));
+        public async Task<bool> IsExist(PhoneDTO item) 
+        {
+            var data = await GetData();
+            var result = data.FirstOrDefault(i => i.PhoneNum.Equals(item.PhoneNum));
+            return result == null;
+        }
     }
 }

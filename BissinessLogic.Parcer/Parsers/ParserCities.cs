@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BusinessLogic.Database.Interfaces;
 using BusinessLogic.Parser.Services.Interfaces;
 
@@ -15,8 +16,10 @@ namespace BusinessLogic.Parser.Parsers
             _cityWebDataService = cityWebDataService;
         }
 
-        public void Start()
+        public async void Start()
         {
+            Console.WriteLine("Start City parser");
+
             List<string> citiesList = new List<string>()
             {
                 "Minsk",
@@ -25,26 +28,29 @@ namespace BusinessLogic.Parser.Parsers
                 "Gomel",
                 "Vitebsk",
                 "Mogilev",
-                "Bobrujsk",
-                "Baranovichi",
-                "Novopolock",
-                "Pinsk",
-                "Borisov",
-                "Lida",
-                "Mozyr",
-                "Polock",
-                "Slonim",
-                "Orsha",
-                "Molodechno",
-                "Zhlobin",
-                "Kobrin",
-                "Sluck"
+                //"Bobrujsk",
+                //"Baranovichi",
+                //"Novopolock",
+                //"Pinsk",
+                //"Borisov",
+                //"Lida",
+                //"Mozyr",
+                //"Polock",
+                //"Slonim",
+                //"Orsha",
+                //"Molodechno",
+                //"Zhlobin",
+                //"Kobrin",
+                //"Sluck"
             };
 
             var cities = _cityWebDataService.GetData(selector: ".//*/li/select/option", url: @"https://m.select.by/kurs");
             foreach (var city in cities)
             {
-                if (citiesList.Contains(city.NameLat)) _cityService.Add(city);
+                if (citiesList.Contains(city.NameLat)) 
+                {
+                    await _cityService.Add(city); 
+                }
             }
         }
     }

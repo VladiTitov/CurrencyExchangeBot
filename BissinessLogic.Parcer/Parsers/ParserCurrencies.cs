@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Database.Interfaces;
+﻿using System;
+using BusinessLogic.Database.Interfaces;
 using BusinessLogic.Parser.Services.Interfaces;
 
 namespace BusinessLogic.Parser.Parsers
@@ -14,12 +15,13 @@ namespace BusinessLogic.Parser.Parsers
             _currencyWebDataService = currencyWebDataService;
         }
 
-        public void Start()
+        public async void Start()
         {
+            Console.WriteLine("Start Currency parser");
             var currencies = _currencyWebDataService.GetData(selector: ".//*/div/select/option", url: @"https://m.select.by/kurs");
             foreach (var currency in currencies)
             {
-                _currencyService.Add(currency);
+               await _currencyService.Add(currency);
             }
         }
     }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using BusinessLogic.MenuStucture.Constants;
 using BusinessLogic.MenuStucture.Keyboard.RequestModels;
 using BusinessLogic.MenuStucture.Services;
@@ -20,6 +20,12 @@ namespace BusinessLogic.MenuStucture.Keyboard
             _userStateId = userStateId;
         }
 
+        public InlineKeyboardButtonModel(int userStateId)
+        {
+            _keyboardService = new KeyboardService();
+            _userStateId = userStateId;
+        }
+
         public IReplyMarkup GetInlineButtonsKeyboard(int columns = 1)
         {
             var newButtonsArray = GetRangeButtonsArray(_buttonsLabels, columns);
@@ -27,15 +33,16 @@ namespace BusinessLogic.MenuStucture.Keyboard
             return new InlineKeyboardMarkup(buttons);
         }
 
-        public IEnumerable<IEnumerable<InlineKeyboardButton>> GetButtonArray(List<List<BestOffersModel>> buttonLabels)
+        private IEnumerable<IEnumerable<InlineKeyboardButton>> GetButtonArray(List<List<BestOffersModel>> buttonLabels)
         {
             List<IEnumerable<InlineKeyboardButton>> buttons = new List<IEnumerable<InlineKeyboardButton>>();
-            for (int i = 0; i < buttonLabels.Count; i++)
+            foreach (var buttonLabel in buttonLabels)
             {
-                buttons.Add(GetButtons(buttonLabels[i]));
+                buttons.Add(GetButtons(buttonLabel));
             }
             buttons.Add(new[] 
-            { new InlineKeyboardButton()
+            { 
+                new InlineKeyboardButton()
                 {
                     Text = $"{MenuEmojiConstants.Close}  Закрыть", 
                     CallbackData = $"Stage{_userStateId}-close"
@@ -45,17 +52,26 @@ namespace BusinessLogic.MenuStucture.Keyboard
             return buttons;
         }
 
-        public IEnumerable<InlineKeyboardButton> GetButtons(List<BestOffersModel> buttonLabels)
+        private IEnumerable<InlineKeyboardButton> GetButtons(List<BestOffersModel> buttonLabels)
         {
             List<InlineKeyboardButton> buttons = new List<InlineKeyboardButton>();
             foreach (var btn in buttonLabels)
             {
-                buttons.Add(new InlineKeyboardButton() { Text = btn.ToString(), CallbackData = $"{btn.BankId};{btn.BankAdrId};{btn.BankOffer}" });
+                buttons.Add(new InlineKeyboardButton() { Text = btn.ToString(), CallbackData = $"{btn.BankAdrId}" });
             }
             return buttons;
         }
 
-        public List<List<BestOffersModel>> GetRangeButtonsArray(List<BestOffersModel> list, int range)
+        public IReplyMarkup GetBankButtons(string adr)
+        {
+            return new InlineKeyboardMarkup(new List<InlineKeyboardButton>()
+            {
+                new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Location}  Где это?", CallbackData = adr },
+                new InlineKeyboardButton() { Text = $"{MenuEmojiConstants.Close}  Закрыть", CallbackData = $"Stage{_userStateId}-close" }
+            });
+        }
+
+        private List<List<BestOffersModel>> GetRangeButtonsArray(List<BestOffersModel> list, int range)
         {
             int count = list.Count / range + 1;
 

@@ -12,7 +12,7 @@ namespace BusinessLogic.Parser
         public void Execute()
         {
             var container = _containerService.CreateContainer();
-            _ = container.GetInstance<Parser>().StartAsync();
+            container.GetInstance<Parser>().Start();
         }
     }
 }

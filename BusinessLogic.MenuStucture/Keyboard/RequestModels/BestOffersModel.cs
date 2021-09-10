@@ -4,11 +4,11 @@ namespace BusinessLogic.MenuStucture.Keyboard.RequestModels
 {
     public class BestOffersModel
     {
-        public int BankId { get; set; }
-        public string BankName { get; set; }
-        public int BankAdrId { get; set; }
-        public string BankAdr { get; set; }
-        public string BankOffer { get; set; }
+        public int BankId { get; }
+        public string BankName { get; }
+        public int BankAdrId { get; }
+        public string BankAdr { get; }
+        public string BankOffer { get; }
 
         public BestOffersModel(int bankNameId, string bankName, int bankAdrId, string bankAdr, string bankOffer)
         {
@@ -20,6 +20,6 @@ namespace BusinessLogic.MenuStucture.Keyboard.RequestModels
         }
 
         public override string ToString() => 
-            $"{MenuEmojiConstants.Shock}  {BankOffer}, {MenuEmojiConstants.Location}  {BankAdr}, {MenuEmojiConstants.Bank} {BankName}";
+            $"{MenuEmojiConstants.Shock}  {BankOffer}, {MenuEmojiConstants.Location}  {BankAdr}";
     }
 }

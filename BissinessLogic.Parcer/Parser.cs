@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using BusinessLogic.Database;
 using BusinessLogic.Database.Interfaces;
 using BusinessLogic.Parser.Services.Interfaces;
@@ -8,14 +7,14 @@ namespace BusinessLogic.Parser
 {
     class Parser
     {
-        private readonly IBankService _bankService;
-        private readonly IBranchService _branchService;
+        private static IBankService _bankService;
+        private static IBranchService _branchService;
         private readonly ICityService _cityService;
         private readonly ICurrencyService _currencyService;
-        private readonly IPhoneService _phoneService;
-        private readonly IQuotationService _quotationService;
+        private static IPhoneService _phoneService;
+        private static IQuotationService _quotationService;
 
-        private readonly IBaseWebDataService _baseWebDataService;
+        private static IBaseWebDataService _baseWebDataService;
 
         public Parser(IBankService bankService,
             IBranchService branchService,
@@ -31,47 +30,57 @@ namespace BusinessLogic.Parser
             _currencyService = currencyService;
             _phoneService = phoneService;
             _quotationService = quotationService;
-
             _baseWebDataService = baseWebDataService;
         }
 
 
-        public async Task StartAsync()
+        public async void Start()
         {
-            var cities = _cityService.GetData();
-            var currencies = _currencyService.GetData();
+            var cities = await _cityService.GetData();
+            var currencies = await _currencyService.GetData();
 
             foreach (var city in cities)
             {
                 foreach (var currency in currencies)
                 {
                     Console.Clear();
-                    Console.WriteLine($"{new string('#', 40)}\n{city.NameRus} {currency.NameRus}\n{new string('#', 40)}");
+                    Console.WriteLine(
+                        $"{new string('#', 40)}\n{city.NameRus} {currency.NameRus}\n{new string('#', 40)}");
                     var baseClassList = _baseWebDataService.GetData(
                         selector: ".//*/tbody/tr/td/table/tbody/tr/td",
                         url: @"https://select.by" + $"/{city.NameLat}{currency.Url}");
                     foreach (var baseClass in baseClassList)
                     {
-                        BankDTO bank = new BankDTO { NameRus = baseClass.BankName };
-                        _bankService.Add(bank);
+                        BankDTO bank = new BankDTO
+                        {
+                            NameRus = baseClass.BankName
+                        };
+
+                        await _bankService.Add(bank);
+
+                        var bankDto = await _bankService.GetWithInclude(bank);
 
                         BranchDTO branch = new BranchDTO
                         {
                             Name = baseClass.BranchName,
                             Adr = baseClass.BranchAdr,
-                            Bank = bank,
-                            City = city
+                            Latitude = baseClass.Latitude,
+                            Longitude = baseClass.Longitude,
+                            BankId = bankDto.Id,
+                            CityId = city.Id
                         };
-                        _branchService.Add(branch);
+                        await _branchService.Add(branch);
+
+                        var branchDto = await _branchService.GetWithInclude(branch);
 
                         QuotationDTO quotation = new QuotationDTO
                         {
                             Sale = baseClass.Sale,
                             Buy = baseClass.Buy,
-                            Branch = branch,
-                            Currency = currency
+                            BranchId = branchDto.Id,
+                            CurrencyId = currency.Id
                         };
-                        _quotationService.Add(quotation);
+                        await _quotationService.Add(quotation);
 
                         foreach (var phoneString in baseClass.Phone)
                         {
@@ -80,9 +89,9 @@ namespace BusinessLogic.Parser
                                 PhoneDTO phone = new PhoneDTO
                                 {
                                     PhoneNum = phoneString,
-                                    Branch = branch
+                                    BranchId = branchDto.Id
                                 };
-                                _phoneService.Add(phone);
+                                await _phoneService.Add(phone);
                             }
                         }
                     }

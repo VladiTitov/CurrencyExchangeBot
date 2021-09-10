@@ -2,27 +2,33 @@
 using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
+using OpenQA.Selenium.Remote;
 
 namespace DataAccess.SeleniumHtmlParse
 {
     public class GenericRepository : IGenericRepository, IDisposable
     {
-        private readonly IWebDriver _driver;
+        private readonly RemoteWebDriver _driver;
 
-        public GenericRepository(string url) => _driver = new ChromeDriver {Url = url};
+        public GenericRepository(string url)
+        {
+            string remoteUrlChrome = "http://localhost:4445/wd/hub";
+            ChromeOptions chromeOptions = new ChromeOptions();
+            _driver = new RemoteWebDriver(new Uri(remoteUrlChrome), chromeOptions);
+            _driver.Navigate().GoToUrl(url);
+        }
 
         public void Dispose() 
         {
             _driver.Close();
             _driver.Quit();
         }
-        
 
-        public IWebElement GetData(By selector) =>
-            _driver.FindElement(selector);
+        public string GetString() => _driver.PageSource;
 
-        public IReadOnlyList<IWebElement> GetDataList(By selector) =>
-            _driver.FindElements(selector);
+
+        public IWebElement GetData(By selector) => _driver.FindElement(selector);
+
+        public IReadOnlyList<IWebElement> GetDataList(By selector) => _driver.FindElements(selector);
     }
 }

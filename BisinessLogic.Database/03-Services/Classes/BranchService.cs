@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Database.Interfaces;
 using DataAccess.DataBaseLayer;
@@ -17,44 +18,39 @@ namespace BusinessLogic.Database.Classes
             _mapper = mapper;
         }
 
-        public void Add(BranchDTO item)
+        public async Task Add(BranchDTO item)
         {
-            if (IsExist(item)) _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
-            else
-            {
-                return;
-            }
-            _unitOfWork.Save();
+            if (await IsExist(item)) _unitOfWork.BranchRepository.Add(_mapper.Map<Branch>(item));
+
+            await _unitOfWork.SaveAsync();
         }
 
-        public void Add(Branch item)
-        {
-            _unitOfWork.BranchRepository.Add(item);
-            _unitOfWork.Save();
-        }
-
-        public void Delete(BranchDTO item)
+        public async Task Delete(BranchDTO item)
         {
             _unitOfWork.BranchRepository.Delete(_mapper.Map<Branch>(item));
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
 
-        public bool IsExist(BranchDTO item) => _unitOfWork.BranchRepository.GetAll()
-                .All(branch => !branch.Name.Equals(item.Name) || !branch.Adr.Equals(item.Adr));
+        public async Task<bool> IsExist(BranchDTO item)
+        {
+            var data = await GetData();
+            var result = data.FirstOrDefault(i => i.Name.Equals(item.Name) && i.Adr.Equals(item.Adr));
+            return result == null;
+        }
 
-        public void Update(BranchDTO item)
+        public async Task Update(BranchDTO item)
         {
             _unitOfWork.BranchRepository.Update(_mapper.Map<Branch>(item));
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<BranchDTO> GetData() =>
-            _mapper.Map<List<BranchDTO>>(_unitOfWork.BranchRepository.GetAll());
+        public async Task<IEnumerable<BranchDTO>> GetData() => 
+            _mapper.Map<List<BranchDTO>>(await _unitOfWork.BranchRepository.GetAllAsync(i => i.Bank, j => j.City));
 
-        public BranchDTO GetWithInclude(BranchDTO item)
+        public async Task<BranchDTO> GetWithInclude(BranchDTO item)
         {
-            var request = _unitOfWork.BranchRepository.GetWithInclude(branch => branch.Adr.Equals(item.Adr) && branch.Name.Equals(item.Name));
-            return _mapper.Map<BranchDTO>(request);
+            var items = await _unitOfWork.BranchRepository.FindAsync(i => i.Adr.Equals(item.Adr) && item.Name.Equals(item.Name));
+            return _mapper.Map<BranchDTO>(items.FirstOrDefault());
         }
 
     }

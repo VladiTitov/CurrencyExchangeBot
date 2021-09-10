@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessLogic.Logger\BusinessLogic.Logger.csproj" />
     <ProjectReference Include="..\BusinessLogic.GeoParser\BusinessLogic.GeoParser.csproj" />
     <ProjectReference Include="..\BusinessLogic.MenuStucture\BusinessLogic.MenuStucture.csproj" />
   </ItemGroup>

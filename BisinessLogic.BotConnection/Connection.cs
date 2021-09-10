@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using BusinessLogic.GeoParser;
+using BusinessLogic.GeoParser.Models;
+using BusinessLogic.Logger;
 using BusinessLogic.MenuStucture.Models;
 using BusinessLogic.MenuStucture.Models.Interfaces;
 using BusinessLogic.MenuStucture.Services;
@@ -17,10 +19,26 @@ namespace BusinessLogic.BotConnection
     {
         private readonly ITelegramBotClient _botClient;
 
-        public Connection(string token) =>
-            _botClient = new TelegramBotClient(token) {Timeout = TimeSpan.FromSeconds(10)};
+        public Connection()
+        {
+            using (var sr = new StreamReader("../token.txt", Encoding.UTF8))
+            {
+                string token = sr.ReadLine();
+                if (token != null)
+                {
+                    _botClient = new TelegramBotClient(token)
+                    {
+                        Timeout = TimeSpan.FromSeconds(10)
+                    };
+                }
+                else
+                {
+                    LoggingService.AddEventToLog("Token is null");
+                }
+            }
+        }
 
-        [Obsolete]
+        [Obsolete("This property is obsolete")]
         public void Connect()
         {
             var bot = _botClient.GetMeAsync().Result;
@@ -31,87 +49,63 @@ namespace BusinessLogic.BotConnection
             _botClient.StartReceiving();
         }
 
-        [Obsolete]
-        private async void BotClient_OnCallbackQuery(object sender, CallbackQueryEventArgs e)
+        [Obsolete ("This property is obsolete")]
+        private  void BotClient_OnCallbackQuery(object sender, CallbackQueryEventArgs e) => 
+            GetResponseModel(e.CallbackQuery.Message, new CallbackQueryHandler(e));
+
+        [Obsolete("This property is obsolete")]
+        private  void BotClient_OnMessage(object sender, MessageEventArgs e) => 
+            GetResponseModel(e.Message, new MessageHandler(e));
+
+        private void GetResponseModel(Message msg, IHandler handler)
         {
-            var ResponseModel = GetResponseModel(e.CallbackQuery.Message, new CallbackQueryHandler(e));
             try
             {
-                await SendMessage(ResponseModel, e.CallbackQuery.Message.Chat);
+                var menuEventHandler = new MenuEventHandler(msg);
+
+                menuEventHandler.DeleteMessage += DeleteMessage;
+                menuEventHandler.SendLocation += SendLocation;
+                menuEventHandler.SendMessage += SendMessage;
+
+                handler.Process(menuEventHandler);
             }
             catch
             {
-
+                LoggingService.AddEventToLog($"Cannot send message to user {msg.Chat.Id}");
             }
-
+            
         }
 
-        [Obsolete]
-        private async void BotClient_OnMessage(object sender, MessageEventArgs e)
-        {
-            //MessageType(e.Message);
-            var ResponseModel = GetResponseModel(e.Message, new MessageHandler(e));
-            try
-            {
-                await SendMessage(ResponseModel, e.Message.Chat);
-            }
-            catch
-            {
-
-            }
-        }
-
-
-        private void MessageType(Message msg)
-        {
-            if (msg.Location != null)
-            {
-                var latitude = msg.Location.Latitude.ToString().Replace(',', '.');
-                var longitude = msg.Location.Longitude.ToString().Replace(',', '.');
-                Core geoCore = new Core();
-                geoCore.SearchByCoordinates(latitude, longitude);
-            }
-        }
-
-        private UserResponseModel GetResponseModel(Message msg, IHandler handler)
-        {
-            var menuEventHandler = new MenuEventHandler(msg);
-            menuEventHandler.Delete += DeleteMessage;
-            handler.Process(menuEventHandler);
-
-            return new MenuStateService(msg).GetMenuState(handler.Text);
-        }
-
-        public Task SendMessage(UserResponseModel state, Chat chat)
+        private void SendMessage(UserResponseModel state, Message message)
         {
             string text = state.ResponseLabel;
             IReplyMarkup replyMarkup = state.ResponseReplyMarkup;
-            return _botClient.SendTextMessageAsync(
-                chatId: chat,
-                text: text,
-                ParseMode.Markdown,
-                null,
-                false,
-                false,
-                0,
-                true,
+            
+            _botClient.SendTextMessageAsync(
+                chatId: message.Chat,
+                text: text, ParseMode.Markdown,
+                entities:null,
+                disableWebPagePreview:false,
+                disableNotification:false,
+                replyToMessageId:0,
+                allowSendingWithoutReply:true,
                 replyMarkup,
                 CancellationToken.None);
         }
 
-        public void DeleteMessage(Message msg)
+        private void DeleteMessage(Message msg)
         {
             _botClient.DeleteMessageAsync(
                 chatId: msg.Chat,
                 messageId: msg.MessageId);
         }
 
-        public void SendLocation(Message msg)
+        private void SendLocation(GeoLocationModel geoLocation, Message msg)
         {
-            _botClient.SendLocationAsync(
+           _botClient.SendLocationAsync(
                 chatId: msg.Chat,
-                latitude: 0,
-                longitude: 0,
+                latitude: geoLocation.Latitude,
+                longitude: geoLocation.Longitude,
                 livePeriod: 0,
                 heading: 0,
                 proximityAlertRadius: 0,
@@ -119,8 +113,7 @@ namespace BusinessLogic.BotConnection
                 replyToMessageId: 0,
                 allowSendingWithoutReply: false,
                 replyMarkup: null,
-                cancellationToken: CancellationToken.None
-                );
+                cancellationToken: CancellationToken.None);
         }
     }
 }
