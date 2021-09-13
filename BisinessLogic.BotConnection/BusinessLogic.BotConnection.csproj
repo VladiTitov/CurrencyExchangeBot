@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentScheduler" Version="5.5.1" />
+    <PackageReference Include="Telegram.Bot" Version="16.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic.GeoParser\BusinessLogic.GeoParser.csproj" />
+    <ProjectReference Include="..\BusinessLogic.MenuStucture\BusinessLogic.MenuStucture.csproj" />
+  </ItemGroup>
+
+</Project>

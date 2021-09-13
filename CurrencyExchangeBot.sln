@@ -3,21 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.CurrencyExchangeBot", "CurrencyExchangeBot\Core.CurrencyExchangeBot.csproj", "{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.CurrencyExchangeBot", "CurrencyExchangeBot\Core.CurrencyExchangeBot.csproj", "{D53AD9BB-8AFD-48BB-B1FB-6213DBBEF63A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-DataAccess", "01-DataAccess", "{AD760F9D-2004-436F-A60F-F89F095A43E7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-BisinessLogic", "02-BisinessLogic", "{A836D102-5DC5-493C-8899-57588F58CBFB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-BusinessLogic", "02-BusinessLogic", "{A836D102-5DC5-493C-8899-57588F58CBFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Core", "03-Core", "{86DC7C99-14AD-42BF-94DF-3B521034D267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.DataBaseLayer", "DataBaseLayer\DataAccess.DataBaseLayer.csproj", "{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.DataBaseLayer", "DataBaseLayer\DataAccess.DataBaseLayer.csproj", "{AADC7166-FBE1-45F6-8CFA-6E729CAC73F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.SeleniumHtmlParse", "SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj", "{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.SeleniumHtmlParse", "SeleniumHtmlParse\DataAccess.SeleniumHtmlParse.csproj", "{7E1EDFC3-E69B-4B95-988A-A190428CA5F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic.Database", "BisinessLogic.Database\BisinessLogic.Database.csproj", "{502881F6-BF45-49F5-B453-F7EFFD2B88DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.Database", "BisinessLogic.Database\BusinessLogic.Database.csproj", "{502881F6-BF45-49F5-B453-F7EFFD2B88DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisinessLogic.BotConnection", "BisinessLogic.BotConnection\BisinessLogic.BotConnection.csproj", "{198CD3AE-2879-4C7C-A148-ACFFB14164A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.BotConnection", "BisinessLogic.BotConnection\BusinessLogic.BotConnection.csproj", "{198CD3AE-2879-4C7C-A148-ACFFB14164A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.Parser", "BissinessLogic.Parcer\BusinessLogic.Parser.csproj", "{9615507B-B7FC-45E5-83A9-682D4A1520F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.MenuStucture", "BusinessLogic.MenuStucture\BusinessLogic.MenuStucture.csproj", "{FA9A1614-D287-4685-8E4B-2C4A669DC386}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.CurrencyParser", "Core.CurrencyParser\Core.CurrencyParser.csproj", "{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic.GeoParser", "BusinessLogic.GeoParser\BusinessLogic.GeoParser.csproj", "{5415DA8C-6806-4D9B-8674-67C2687F3B88}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A68E1F06-C909-49A5-829F-503C90045C9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic.Serilog", "BusinessLogic.Serilog\BusinessLogic.Serilog.csproj", "{08B89352-0175-41B6-A442-3FF3AAD269C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +57,30 @@ Global
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA9A1614-D287-4685-8E4B-2C4A669DC386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA9A1614-D287-4685-8E4B-2C4A669DC386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA9A1614-D287-4685-8E4B-2C4A669DC386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA9A1614-D287-4685-8E4B-2C4A669DC386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5415DA8C-6806-4D9B-8674-67C2687F3B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5415DA8C-6806-4D9B-8674-67C2687F3B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5415DA8C-6806-4D9B-8674-67C2687F3B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5415DA8C-6806-4D9B-8674-67C2687F3B88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68E1F06-C909-49A5-829F-503C90045C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68E1F06-C909-49A5-829F-503C90045C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68E1F06-C909-49A5-829F-503C90045C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68E1F06-C909-49A5-829F-503C90045C9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B89352-0175-41B6-A442-3FF3AAD269C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B89352-0175-41B6-A442-3FF3AAD269C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B89352-0175-41B6-A442-3FF3AAD269C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B89352-0175-41B6-A442-3FF3AAD269C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +91,11 @@ Global
 		{7E1EDFC3-E69B-4B95-988A-A190428CA5F0} = {AD760F9D-2004-436F-A60F-F89F095A43E7}
 		{502881F6-BF45-49F5-B453-F7EFFD2B88DA} = {A836D102-5DC5-493C-8899-57588F58CBFB}
 		{198CD3AE-2879-4C7C-A148-ACFFB14164A6} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+		{9615507B-B7FC-45E5-83A9-682D4A1520F9} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+		{FA9A1614-D287-4685-8E4B-2C4A669DC386} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+		{739C3A72-2BA6-4F61-A2A4-3034F9E28DEF} = {86DC7C99-14AD-42BF-94DF-3B521034D267}
+		{5415DA8C-6806-4D9B-8674-67C2687F3B88} = {A836D102-5DC5-493C-8899-57588F58CBFB}
+		{08B89352-0175-41B6-A442-3FF3AAD269C9} = {A836D102-5DC5-493C-8899-57588F58CBFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C631B7CF-2303-46A3-ACED-255843DA2E1C}

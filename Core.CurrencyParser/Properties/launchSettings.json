@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Core.CurrencyParser": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

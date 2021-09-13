@@ -2,10 +2,8 @@
 
 namespace DataAccess.DataBaseLayer
 {
-    public class Quotation
+    public class Quotation : BaseDbModel
     {
-        [Key]
-        public int Id { get; set; }
         public string Sale { get; set; }
         public string Buy { get; set; }
 

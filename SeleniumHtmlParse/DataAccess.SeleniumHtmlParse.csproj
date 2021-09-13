@@ -1,11 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="01-Repositories\" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
+    <PackageReference Include="Selenium.Support" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic.Serilog\BusinessLogic.Serilog.csproj" />
+    <ProjectReference Include="..\DataBaseLayer\DataAccess.DataBaseLayer.csproj" />
   </ItemGroup>
 
 </Project>

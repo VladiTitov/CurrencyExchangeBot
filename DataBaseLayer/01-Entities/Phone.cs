@@ -2,10 +2,8 @@
 
 namespace DataAccess.DataBaseLayer
 {
-    public class Phone
+    public class Phone : BaseDbModel
     {
-        [Key]
-        public int Id { get; set; }
         public string PhoneNum { get; set; }
 
         public int? BranchId { get; set; }

@@ -1,6 +1,4 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    public interface ICurrencyRepository : IGenericRepository<Currency>
-    {
-    }
+    public interface ICurrencyRepository : IGenericRepository<Currency> { }
 }

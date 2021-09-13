@@ -2,8 +2,6 @@
 {
     public class CurrencyRepository : GenericRepository<Currency>, ICurrencyRepository
     {
-        public CurrencyRepository(DataContext context) : base(context)
-        {
-        }
+        public CurrencyRepository(DataContext context) : base(context) { }
     }
 }

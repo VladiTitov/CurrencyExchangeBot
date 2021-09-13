@@ -1,6 +1,6 @@
 ﻿namespace DataAccess.DataBaseLayer
 {
-    class RepositoryFactory : IRepositoryFactory
+    public class RepositoryFactory : IRepositoryFactory
     {
         private readonly DataContext _context;
 
@@ -23,5 +23,8 @@
 
         public IPhoneRepository CreatePhoneRepository() =>
             new PhoneRepository(_context);
+
+        public IUserStateRepository CreateUserStateRepository() => 
+            new UserStateRepository(_context);
     }
 }
